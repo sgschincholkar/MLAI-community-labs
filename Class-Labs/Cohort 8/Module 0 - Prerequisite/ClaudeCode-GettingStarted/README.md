@@ -1,6 +1,5 @@
 # Module 1: Getting Started
 
-![images](./images/banner.png)
 
 Welcome to Module 1! This module will guide you through the fundamentals of Claude Code and help you set up your development environment to start using this powerful AI assistant.
 
@@ -52,7 +51,7 @@ Each lesson builds on the previous one, so we recommend following them in order.
 
 ## Lessons in This Module
 
-### [Lesson 1.0: Course Structure](./1.0-course-structure.md)
+### [Lesson 1.0:Claude Code Labs Structure](./1.0-course-structure.md)
 
 **[Click here to access the lesson](./1.0-course-structure.md)**
 
