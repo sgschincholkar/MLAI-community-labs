@@ -237,5 +237,5 @@ This article covers 4 main points:
 ---
 
 <a href="https://playful-blinker-866.notion.site/Connecting-v0-to-Supabase-Step-by-Step-Guide-30c56510f2bd8050a187ca5acd19fd89">
-  <img src="https://img.shields.io/badge/Previous%20Lesson-←-black?style=for-the-badge" alt="Previous Lesson"/>
+  <img src="https://img.shields.io/badge/Previous%20Lesson-->-black?style=for-the-badge" alt="Next Lesson"/>
 </a>
