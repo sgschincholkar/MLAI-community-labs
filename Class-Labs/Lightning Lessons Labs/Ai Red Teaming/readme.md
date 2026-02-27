@@ -98,7 +98,7 @@ Before running this lab you will need:
 - ✅ A **Google account** to run the notebook in Google Colab (free)
 - ✅ An **Azure subscription** with an **Azure AI Foundry project** → [ai.azure.com](https://ai.azure.com)
 - ✅ An **n8n workflow** with an AI Agent node deployed and **Published/Active**
-- ✅ A **webhook URL** from your n8n workflow : [Click Here](https://drive.google.com/file/d/13kViknFzSmjI9VKZwA5gMpMqPS8NJj_k/view?usp=sharing)
+- ✅ A **webhook URL** from your n8n workflow : [Click Here](https://drive.google.com/file/d/1jQ6TN7gi2gliv-Yr9vIR4DW7keH9fMFs/view?usp=sharing)
 
 
 
