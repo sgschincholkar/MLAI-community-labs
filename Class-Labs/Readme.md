@@ -33,7 +33,7 @@ Welcome to the **MLAI Community Class Labs** repository! Below you'll find all a
 ---
 
 > 💡 **Tip:** Click the green **Click Here** button on any row to open the lab directly.
-<<<<<<< HEAD
+
 
 ---
 
@@ -177,5 +177,3 @@ Example: [Update] – Fine-Tuning Lab – Section 4 (Steps & Instructions)
 
 > 💬 Have questions? Open a GitHub Issue or reach out to the maintainers before starting a large contribution.
 
-=======
->>>>>>> ad24a6a76b752d87f4c2161c30eb9ed2ddf838b1
