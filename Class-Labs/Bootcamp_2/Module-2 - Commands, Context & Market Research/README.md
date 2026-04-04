@@ -1,6 +1,6 @@
 # Module 2 — Commands, Context & Market Research
 
-Build a reusable PM command library and run a full research-to-PRD workflow — market research, user research, and a structured PRD — all on the same feature.
+Build a reusable PM skills library and run a full research-to-PRD workflow — market research, user research, and a structured PRD — all on the same feature.
 
 ---
 
@@ -8,8 +8,8 @@ Build a reusable PM command library and run a full research-to-PRD workflow — 
 
 | # | Lesson | What You'll Do |
 |---|--------|---------------|
-| 2.1 | [Slash Commands in Claude Code](./Lesson2.1-Slash-Commands-in-Claude-Code.md) | Understand how built-in and custom slash commands work |
-| 2.2 | [Custom Slash Commands](./Lesson2.2-Custom-Slash-Commands.md) | Build `/market-research`, `/user-research`, and `/prd` commands |
+| 2.1 | [Slash Commands in Claude Code](./Lesson2.1-Slash-Commands-in-Claude-Code.md) | Understand how built-in slash commands and skills work |
+| 2.2 | [Skills](./Lesson2.2-Skills.md) | Build `/market-research`, `/user-research`, and `/prd` skills |
 | 2.3 | [Market Research — Chaining Prompts](./Lesson2.3-Chaining-Research-Prompts.md) | Chain 4 research stages on the Lease Compliance feature, update CLAUDE.md |
 | 2.4 | [User Research — Chaining Prompts](./Lesson2.4-User-Research-Chaining.md) | Chain user research on the same feature using market research as context |
 | 2.5 | [PRD](./Lesson2.5-PRD.md) | Turn both research outputs into a structured PRD, update CLAUDE.md |
@@ -32,7 +32,7 @@ Every lesson builds on the same feature — Lease Compliance Reporting for Legal
 
 ## What You'll Have by the End
 
-- Three reusable slash commands in your personal library (`/market-research`, `/user-research`, `/prd`)
+- Three reusable skills in your personal library (`/market-research`, `/user-research`, `/prd`)
 - Three research output files saved in `outputs/`
 - CLAUDE.md updated with market intelligence, user research, PRD decisions, and competitive context
 - Slack connector configured — Claude notifies you when any long-running task completes

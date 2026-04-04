@@ -186,6 +186,48 @@ Day 3 — PRD
 
 ---
 
+## Statusline
+
+The statusline is a persistent status bar that displays live session data at the bottom of your Claude Code interface — context window usage, session cost, current model, git branch, and more.
+
+> **CLI only.** The statusline runs in the terminal. If you're using Claude Code inside VS Code (via the extension), it renders in VS Code's integrated terminal — same behavior, same setup.
+
+### What it shows
+
+| Info | Example |
+|------|---------|
+| Context window usage | `▓▓▓▓░░░░ 42%` |
+| Session cost | `$0.08` |
+| Current model | `claude-sonnet-4-6` |
+| Git branch | `main` |
+| Session duration | `14m` |
+
+![images](./images/statusop.png)
+
+### How to enable it
+
+The easiest way — run this directly in Claude Code:
+
+```
+/statusline show model name and context percentage with a progress bar
+```
+
+Claude generates the script and updates your settings automatically. No manual file editing needed.
+
+### How to remove it
+
+```
+/statusline remove
+```
+
+### Why it's useful for PMs
+
+Context window and cost are the two things that sneak up on you mid-session. The statusline keeps both visible at all times so you know when to `/compact` before quality degrades — without having to stop and run `/cost` or `/context` manually.
+
+![images](./images/statusline.png)
+
+---
+
 ## Full Command Reference
 
 ![images](./images/diagram.png)
@@ -230,8 +272,9 @@ The 5 commands above are the ones you'll use most as a PM. Here's the complete s
 - **`/context`** — surfaces what Claude can currently see, how full the context window is, and whether the right files are loaded before you run a long task
 - **`/insights`** — synthesizes patterns, contradictions, and gaps across everything loaded in context; most useful before strategy sessions and PRD writing
 - **`/schedule`** — converts a deliverable goal into a sequenced Claude Code work plan with specific commands and file references at each step
+- **The statusline** — a persistent CLI status bar showing context usage, cost, and model in real time; set up with `/statusline` and works inside VS Code's terminal too
 - **The full command set** — there are a dozen commands worth knowing; the five above are the PM-critical ones
 
 ---
 
-*Next: [Lesson 2.2 — Custom Slash Commands](./Lesson2.2-Custom-Slash-Commands.md)*
+*Next: [Lesson 2.2 — Skills](./Lesson2.2-Skills.md)*

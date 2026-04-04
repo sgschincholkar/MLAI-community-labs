@@ -33,20 +33,20 @@ Before you can use Claude Code effectively, you need to understand how it loads 
 ---
 
 ### [Module 2 — Commands, Context & Research](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/README.md)
-**Build a reusable PM command library and run a full research-to-PRD workflow**
+**Build a reusable PM skills library and run a full research-to-PRD workflow**
 
-This module is where Claude Code becomes a real PM tool. You build three reusable slash commands, then use them to run a full chained research workflow — market research, user research, and a structured PRD — all on the same feature (Lease Compliance Reporting for LegalGraph). Every lesson builds on the output of the last.
+This module is where Claude Code becomes a real PM tool. You build three reusable skills, then use them to run a full chained research workflow — market research, user research, and a structured PRD — all on the same feature (Lease Compliance Reporting for LegalGraph). Every lesson builds on the output of the last.
 
 | Lesson | Topic |
 |--------|-------|
-| [2.1 — Slash Commands](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.1-Slash-Commands-in-Claude-Code.md) | How built-in and custom slash commands work in Claude Code |
-| [2.2 — Custom Slash Commands](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.2-Custom-Slash-Commands.md) | Build `/market-research`, `/user-research`, and `/prd` — reusable for any feature, any project |
+| [2.1 — Slash Commands](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.1-Slash-Commands-in-Claude-Code.md) | How built-in slash commands and skills work in Claude Code |
+| [2.2 — Skills](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.2-Skills.md) | Build `/market-research`, `/user-research`, and `/prd` — reusable for any feature, any project |
 | [2.3 — Market Research](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.3-Chaining-Research-Prompts.md) | Chain 4 research stages on Lease Compliance — market size, competitors, customer pain points, full synthesis |
 | [2.4 — User Research](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.4-User-Research-Chaining.md) | Chain user research using the market research as context — personas, workflow, ranked pain points |
 | [2.5 — PRD](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.5-PRD.md) | Turn both research outputs into a structured PRD — requirements, success metrics, open questions |
 | [2.6 — Connectors in Claude Cowork](./Module-2%20-%20Commands%2C%20Context%20%26%20Market%20Research/Lesson2.6-Connectors-in-Claude-Cowork.md) | Connect Claude to Slack and other tools so it notifies you when long-running tasks finish |
 
-**What you'll have:** Three slash commands in your personal library. Three research output files saved in `outputs/`. CLAUDE.md updated with market intelligence, user insights, PRD decisions, and competitive context — loading automatically every session. Slack connector active so Claude closes the loop on every task.
+**What you'll have:** Three skills in your personal library. Three research output files saved in `outputs/`. CLAUDE.md updated with market intelligence, user insights, PRD decisions, and competitive context — loading automatically every session. Slack connector active so Claude closes the loop on every task.
 
 ---
 
