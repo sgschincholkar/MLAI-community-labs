@@ -17,6 +17,12 @@ This guide walks you through launching an OpenClaw-ready EC2 instance on AWS usi
 Go to [https://aws.amazon.com/](https://aws.amazon.com/) and sign in to your account. You'll land on the AWS Management Console dashboard.
 
 ![alt text](./images/1.png)
+
+⚠️ **Important:** Please make sure you are in the **Ohio region (us-east-2)**.
+If not, switch to this region before proceeding.
+
+
+![alt text](./images/33.png)
 ---
 
 ## Step 2 — Find the AMI
