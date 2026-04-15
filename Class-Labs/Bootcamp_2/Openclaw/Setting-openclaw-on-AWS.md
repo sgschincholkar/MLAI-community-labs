@@ -242,33 +242,6 @@ OpenClaw is now installed and running successfully.
 
 ## Troubleshooting
 
-### Issue: `brew` version installed / `brew` not found
-
-If the installer detects a Homebrew-installed version of a dependency or throws a `brew`-related error, first ensure Homebrew is properly installed and up to date.
-
-**Install Homebrew (Mac only):**
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-After installation, add Homebrew to your PATH if prompted (copy and run the commands shown in the installer output), then verify:
-
-```bash
-brew --version
-```
-
-**Update Homebrew:**
-
-```bash
-brew update && brew upgrade
-```
-
-Once Homebrew is installed and up to date, re-run the OpenClaw install command from Step 8:
-
-```bash
-curl -fsSL https://openclaw.ai/install.sh | bash
-```
 
 ---
 

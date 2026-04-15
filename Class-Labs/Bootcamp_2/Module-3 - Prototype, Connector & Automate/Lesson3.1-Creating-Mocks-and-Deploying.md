@@ -24,7 +24,7 @@ A clickable mock answers questions a PRD can't:
 - Is the IFRS 16 data extraction output readable for an auditor?
 - Where does the user get confused before you've spent eng time building the wrong thing?
 
-Claude Code can generate a working HTML/CSS/JS prototype from your PRD in minutes. You validate the UX, get stakeholder sign-off, and hand eng a visual spec — not just a document.
+Claude Code can generate a working prototype from your PRD in minutes. You validate the UX, get stakeholder sign-off, and hand eng a visual spec — not just a document.
 
 ---
 
