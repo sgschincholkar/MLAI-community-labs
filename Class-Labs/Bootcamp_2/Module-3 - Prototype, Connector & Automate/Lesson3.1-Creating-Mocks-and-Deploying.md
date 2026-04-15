@@ -45,7 +45,7 @@ Open Claude Code Desktop in your working project folder and run:
 @company-context.md
 @outputs/prd-lease-compliance-<date>.md
 
-Read all four files above. Build a clickable HTML prototype for the Lease Compliance Reporting feature.
+Read all files above. Build a clickable HTML prototype for the Lease Compliance Reporting feature.
 
 Requirements for the prototype:
 - Single HTML file (self-contained — CSS and JS inline, no external dependencies)
