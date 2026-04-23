@@ -1,348 +1,361 @@
-# Lesson: Self-Learning PRD Agent Loop — Watch, Detect, Improve, Repeat
+# The PRD Feedback Loop: How to Train AI Using Your Own Edits
 
-*Workshop: Claude Code for Product Managers*
+![image](./images/27.png)
 
----
+## The Problem
 
-## Overview
-
-Most PMs write PRDs in isolation no feedback until a review meeting. This lesson builds a **self-learning agent loop** that watches your PRD as you write it, detects patterns in how it evolves, generates targeted checklist improvements, and emails them to you for approval — all automatically, on a 5-minute heartbeat.
-
-The loop does not rewrite your PRD. It acts as a silent observer and coach: it sees what you changed, infers what you are prioritizing, and suggests what you are missing. You stay in control; the agent compounds your quality over time.
-
-By the end of this lesson you will have:
-
-1. A Claude Code workspace with a live PRD and a 20-point quality checklist.
-2. A baseline snapshot file that resets on every approved cycle.
-3. A background cron task that diffs, analyzes, and logs changes every 5 minutes.
-4. An email notification with an Approve button that writes approved items back to your checklist.
-5. A `/loop` command that orchestrates all of the above into one autonomous watcher.
+Most AI workflows today are fundamentally static. You provide a prompt, tools like Claude generate a PRD, and then you manually refine it to match your expectations. However, all the valuable edits you make—your clarity improvements, added constraints, structural changes, and product thinking—are lost after that step. The AI does not learn from these corrections, which means it keeps repeating the same mistakes in future outputs. As a result, your unique way of thinking and writing PRDs never becomes part of the system, forcing you to repeatedly "fix" the AI instead of benefiting from it over time.
 
 ---
 
-## Why This Works: The Core Idea
+## How We Solve This: Self-Learning Feedback Loop
 
-A PRD is never written in one sitting. It is built iteratively — placeholders filled in, sections restructured, priorities reordered. That evolution contains a signal: **how you edit tells you what you are thinking about and what you are avoiding**.
+![image](./images/28.png)
 
-The loop captures that signal by comparing each version of the PRD against the last known baseline. Instead of gradient descent, the "learning" is systematic pattern accumulation across diffs. Each 5-minute cycle:
+Introduce a self-learning feedback loop that converts user edits into long-term intelligence:
 
-1. Reads the latest state of your PRD from disk.
-2. Diffs it against the frozen baseline.
-3. Infers patterns (which sections changed, what types of edits, placeholder fill rate).
-4. Generates targeted checklist improvements conditioned on those patterns.
-5. Freezes the new state as the next baseline.
+1. The system generates a PRD using a predefined checklist
+2. The user modifies the PRD, creating a more accurate and refined version
+3. A scheduled process compares the AI-generated PRD with the user-edited version
+4. The system identifies patterns in changes, such as:
+   - Added specificity
+   - Restructured sections
+   - Inclusion of edge cases
+5. These patterns are converted into new checklist items
+6. Each checklist item includes a reason inferred from user behavior (behavioral inference)
+7. A human-in-the-loop step is introduced where:
+   - Suggestions are reviewed
+   - User approves or rejects them
+8. Once approved, the system updates the original checklist
 
-The feedback signal here is not test pass/fail — it is **PRD quality patterns**. The closer your PRD is to the 20-point checklist standard, the fewer new suggestions the agent generates. When suggestions stop, your PRD is done.
+This creates a continuous loop:
+
+```
+Generate → Edit → Learn → Improve → Repeat
+```
+
+> [!IMPORTANT]
+> **Key Insight:** Most people use AI as a one-shot tool — prompt in, output out. What we're building here is different. We're treating every edit you make as a signal, and teaching the system to learn from that signal over time. This is the foundation of a truly personal AI assistant.
 
 ---
 
 ## Prerequisites
 
-Before starting, you need two things:
-
-- **Claude Pro subscription** — Required to run scheduled tasks (`/cron`) and the `/loop` skill inside Claude Code. Claude Pro is available at claude.ai.
-- **prd-checklist.md - [Dowload from here](https://drive.google.com/file/d/1dn2ZK8e50txTjC0zXUEoBWX7aYHlVSmw/view?usp=sharing)** — The 20-point PRD quality standard that drives everything in this loop. Download it from the workshop materials folder and keep it ready. *(If you followed earlier lessons, you already have this file.)*
-
----
-
-## Setup
-
-### Step 1 — Open Claude Code and Create Your Workspace Folder
-
-1. Open **Claude Code** (the desktop app or run `claude` in your terminal).
-2. Create a new folder on your machine called `mini-pm` (or any name you prefer).
-3. Inside `mini-pm`, place the `prd-checklist.md` file. This is the only file you need to start.
-
-Your folder should look like this before you run any prompts:
-
-```
-mini-pm/
-└── prd-checklist.md
-```
-
-### Step 2 — Add the Folder to Claude Code
-
-1. In the Claude Code interface, click **Add** (or use `File → Open Folder`).
-2. Select your `mini-pm` folder.
-3. Claude Code will now treat this folder as its workspace — all file reads, writes, and diffs happen here.
-   
-![Claude download page](images/1.png)
-
-> Why this matters: Claude Code operates on the files it can see. Adding the folder gives the agent direct read/write access to `prd.md`, `dummy_prd.md`, and `prd-pattern-log.md` without any path ambiguity. Every subsequent prompt in this lesson assumes this folder is open.
+- Active Claude Pro Subscription
+- A PRD (Product Requirements Document) — if you don't have one, [download the sample PRD here](https://drive.google.com/file/d/1f3WpI2K1UozwkuATTHx9QQzv_e7S8uOs/view?usp=sharing)
+- PRD Checklist File (`prd-checklist.md`) — [click to download](https://drive.google.com/file/d/1Z72lRsAPtNCzrLUNbZ4TL_p9djHAI0Qh/view?usp=sharing)
 
 ---
 
-## The Five Prompts — Step by Step
+## Part 1: Project Setup
+
+![image](./images/29.png)
+
+Before we write a single prompt, we need to give Claude a workspace — a folder it can read from and write to. Think of this as setting up the "memory" of your agent. Without this, Claude has no way to access your PRD or persist any files it generates.
+
+### Step 1 — Create Your Project Folder
+
+- Create a new folder (suggested name: `self-learning-prd-agent`)
+- Inside this folder, add two files:
+  - `PRD_v1_original.md` → your base Product Requirements Document
+  - `prd-checklist.md` → the checklist you downloaded from the prerequisites section
+
+### Step 2 — Open Claude
+
+- Launch Claude on your system
+- Make sure you're logged into your Pro account
+
+### Step 3 — Add Your Folder to Workspace
+
+In Claude, add/import the folder you just created (`self-learning-prd-agent`). This allows Claude to:
+- Access your PRD file
+- Read the checklist
+- Generate and update files directly within the folder
+
+![image](./images/1.png)
+
+> [!IMPORTANT]
+> **✅ Checkpoint — What just happened?**
+> You've given Claude a shared workspace — it can now read your files and save outputs directly into your folder. This is what makes the agent persistent. Without connecting the folder, every chat starts from scratch and Claude has no context about your work.
 
 ---
 
-### Prompt 1 — Generate the PRD from Your Checklist
+## Part 2: First PRD Generation
+
+Now that Claude has access to your workspace, we'll use it to generate an improved version of your PRD. The key idea here is **checklist-driven generation** — instead of just asking Claude to "improve the PRD," we give it a structured set of rules to follow. This makes the output consistent, reviewable, and comparable to your edits later.
+
+### Step 1 — Open Claude
+
+Make sure your workspace folder is already connected.
+
+### Step 2 — Start a New Chat
+
+This keeps the context clean and focused.
+
+### Step 3 — Paste the Following Prompt
+
+> [!TIP]
+> **Prompt — Copy and paste this into Claude**
 
 ```
-Create a Product Requirements Document (PRD) for a lease compliance tool based on my prd-checklist,
-ensuring that all checklist items are fully addressed in the document, and save the generated PRD
-in the same workspace folder with name prd.md.
+You are a senior Product Manager and PRD expert.
+
+I have two files in my workspace:
+1. prd-checklist.md → contains the structure, rules, and expectations
+2. PRD_v1_original.md → contains the base PRD
+
+Your task:
+
+- Carefully read the checklist file and understand all requirements
+- Review the original PRD
+- Improve and rewrite the PRD so that it fully satisfies every checklist point
+
+Output Instructions:
+- Save the improved version as a new file named: PRD_v2_ai.md
+- Keep the structure clean with proper headings
 ```
+![image](./images/2.png)
 
-**What Claude does:** Reads `prd-checklist.md`, maps each of the 20 checklist items to a section in the PRD template, and writes a structured first draft. Sections that require real business context will contain `[Fill in]` placeholders — that is intentional and expected.
+### Step 4 — Run the Prompt
 
-**What you get:** `prd.md` — a full-length PRD skeleton with every checklist section present.
+Let Claude process both files and generate the improved PRD.
 
-**Why this is the foundation:** The loop can only detect *change* if it has a starting state. Prompt 1 establishes that state. Everything downstream diffs against this file. If you skip it and start with a blank PRD, the baseline comparison in Prompt 3 has nothing to work with.
+### Step 5 — Save the Output
 
-**What to do after:** Read through `prd.md`. Fill in a few `[Fill in]` placeholders — your product name, a real user pain point, one success metric. This gives the loop real signal to detect on its first cycle.
+Save the response as `PRD_v2_ai.md` inside your project folder.
 
-![Claude download page](images/2.png)
+> [!IMPORTANT]
+> **✅ Checkpoint — What just happened?**
+> Claude read your checklist, applied every rule to your original PRD, and produced a refined version — `PRD_v2_ai.md`. This is now the "AI's best attempt" at your PRD. Your job next is to read it, make your own edits, and save that as `PRD_v3_user.md`. That gap between `v2` and `v3` is where the learning happens. Every change you make is a lesson.
+
+![alt text](./images/3.png)
 
 ---
 
-### Prompt 2 — Freeze the Baseline Snapshot
+## Part 3: Scheduler Task — Pattern Learning
+
+![alt text](./images/5.png)
+
+Here's where the system starts getting intelligent. You've made edits to the AI's PRD. Now we need a process that automatically looks at those edits, figures out *why* you made them, and converts that reasoning into structured checklist rules.
+
+We do this using a **scheduled task** — a recurring job that runs every hour, compares the two PRD versions, and appends new learnings to a file called `learned-checklist.md`.
+
+### Prompt
+
+> [!TIP]
+> **Prompt — Copy and paste this into Claude**
 
 ```
-Please create a file named dummy_prd.md as an exact copy of prd.md. This file will act as the
-baseline snapshot for tracking changes and should never be edited manually.
+Create a scheduled task named `prd-learning-scheduler`.
+
+This task should run every 1 hour.
+
+On every run, execute the following:
+
+- Read two files from the workspace:
+  1. PRD_v2_ai.md (AI-generated PRD)
+  2. PRD_v3_user.md (User-edited PRD)
+
+- Compare both files and identify meaningful differences
+
+- Extract patterns from user changes such as:
+  - Added specificity
+  - Added constraints
+  - Added edge cases
+  - Structural improvements
+  - Clarity or tone improvements
+
+- Convert these patterns into structured checklist learnings
+
+- For each learning, include:
+  - Checklist Item
+  - Section
+  - Observed Change
+  - Frequency (if repeated)
+  - Confidence Score (Low/Medium/High)
+  - Reason (behavioral inference based on user edits)
+
+- Append all learnings into a SINGLE file:
+  → learned-checklist.md
+
+Important Rules:
+- Do NOT create new files every run
+- Do NOT overwrite the file; always APPEND new learnings
+- Avoid duplicate checklist items (merge if similar)
+- Do NOT include timestamp in the file name
+- Only focus on meaningful changes
+- Learn strictly from user behavior, not assumptions
 ```
 
-**What Claude does:** Creates `dummy_prd.md` as a byte-for-byte copy of `prd.md` at this exact moment.
+![alt text](./images/4.png)
 
-**What you get:** `dummy_prd.md` — the frozen reference point.
+The Scheduler task is live 
 
-**Why two files?** The loop needs to answer the question: *"What changed since the last cycle?"* To answer that, it needs two versions:
-- `prd.md` — the live file you are always editing.
-- `dummy_prd.md` — the frozen snapshot from the last approved cycle.
+![alt text](./images/6.png)
 
-The diff between them is the signal. If you only had one file, there would be nothing to compare against. If you manually edited `dummy_prd.md`, the diff would be corrupted. **Never touch `dummy_prd.md` by hand** — the agent owns it.
 
-**What to do after:** Make a few more edits to `prd.md` to build up some diff material before running Prompt 3.
 
-![Claude download page](images/3.png)
+### How to Test the Scheduler
+
+1. Go to **Scheduler** in the left side bar
+![alt text](./images/7.png)
+2. Click on your scheduler task
+![alt text](./images/8.png)
+3. Click **Run**
+![alt text](./images/9.png)
+
+> [!IMPORTANT]
+> **✅ Checkpoint — What just happened?**
+> You've created an autonomous background process. Every hour, without any manual effort, it wakes up, reads both PRDs, extracts what you changed and why, and appends structured learnings to `learned-checklist.md`. Over time, this file becomes a reflection of how *you* think about PRDs — written in rules the AI can actually use. Notice the confidence scores: the system doesn't just log changes, it infers intent and assigns confidence to each pattern.
+
+![alt text](./images/10.png)
+
+![alt text](./images/11.png)
 
 ---
 
-### Prompt 3 — Start the Background Change Tracker (Cron Task)
+## Part 4: End-to-End Slack Approval Flow
+
+We now have a system that automatically generates learnings — but we don't want to blindly trust them. This is where **human-in-the-loop** comes in. Before any new rule gets added to your master checklist, you need to approve it. We use Slack as the approval channel: the system DMs you a summary of high-frequency patterns (observed 2+ times), and you reply with a single word — `APPROVE` or `REJECT`.
+
+This step is what separates a toy demo from a production-grade workflow. It ensures you stay in control even as the system learns.
+
+### Step 1 — Create the Slack Approval Scheduler
+
+This scheduler runs every 15 minutes, filters patterns with `Frequency >= 2`, and sends them to you for approval via Slack DM.
+
+#### Prompt
+
+> [!TIP]
+> **Prompt — Copy and paste this into Claude**
 
 ```
-Create a scheduled task called prd-change-tracker that runs every 5 minutes with the following prompt:
+Create a scheduled task named `slack-approval-checker`.
 
-You are the PRD Loop Tracker. On each run, compare prd.md with dummy_prd.md and identify patterns
-in how the PRD has changed. If changes are found, for each change, record the section it belongs to,
-the type of change (Addition, Deletion, or Modification), and include both the before text
-(from dummy_prd.md) and after text (from prd.md). Then generate a Pattern Analysis explaining
-what types of changes were made (such as filling placeholders, restructuring, or adding detail),
-which sections were modified, what this indicates about the PM's current focus, and the percentage
-of [Fill in] placeholders that have been completed versus those remaining. After that, generate
-5–8 specific and actionable checklist items tailored to the detected patterns. Save all detected
-changes, pattern analysis, and generated checklist items in a file named prd-pattern-log.md.
-Finally, update dummy_prd.md to match the latest version of prd.md so it remains the baseline
-for the next run.
-```
-![Claude download page](images/5.png)
+Run every 15 minutes.
 
-**What Claude does:** Registers a cron-style background task named `prd-change-tracker` that wakes up every 5 minutes, runs the embedded prompt against your workspace, and goes back to sleep.
+On each run:
 
-**What you get:**
-- A live background task running in Claude Code.
-- `prd-pattern-log.md` — an append-only log of every diff cycle with timestamps, change records, pattern analysis, and generated checklist items.
-- `dummy_prd.md` automatically updated to the latest state of `prd.md` at the end of each cycle.
+STEP 1 — Filter High-Frequency Patterns
+- Read `learned-checklist.md`
+- Extract only the checklist items where Frequency >= 2
+- If no items meet this threshold, stop — do nothing
 
-**What the log entry looks like (one cycle):**
+STEP 2 — Send for Approval via Slack DM
+- Send a Slack direct message to: Sachin Parmar
+- Message content:
 
-```
-## Cycle — 2026-04-22 14:35:01
+  Subject: PRD Checklist Learning Updates
 
-### Changes Detected
-| Section | Type | Before | After |
-|---------|------|--------|-------|
-| Success Metrics | Modification | [Fill in north-star metric] | DAU of lease managers completing compliance review ≥ 40% in 30 days |
-| Users & JTBD | Addition | — | Added secondary persona: Legal Ops Analyst |
+  Hi Sachin,
 
-### Pattern Analysis
-- 1 of 4 metric placeholders filled (25% complete)
-- PM is currently focused on Success Metrics — two of three edits touched this section
-- JTBD section still has 3 of 5 placeholders unfilled
-- No changes to Risks & Dependencies — likely deferred
+  The following checklist patterns have been observed 2 or more times in your PRD edits and are ready for review:
 
-### Generated Checklist Items
-- [ ] Define guardrail metrics for lease data extraction latency (< 3s p99)
-- [ ] Add JTBD statement for Legal Ops Analyst in "When I __" format
-- [ ] Specify measurement window for the north-star DAU metric
-- [ ] Validate the 40% target against current baseline usage data
-- [ ] Call out GDPR / SOC 2 implications in Regulatory section
+  [Insert only the filtered items with Frequency >= 2 from learned-checklist.md]
+
+  Please reply with ONLY one word:
+
+  APPROVE → to accept and update the checklist
+  REJECT → to ignore
+
+STEP 3 — Check for Reply
+- Read the latest reply from Sachin Parmar in the DM thread
+
+- If the reply contains "APPROVE":
+  - Append ONLY the filtered items (Frequency >= 2) to `prd-checklist.md`
+
+- If the reply contains "REJECT":
+  - Do nothing
+
+Important:
+- Only process patterns with Frequency >= 2
+- Never append low-frequency patterns regardless of approval
+- Only check the latest reply in the thread
+- Do not append duplicate checklist items
+- Do not repeat the same update if already processed
 ```
 
-**Why the baseline reset matters:** After logging, the task sets `dummy_prd.md = prd.md`. This means the *next* cycle only diffs changes made *after* this cycle. Without the reset, every cycle would re-report all historical changes. The reset is what makes each log entry a clean, incremental record of your progress.
+![alt text](./images/20.png)
 
-**What to do:** Keep editing `prd.md`. The tracker is running silently in the background. Every 5 minutes it captures where you are. Check `prd-pattern-log.md` after two or three cycles to see the pattern emerging.
+### Step 2 — Add Slack Connector
 
-![Claude download page](images/6.png)
+Now connect Claude to your Slack workspace so the scheduler can send you DMs.
+
+1. Click on **Add Connector**
+2. Search for **Slack**
+3. Authenticate your account and grant permissions
+
+![alt text](./images/21.png)
+
+### Step 3 — Verify Access in Claude
+
+Ensure Claude can:
+- Send direct messages
+- Search Slack messages
+- Read message threads
+
+### Step 4 — Test the Full Flow
+
+**Step A — Run the Scheduler**
+
+1. Go to the **Scheduler** section in the left sidebar
+
+![alt text](./images/7.png)
+
+2. Select your `slack-approval-checker` task (created in Step 1)
+
+![alt text](./images/22.png)
+
+3. Click **Run**
+
+![alt text](./images/23.png)
+
+**Step B — Confirm Message is Sent**
+
+1. Go to your Slack workspace
+2. Open your Direct Messages from Claude
+3. Verify the approval request has arrived
+
+![alt text](./images/25.png)
+
+**Step C — Reply with Your Decision**
+
+1. Open the DM from Claude
+2. Reply in the thread with: `APPROVE`
+
+![alt text](./images/25.png)
+
+**Step D — Run Scheduler Again to Process Reply**
+
+1. Go back to Scheduler
+2. Run `slack-approval-checker` again
+
+### Expected Outcome
+
+- Scheduler reads your Slack DM reply
+- Detects: `APPROVE`
+- Appends only patterns with `Frequency >= 2` to `prd-checklist.md` ✅
+
+![alt text](./images/26.png)
+
+> [!IMPORTANT]
+> **✅ Checkpoint — What just happened?**
+> You've closed the full loop. The system learned from your edits, asked for your permission, received your approval, and updated the master checklist — all automatically. Next time Claude generates a PRD, it will use the updated checklist, which now includes rules derived from your own behavior. The AI has genuinely gotten better at writing PRDs *your way*, and it will continue improving every time you edit.
 
 ---
 
-### Prompt 4 — Email Patterns and Collect Approval
+## What You've Built
 
-```
-Now use the Gmail connector to send an email that includes:
-1. The patterns you identified in how the user writes the PRD
-2. An explanation of why you are suggesting these patterns
+Let's step back and appreciate the full system you just assembled:
 
-The email should also include an "Approve" button. When the user clicks this button, it should
-trigger a webhook that updates the PRD checklist file with the new checklist points approved
-by the user.
-```
+| Component | What It Does |
+|---|---|
+| `PRD_v1_original.md` | Your raw PRD — the starting point |
+| `prd-checklist.md` | The rules Claude uses to generate PRDs |
+| `PRD_v2_ai.md` | Claude's best attempt based on the checklist |
+| `PRD_v3_user.md` | Your edited version — the source of truth |
+| `prd-learning-scheduler` | Hourly job that extracts learnings from your edits |
+| `learned-checklist.md` | New rules inferred from your behavior |
+| `slack-approval-checker` | Watches `#prd-approvals` for your reply and updates the master checklist |
 
-### How To Connect Gmail Connector to Claude Code
-
-1. Click on the **(+)** symbo
-
-![Claude download page](images/7.png)
-
-2. Select **Add Connector**
-
-![Claude download page](images/7.png)
-
-3. Choose **Gmail**
-
-![Claude download page](images/9.png)
-
-4. Click on **Connect** and complete the authentication process
-![Claude download page](images/8.png)
-
-
-**What Claude does:** Reads the latest entry in `prd-pattern-log.md`, composes a structured email summarizing the patterns and the generated checklist items, and sends it via the Gmail MCP connector. The Approve button in the email points to a webhook endpoint. When clicked, the webhook calls back into Claude Code, which appends the approved checklist items to `prd-checklist.md`.
-
-**What you get:**
-- An email in your inbox with a clear summary of what the agent observed and why it is suggesting each item.
-- A one-click approval flow that writes the approved items directly into your checklist file — no copy-paste required.
-
-**What the email looks like:**
-
-![Claude download page](images/11.png)
-
-
-**Why the approval step matters:** The loop should not blindly rewrite your checklist. You are the PM — you decide what belongs in the checklist. The Approve button is the human-in-the-loop gate. Items you do not approve are discarded. Items you approve become part of the checklist that drives the next PRD you write.
-
----
-
-### Prompt 5 — The Full Autonomous Loop
-
-```
-/loop 5m
-
-① Detect changes
-Compare prd.md against dummy_prd.md. If no changes are found, stop and wait for the next interval.
-If changes are found, identify each one by: section name, change type (add / delete / modify),
-and a before-vs-after diff.
-
-② Analyze patterns
-Examine the changes to: identify how the PRD is evolving, infer what the PM is currently
-prioritizing, and calculate the percentage of placeholders that have been completed.
-
-③ Suggest improvements
-Based on the patterns found, generate 5–8 new checklist improvements.
-
-④ Log and notify
-Append a timestamped entry to prd-pattern-log.md containing all of the above. Then send an email
-including: patterns identified, why those patterns matter, suggested checklist updates, and an
-Approve button.
-
-⑤ Handle approval
-If the Approve button is clicked: trigger the configured hook or create one and update
-prd-checklist.md with the approved items.
-
-⑥ Sync baseline
-Update dummy_prd.md to match the current state of the PRD, so the next loop has a clean
-baseline to diff against.
-```
-![Claude download page](images/12.png)
-
-![Claude download page](images/13.png)
-
-**What this is:** The `/loop` skill turns the cron task from Prompt 3 and the email step from Prompt 4 into a single, cohesive, autonomous agent that runs on a 5-minute heartbeat indefinitely.
-
----
-
-### Deep Dive: How `/loop` Works
-
-The `/loop` skill is Claude Code's primitive for building persistent agent behavior. When you run `/loop 5m`, Claude Code:
-
-1. Registers a recurring schedule (every 5 minutes by default, configurable).
-2. On each tick, invokes the attached prompt as a fresh agent context.
-3. The agent reads the current state from disk (no memory of prior runs needed — the files are the memory).
-4. Executes steps ① through ⑥ in order.
-5. Exits cleanly. The loop schedules the next tick and waits.
-
-**Why fresh context on every tick?** Each loop iteration gets a brand-new context window. This is the same principle as the Ralph Loop: fresh context = no drift, no compaction artifacts, no accumulated errors. The files on disk — `prd.md`, `dummy_prd.md`, `prd-pattern-log.md`, `prd-checklist.md` — are the persistent memory. The agent is stateless; the workspace is stateful.
-
-**The six steps in detail:**
-
-| Step | What it does | Why it matters |
-|------|-------------|----------------|
-| ① Detect changes | `diff prd.md dummy_prd.md` | No changes = no-op. Saves tokens on idle cycles. |
-| ② Analyze patterns | Classifies change types, measures placeholder fill rate | Turns raw diffs into insight about PM behavior |
-| ③ Suggest improvements | Generates 5–8 checklist items conditioned on the patterns | Targeted suggestions beat generic checklists |
-| ④ Log and notify | Appends to `prd-pattern-log.md`, sends email | Creates a durable audit trail + triggers human review |
-| ⑤ Handle approval | Webhook → append to `prd-checklist.md` | Human-in-the-loop gate; agent doesn't self-authorize |
-| ⑥ Sync baseline | `dummy_prd.md = prd.md` | Resets the diff surface; next cycle starts clean |
-
-**The stop condition:** The loop runs until one of these is true:
-- You run `/loop stop` to cancel the schedule.
-- The PRD reaches 100% placeholder fill rate and the pattern analysis finds no new gaps.
-- You close the Claude Code workspace.
-
-Unlike a software build loop where "tests green" is the stop signal, this loop's signal is **PRD completeness**: when every checklist item is addressed and no new patterns are detected, the loop goes quiet.
-
-**What the full file state looks like after 10 cycles:**
-
-```
-mini-pm/
-├── prd-checklist.md          ← your original 20 points + approved additions from cycles
-├── prd.md                    ← your live PRD, increasingly complete
-├── dummy_prd.md              ← auto-updated baseline; always = state of prd.md at last cycle end
-└── prd-pattern-log.md        ← append-only log; 10 timestamped entries, one per cycle
-```
-
-**The compounding effect:** By cycle 10, `prd-checklist.md` has grown from 20 items to 28 or 30 items — all tailored to how *you* write PRDs, not a generic template. The log shows your editing trajectory: which sections you tackled first, which you avoided, how your placeholder fill rate moved from 12% to 87%. You have a personal PRD quality fingerprint that will inform every PRD you write from here on.
-
----
-
-## How the Steps Connect
-
-laude
-
-
-Every arrow is a file write. The agent is stateless — it reconstructs all context from the files on each tick. This is the same architectural insight as the Ralph Loop: **the workspace is the memory**.
-
----
-
-## Key Takeaways
-
-1. A PRD is a living document — its edit history contains signal about how you think as a PM.
-2. The loop extracts that signal by diffing each version against a frozen baseline.
-3. The baseline resets after every approved cycle, making each log entry a clean incremental record.
-4. `/loop` is the Claude Code primitive that turns a one-shot task into a persistent autonomous agent.
-5. The human-in-the-loop gate (Approve button) ensures the agent suggests; you decide.
-6. By the end of the loop, your checklist is personalized to your PRD writing patterns — not a generic template.
-
----
-
-## Files Created in This Lesson
-
-| File | Created by | Purpose |
-|------|-----------|---------|
-| `prd-checklist.md` | You (prerequisite) | 20-point quality standard; grows with approved items |
-| `prd.md` | Prompt 1 | Your live PRD — the only file you edit manually |
-| `dummy_prd.md` | Prompt 2 | Frozen baseline; owned by the agent, never edited by hand |
-| `prd-pattern-log.md` | Prompt 3 / loop | Append-only change and pattern log; one entry per cycle |
-
----
-
-## Key Takeaways
-
-- **Edit history is signal.** Which sections you touch first and which you avoid tells the agent what you're prioritizing and what you're deferring.
-- **Two-file baseline = clean diffs.** Live file + frozen snapshot scopes every diff to exactly one cycle — no version control needed.
-- **Files are the memory; the agent is stateless.** State lives on disk. Each tick reads it fresh — no context drift, no compaction issues.
-- **Baseline resets make logs incremental.** Without resetting `dummy_prd.md` after each cycle, every run re-reports all prior changes.
-- **Pattern-conditioned suggestions beat generic checklists.** Items generated from your actual edits are more actionable than a static template.
-- **Human-in-the-loop is an architectural decision.** The Approve button prevents the agent from self-modifying the checklist — you authorize every change.
-- **Stop conditions are domain-specific.** This loop stops when placeholder fill rate hits 100% and no new gaps are found — not when a test passes.
-- **`/loop` composes primitives.** Diff → analyze → log → notify → approve → sync. Each step is independent; the skill chains them on a heartbeat.
+Every cycle makes the system smarter. Every PRD you edit teaches it something new. And because you approve every update, you stay in control of what the AI learns. This is **agentic AI with human oversight** — the same pattern used in production AI systems at scale.
