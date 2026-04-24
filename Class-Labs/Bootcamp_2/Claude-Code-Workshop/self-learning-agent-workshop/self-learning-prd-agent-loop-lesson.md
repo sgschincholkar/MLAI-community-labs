@@ -12,6 +12,9 @@ Most AI workflows today are fundamentally static. You provide a prompt, tools li
 
 ![image](./images/28.png)
 
+
+![image](./images/30.png)
+
 Introduce a self-learning feedback loop that converts user edits into long-term intelligence:
 
 1. The system generates a PRD using a predefined checklist
