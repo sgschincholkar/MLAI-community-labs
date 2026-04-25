@@ -40,6 +40,7 @@ Scheduled tasks (the learning and approval schedulers) are a Claude Pro feature.
 **3. Download the Sample PRD**
 This is the raw product requirements document you will feed into the system in Step 6.
 [Download Sample PRD](https://pragyaallc-my.sharepoint.com/:w:/g/personal/sachin_parmar_legalgraph_ai/IQB9ewTdTDo2T74jgfymTUOnAdXk2dwfYVEPHhWvAjtGvkc?e=rSvgqK)
+
 **4. Download the Checklist**
 This file defines the rules the AI uses to evaluate and improve your PRD. It also evolves over time as the system learns from your edits.
 [Download Checklist](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQD09xYg-LjFRY478BcFkDs0ASCZMa3zo-xryjSF59qt-ro?e=a5KtLt)
