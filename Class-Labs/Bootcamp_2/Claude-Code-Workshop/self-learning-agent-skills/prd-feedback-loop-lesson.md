@@ -31,11 +31,11 @@ The key insight: <span style="color:#2563EB">**you never write new rules manuall
 Complete all four before starting. Do not skip these — the lesson will not work without them.
 
 **1. Download the PRD Skill**
-This is the skill file you will upload into Claude Code. It defines how Claude processes and improves your PRD.
+This is the skill file you will upload into Claude. It defines how Claude processes and improves your PRD.
 [Download Skill File](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQC8VfiPKDTtTJIz_2ZQcmbeAbkQrLqf9qTlX5trjdwCp6o?e=rYfDdS) *(link will be updated)*
 
 **2. Claude Pro Subscription**
-Scheduled tasks (the learning and approval schedulers) are a Claude Code Pro feature. Make sure you are signed into Claude Code with an active Pro subscription before starting.
+Scheduled tasks (the learning and approval schedulers) are a Claude Pro feature. Make sure you are signed into Claude with an active Pro subscription before starting.
 
 **3. Download the Sample PRD**
 This is the raw product requirements document you will feed into the system in Step 6.
@@ -123,15 +123,15 @@ This is the **self-learning agent loop** — the system gets better at your spec
 
 **What to do:** Create a new, empty folder anywhere on your machine. Name it something meaningful, for example: `prd-feedback-loop`. This folder will hold every file in this lesson.
 
-**Why this matters in the agent loop:** The schedulers and all file read/write operations are scoped to a workspace in Claude Code. One clean folder means the AI always reads and writes exactly the files you intend — no accidental cross-contamination from other projects. Think of it as the container for your agent's memory.
+**Why this matters in the agent loop:** The schedulers and all file read/write operations are scoped to a workspace in Claude. One clean folder means the AI always reads and writes exactly the files you intend — no accidental cross-contamination from other projects. Think of it as the container for your agent's memory.
 
 ---
 
-### Step 2 — Open Claude Code
+### Step 2 — Open Claude 
 
-**What to do:** Open the Claude Code desktop application. Confirm you are signed in and that your Pro subscription is active.
+**What to do:** Open the Claude desktop application. Confirm you are signed in and that your Pro subscription is active.
 
-**Why this matters in the agent loop:** Claude Code is the runtime for this entire system. The skill runner, the schedulers, and all file access live inside it. Without Claude Code running, none of the automated learning happens.
+**Why this matters in the agent loop:** Claude is the runtime for this entire system. The skill runner, the schedulers, and all file access live inside it. Without Claude  running, none of the automated learning happens.
 
 ---
 
@@ -139,7 +139,7 @@ This is the **self-learning agent loop** — the system gets better at your spec
 
 **What to do:** Follow these three sub-steps exactly.
 
-**3a.** In Claude Code, click on the **Customize** section in the left sidebar.
+**3a.** In Claude, click on the **Customize** section in the left sidebar.
 
 ![image](./images/38.png)
 
@@ -170,21 +170,21 @@ Make sure both files are in the same folder. Do not put them in subfolders.
 
 ---
 
-### Step 5 — Add the Workspace Folder to Claude Code
+### Step 5 — Add the Workspace Folder to Claude
 
-**What to do:** In Claude Code, add your workspace folder as an active project workspace. You will see a folder/workspace selector — point it to the `prd-feedback-loop` folder you created.
+**What to do:** In Claude, add your workspace folder as an active project workspace. You will see a folder/workspace selector — point it to the `prd-feedback-loop` folder you created.
 
 ![image](./images/1.png)
 
-After adding it, Claude Code will have read and write access to that folder. All prompts, skills, and schedulers in this lesson operate within this boundary.
+After adding it, Claude will have read and write access to that folder. All prompts, skills, and schedulers in this lesson operate within this boundary.
 
-**Why this matters in the agent loop:** Claude Code operates with explicit file permissions. By registering the folder as your workspace, you are authorizing the agent to read your PRD and checklist, write output files, update `learner_checklist.md`, and persist state in `slack_state.json` — all of which are required for the loop to function.
+**Why this matters in the agent loop:** Claude operates with explicit file permissions. By registering the folder as your workspace, you are authorizing the agent to read your PRD and checklist, write output files, update `learner_checklist.md`, and persist state in `slack_state.json` — all of which are required for the loop to function.
 
 ---
 
 ### Step 6 — Run Prompt 1: Generate the Improved PRD
 
-**What to do:** In the Claude Code chat, paste the prompt below. Before running it, attach both files from your workspace folder:
+**What to do:** In the Claude chat, paste the prompt below. Before running it, attach both files from your workspace folder:
 - `INPUT_PRD.docx`
 - `CHECKLIST.md`
 
@@ -259,7 +259,7 @@ When you are done, save the file. You do not need to rename it — the scheduler
 
 ### Step 7 — Create the Learning Scheduler (Prompt 2)
 
-**What to do:** In the Claude Code chat, paste and run the following prompt. This creates a scheduled background job that will run automatically every hour.
+**What to do:** In the Claude chat, paste and run the following prompt. This creates a scheduled background job that will run automatically every hour.
 
 ```
 Create a scheduled task named learner-checklist-generator.
@@ -349,7 +349,7 @@ You do not need to wait an hour. You can trigger the scheduler manually right no
 
 **What to do:**
 
-**8a.** In Claude Code, go to the **Scheduler** section.
+**8a.** In Claude, go to the **Scheduler** section.
 
 ![image](./images/7.png)
 
@@ -373,7 +373,7 @@ Open `learner_checklist.md`. You will see structured checklist items — each on
 
 ### Step 9 — Create the Approval Scheduler (Prompt 3)
 
-**What to do:** In the Claude Code chat, paste and run the following prompt. This creates the human-in-the-loop control layer — the piece that ensures *you* decide what gets added to your checklist, not the AI alone.
+**What to do:** In the Claude chat, paste and run the following prompt. This creates the human-in-the-loop control layer — the piece that ensures *you* decide what gets added to your checklist, not the AI alone.
 
 > **Before you paste this prompt:** Find the line that says `Send a direct message to: Sachin Parmar` and replace `Sachin Parmar` with your own Slack display name, a teammate's name, or a Slack channel (e.g. `#prd-reviews`). Use whatever destination makes sense for your workflow.
 
@@ -459,7 +459,7 @@ OUTPUT: Perform actions silently. Do NOT print anything.
 
 Just like Step 8, you can test this immediately without waiting 15 minutes.
 
-**What to do:** Go to the **Scheduler** section in Claude Code, find the `slack-approval-checker` task, and click **Run**.
+**What to do:** Go to the **Scheduler** section in Claude, find the `slack-approval-checker` task, and click **Run**.
 
 The scheduler will:
 1. Read `learner_checklist.md`
@@ -496,7 +496,7 @@ Every 15 minutes, this job runs through the following sequence:
 
 **6. On REJECT:** The patterns are discarded from consideration. The checklist stays unchanged. The scheduler will not re-surface these same patterns in future runs.
 
-**7. State is persisted in `slack_state.json`.** This file tracks the timestamp of the last processed reply and the hash of the last sent patterns. It guarantees the system never processes a reply twice, never sends duplicate notifications, and always resumes correctly — even if Claude Code restarts between runs.
+**7. State is persisted in `slack_state.json`.** This file tracks the timestamp of the last processed reply and the hash of the last sent patterns. It guarantees the system never processes a reply twice, never sends duplicate notifications, and always resumes correctly — even if Claude restarts between runs.
 
 <span style="color:#6B7280">*You are not writing new rules. You are reviewing rules the AI inferred from watching you work — and deciding which ones are worth keeping. This is the difference between prompting an AI and actually training one on your behavior.*</span>
 
