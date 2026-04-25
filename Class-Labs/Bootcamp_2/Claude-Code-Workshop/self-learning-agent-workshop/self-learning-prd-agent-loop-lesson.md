@@ -95,7 +95,7 @@ Make sure your workspace folder is already connected.
 
 This keeps the context clean and focused.
 
-### Step 3 — Paste the Following Prompt
+### Step 3 — Paste the Following Prompt before that make sure to upload your PRD file .
 
 > [!TIP]
 > **Prompt — Click the copy icon in the top-right corner of the code block below, then paste it directly into Claude.**
