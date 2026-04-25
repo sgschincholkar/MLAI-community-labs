@@ -157,20 +157,7 @@ Once uploaded, the skill will appear in your skills list. You do not need to con
 
 ---
 
-### Step 4 — Add Your Files to the Workspace Folder
-
-**What to do:** Copy both files you downloaded in the Prerequisites into the workspace folder you created in Step 1:
-
-- `INPUT_PRD.docx` — your raw PRD (the document to be improved)
-- `CHECKLISt.md` — your rule file (what good looks like)
-
-Make sure both files are in the same folder. Do not put them in subfolders.
-
-**Why this matters in the agent loop:** These two files are the inputs to the Generate phase. The PRD is the raw material the AI will improve. The checklist is the current state of the AI's learned rules — it starts as a base set and will evolve after each loop cycle. Keeping them together means every scheduled job can find them reliably without any path configuration.
-
----
-
-### Step 5 — Add the Workspace Folder to Claude
+### Step 4 — Add the Workspace Folder to Claude
 
 **What to do:** In Claude, add your workspace folder as an active project workspace. You will see a folder/workspace selector — point it to the `prd-feedback-loop` folder you created.
 
@@ -182,13 +169,11 @@ After adding it, Claude will have read and write access to that folder. All prom
 
 ---
 
-### Step 6 — Run Prompt 1: Generate the Improved PRD
+### Step 5 — Run Prompt 1: Generate the Improved PRD
 
-**What to do:** In the Claude chat, paste the prompt below. Before running it, attach both files from your workspace folder:
-- `INPUT_PRD.docx`
-- `CHECKLIST.md`
-
-Then run the prompt:
+**What to do:** In the Claude Code chat, attach both files you downloaded in the Prerequisites directly in the chat window, then paste and run the prompt below:
+- `INPUT_PRD_input.docx`
+- `CHECKLIST_PRD_review_checklist_v3.md`
 
 ```
 Based on my PRD and checklist, your task is to:
@@ -257,7 +242,7 @@ When you are done, save the file. You do not need to rename it — the scheduler
 
 ---
 
-### Step 7 — Create the Learning Scheduler (Prompt 2)
+### Step 6 — Create the Learning Scheduler (Prompt 2)
 
 **What to do:** In the Claude chat, paste and run the following prompt. This creates a scheduled background job that will run automatically every hour.
 
@@ -343,25 +328,25 @@ Every hour, this job wakes up and works through the following sequence:
 
 ---
 
-### Step 8 — Test the Learning Scheduler
+### Step 7 — Test the Learning Scheduler
 
 You do not need to wait an hour. You can trigger the scheduler manually right now to verify it works.
 
 **What to do:**
 
-**8a.** In Claude, go to the **Scheduler** section.
+**7a.** In Claude Code, go to the **Scheduler** section.
 
 ![image](./images/7.png)
 
-**8b.** Find the task named `learner-checklist-generator` in the list.
+**7b.** Find the task named `learner-checklist-generator` in the list.
 
 ![image](./images/45.png)
 
-**8c.** Click **Run** to trigger it immediately.
+**7c.** Click **Run** to trigger it immediately.
 
 ![image](./images/46.png)
 
-**8d.** Wait for it to complete, then open your workspace folder. You should now see a new file: `learner_checklist.md`.
+**7d.** Wait for it to complete, then open your workspace folder. You should now see a new file: `learner_checklist.md`.
 
 ![image](./images/47.png)
 
@@ -371,7 +356,7 @@ Open `learner_checklist.md`. You will see structured checklist items — each on
 
 ---
 
-### Step 9 — Create the Approval Scheduler (Prompt 3)
+### Step 8 — Create the Approval Scheduler (Prompt 3)
 
 **What to do:** In the Claude chat, paste and run the following prompt. This creates the human-in-the-loop control layer — the piece that ensures *you* decide what gets added to your checklist, not the AI alone.
 
