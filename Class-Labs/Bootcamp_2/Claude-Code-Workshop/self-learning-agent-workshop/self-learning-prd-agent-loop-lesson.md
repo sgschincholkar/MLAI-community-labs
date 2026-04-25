@@ -95,7 +95,7 @@ Make sure your workspace folder is already connected.
 
 This keeps the context clean and focused.
 
-### Step 3 — Paste the Following Prompt
+### Step 3 — Paste the Following Prompt before that make sure to upload your PRD file .
 
 > [!TIP]
 > **Prompt — Click the copy icon in the top-right corner of the code block below, then paste it directly into Claude.**
@@ -103,14 +103,13 @@ This keeps the context clean and focused.
 ```
 You are a senior Product Manager and PRD expert.
 
-I have two files in my workspace:
+I have one file in my workspace:
 1. prd-checklist.md → contains the structure, rules, and expectations
-2. PRD_v1_original.md → contains the base PRD
 
 Your task:
 
 - Carefully read the checklist file and understand all requirements
-- Review the original PRD
+- Review the PRD Shared by User
 - Improve and rewrite the PRD so that it fully satisfies every checklist point
 
 Output Instructions:
