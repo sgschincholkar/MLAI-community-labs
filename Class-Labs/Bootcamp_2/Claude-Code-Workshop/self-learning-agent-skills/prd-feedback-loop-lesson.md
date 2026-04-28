@@ -256,9 +256,9 @@ Read the following files from the workspace:
 - CHECKLIST.md
 
 STEP 2 — Extract User Intent from Comments
-Parse ALL comments from the PRD document and compare PRD_reviewed_with_comments_user.docx with PRD_reviewed_with_comments_ai.docx.
+Parse ALL comments from the RD_reviewed_with_comments_user.docx document and compare the content of PRD_reviewed_with_comments_user.docx with PRD_reviewed_with_comments_ai.docx.
 For each comment in and edits , identify what the user is trying to improve in PRD_reviewed_with_comments_user.docx:
-- Adding missing edge cases → pattern: "User prefers edge case coverage"
+- Adding missing edge cases → pattern: "User prefers edge case coverage" you get while doing comparison and reading coments
 - Rewriting vague text → pattern: "User prefers clarity"
 - Adding structure → pattern: "User prefers structured sections"
 - Adding examples → pattern: "User prefers examples"
