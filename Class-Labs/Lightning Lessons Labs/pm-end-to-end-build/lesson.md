@@ -30,7 +30,8 @@ Before you begin, make sure you have the following ready:
 | Item | Why You Need It |
 |------|-----------------|
 | Downloaded the PRD | The source of truth for what you're building — [Download PRD](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQBKtu5D_GJHTrdiIK5INdeCAUv8pW1MAbBNcNSF0mY8lBQ?e=TFMfsK) |
-| Downloaded the n8n workflow file | Pre-built automation you'll import into n8n — [Download n8n Workflow](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQBiK9oT3JzGQa_QeDhtBNCjAV98s0FF7bTadTd15B_Mkb4?e=NMMAdl) |
+| Downloaded the n8n workflow file | Pre-built automation you'll import into n8n — [Download n8n Workflow](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQCmjU-WCUhSRpzxe5t-YvGRAfXizKgbspDn0FOA2Z-Xf84?e=zukqv6) |
+| Downloaded sample contracts | Required test contracts (NDA, MSA, Lease) for validating extraction and analysis workflows — [Download Sample Contracts](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQByYoGip0T7Q7RMaeLN-0iYAX5sWdzldsVydrcd6ZJB5A8?e=ca3zZo) |
 | Active n8n account (cloud or self-hosted) | Runs the automation layer |
 | Claude Code with Pro subscription | Powers the AI coding and MCP connectors |
 | Supabase account (free tier is fine) | Hosts your database |
@@ -133,6 +134,24 @@ INSERT INTO contract_playbook (contract_type, key_term_name, key_term_label, key
   ('MSA', 'termination_rights',    'Termination Rights',    'Conditions under which either party may terminate', 4),
   ('MSA', 'indemnification',       'Indemnification',       'Who indemnifies whom and under what circumstances', 4),
   ('MSA', 'sla_terms',             'SLA Terms',             'Service level commitments and remedies for breach', 3);
+
+
+  INSERT INTO contract_playbook (
+  contract_type, 
+  key_term_name, 
+  key_term_label, 
+  key_term_description, 
+  risk_weight
+) VALUES
+  ('LEASE', 'commencement_date', 'Commencement Date', 'The date when the lease agreement becomes effective', 3),
+  ('LEASE', 'lease_term', 'Lease Term', 'The duration of the lease agreement', 5),
+  ('LEASE', 'renewal_option', 'Renewal Option', 'Options available to extend the lease after expiry', 4),
+  ('LEASE', 'monthly_payment', 'Monthly Payment', 'Recurring lease payment obligations', 5),
+  ('LEASE', 'discount_rate', 'Discount Rate', 'Rate used for present value calculation of lease obligations', 3),
+  ('LEASE', 'right_of_use_asset', 'Right-of-Use Asset', 'Asset recognized under lease accounting standards', 4),
+  ('LEASE', 'lease_liability', 'Lease Liability', 'Present value of future lease payment obligations', 5);
+
+  
 ```
 
 ![images](./images/5.png)
