@@ -35,7 +35,7 @@ Download and install these four skills to use throughout the program. Each one i
 
 ### Step 1: Open Claude
 
-Open Claude at `claude.ai`. You can start from any surface — **Chat**, **Cowork**, or **Code**.
+Open Claude . You can start from any surface — **Cowork**, or **Code**.
 
 > **Don't have Claude set up yet?**
 > Complete [Lesson 1.0 — Installation & Claude Overview](../lesson-1-claude-code-setup/Lesson1.0%20-%20Installation.md) first, then come back here.
