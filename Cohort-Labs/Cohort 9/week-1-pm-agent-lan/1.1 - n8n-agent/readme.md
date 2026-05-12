@@ -1,7 +1,6 @@
 # Lab 1: Build Your First AI Agent in n8n
 
-
-![flow](./assets/openai-n8n-1.png)
+![flow](./assets/banner.png)
 
 You're about to build your first AI agent — one that reads contracts and answers questions about them in plain language.
 
@@ -16,52 +15,50 @@ No coding experience needed. Just a browser, an API key, and about 25 minutes.
 
 ---
 
-## What You're Building
+## What Are We Building?
 
-![flow](./assets/systemdesign.png)
+A **Contract Q&A Chatbot.**
 
-A **Contract Review Agent.**
+Here's the scenario: a user uploads a contract PDF, types a question, and the agent reads the document and replies with a direct answer — payment terms, termination clauses, renewal conditions, all of it. No scrolling through 40 pages. No legal background required.
 
-You upload a contract. You ask it questions. It reads the document, finds the relevant section, and gives you a direct answer. Ask it about payment terms, termination clauses, auto-renewals it handles all of it.
+Here's how the pieces connect:
 
-This isn't a search tool. It's an agent it understands context, follows instructions, and stays within the boundaries you set. By the end of this lab, you'll know exactly how that works under the hood.
+1. A **Chat Trigger** — listens for the user's message and receives the uploaded file
+2. **Extract From File** — pulls readable text out of the PDF so the AI can work with it
+3. An **AI Agent** — takes the user's question + the extracted text, reasons over both, and writes a response
+4. An **OpenAI Chat Model** — the actual intelligence powering the reasoning
 
----
-
-## What Is an AI Agent?
-
-An AI agent is a system you configure with a role, a context, and a set of instructions and then it handles the reasoning on its own.
-
-You don't tell it which page to look at or how to structure its answer. You define its behavior upfront through something called a **system message**, give it a document to work with, and let the model do the rest.
-
-Three things power every agent you'll ever build:
-
-**System Message** — who the agent is, what it does, and how it should behave. You write this once. It runs at the start of every conversation.
-
-**User Message** — the question or instruction coming from the person using the agent. This is what your end users type.
-
-**Model** — the AI doing the actual reasoning. In this lab, that's GPT-5-mini from OpenAI.
-
-You'll configure all three before this lab is done.
+Each of these is a node in n8n. You'll add them one by one, connect them, and watch the data flow through. Let's get into it.
 
 ---
 
-## What Is n8n?
+## A Quick Mental Model Before You Start
 
-n8n is a workflow automation platform. Think of it as a canvas where you connect components each one does a specific job, and they pass information to each other in sequence.
+Think of n8n like an assembly line. Each station (node) does one specific job and hands the result to the next station. The data moves left to right input goes in one end, processed output comes out the other.
 
-In this lab, one component triggers the chat, one runs the AI agent, one connects to OpenAI, and one handles the conversation memory. You don't build these from scratch you import a pre-built workflow and configure it.
+Your agent is not magic. It's a chain of simple steps:
 
-For PMs, n8n is the shortest path from "I have an AI idea" to "I have something I can actually show someone." No backend. No deployment pipeline. No waiting on engineering.
+```
+User sends message + file
+        ↓
+Chat Trigger receives it
+        ↓
+Extract From File pulls the text out
+        ↓
+AI Agent reads the text + question, writes an answer
+        ↓
+Response goes back to the user
+```
+
+Once you see it this way, every agent you'll ever build is just a variation of this pattern.
 
 ---
 
 ## Prerequisites
 
-Make sure you have all four of these before starting the lab:
+Make sure you have all four of these before starting:
 
 ✅ An **n8n account** — sign up free at n8n.io, the cloud version works fine. [Follow this setup guide](../../week%200%20%20-%20foundation/n8n-loginSetup/Doc.md) to create and configure your account.
-
 
 ✅ An **OpenAI API key** — go to platform.openai.com, create an account, and generate a key under API Keys. [Watch this video](https://youtu.be/J3y1dOpz9R4?si=fBqIP0TTShbH_6-n) for a step-by-step walkthrough.
 
@@ -73,108 +70,279 @@ Make sure you have all four of these before starting the lab:
 
 ---
 
+## Two Ways to Build This
 
-## Let's Build
+| | **Path A: Import the Workflow** | **Path B: Build from Scratch** |
+|---|---|---|
+| **Best for** | Getting up and running fast | Understanding every component |
+| **Time** | ~5 minutes | ~25 minutes |
+| **What you do** | Import a pre-built file and configure it | Add and connect each node yourself |
 
-**Step 1. Open n8n and create a new workflow.**
-
-Open your your n8n account and click **"Create Workflow"** in the top right. You'll land on a blank canvas this is where your agent lives.
-
-![flow](./assets/img-1.png)
-
----
-
-**Step 2. Import the starter workflow.**
-
-We've pre-built the skeleton so you can focus on the configuration, not the setup. Click the **three-dot menu (⋮)** at the top right of the canvas, select **"Import from File"**, and upload the `n8n-workflow.json` file from your prerequisites.
-
-Your canvas will populate with a connected series of nodes.
-
-![flow](./assets/img-2.png)
+Both paths produce the same working agent. Path B is recommended if this is your first time — building it node by node is how you actually internalize how agents work.
 
 ---
 
-**Step 3. Check that all nodes are connected.**
+## Path A: Import the Workflow
 
-Once imported, you should see every node linked to the next with a visible line. If anything looks disconnected or floating, drag the small circle on the right edge of that node and connect it to the input of the next one. The reference image below shows the correct order.
+**Step 1. Create a new workflow.**
+
+Open your n8n account and click **"Create Workflow"** in the top right. You'll land on a blank canvas — this is your build surface.
+
+![flow](./assets/create-workflow.png)
+
+---
+
+**Step 2. Import the starter file.**
+
+Click the **three-dot menu (⋮)** at the top right, select **"Import from File"**, and upload the `n8n-workflow.json` file from the prerequisites.
+
+Your canvas will populate with all the nodes already connected.
+
+![flow](./assets/import-workflow.png)
+
+---
+
+**Step 3. Verify the connections.**
+
+Every node should be linked with a visible line. If anything looks disconnected, drag the small circle on the right edge of that node and connect it to the next one.
+
+![flow](./assets/connected-nodes.png)
+
+> ✓ Tip. If your agent isn't responding, the first thing to check is always node connections. One broken link stops the entire workflow silently.
+
+---
+
+**Step 4. Add your OpenAI API key.**
+
+Click the **"OpenAI Chat Model"** node. In the settings panel, click **"Credential"** → **"Create New Credential"** → paste your API key → Save.
+
+n8n encrypts and stores it. You won't need to paste it again across any of the labs.
+
+![flow](./assets/add-api-key.gif)
+
+> ★ Your API key is tied to your OpenAI billing account. Never paste it into a public file or share it in a message. Treat it like a password.
+
+---
+
+**Step 5. Open the chat and test.**
+
+Click **"Open Chat"** at the bottom of the canvas. Upload the sample contract PDF and ask: *"What are the payment terms?"*
+
+Jump to the **Testing Your Agent** section at the bottom to try more questions.
+
+---
+
+## Path B: Build from Scratch
+
+This is the path that actually teaches you something. You'll add each node yourself, connect them, and see exactly what each one contributes. By the end, you'll understand not just *how* it works but *why* it's built this way.
+
+Open n8n, click **"Create Workflow"**, and let's go.
+
+---
+
+### Step 1. Add the Chat Trigger
+
+Every workflow needs a starting point — something that tells n8n "start running now." That's what a **Trigger** does.
+
+Click **"Add Node"** on the canvas.
+
+![flow](./assets/9.png)
+
+Search for **Chat Trigger** and select it.
+
+![flow](./assets/1.png)
+
+> **Why a Chat Trigger?** Because we're building a chatbot. The Chat Trigger is what listens for incoming messages. Every time a user sends something — whether it's a question or an uploaded file — this node wakes up and kicks off the rest of the workflow. No trigger, no workflow. It's the on-switch.
+
+---
+
+### Step 2. Set the Event to "On a New Chat Message"
+
+Click on the trigger node's output point and select **"On a new chat message"** as the event type.
+
+![flow](./assets/2.png)
+
+> **What's an event?** Triggers don't just activate randomly — they listen for a specific thing to happen. In this case, the event is a new chat message arriving. When it does, n8n fires the workflow. You could have other triggers listen for emails, form submissions, webhook calls, or a timer. The event type determines what activates your agent.
+
+---
+
+### Step 3. Allow File Uploads
+
+Right now the chat can only receive text. We need it to also accept a PDF. Inside the Chat Trigger settings, click **"Add Field"** and enable **"Allow File Upload"**.
+
+![flow](./assets/12.png)
 
 ![flow](./assets/3.png)
 
-
-> ✓ Tip. If your agent isn't responding later in the lab, the first thing to check is node connections. A single broken link stops the whole workflow.
-
----
-
-**Step 4. Open the OpenAI node.**
-
-Click the node labeled **"OpenAI Chat Model"** on your canvas. A settings panel will open on the right this is where you connect n8n to your OpenAI account and choose which model to use.
+> **Why do we need this?** Our agent needs to read a contract — and contracts live in PDF files, not in text boxes. Enabling file upload is what gives users the ability to hand the document to the agent. Without this, the chatbot is just... a chatbot. With it, it becomes a document-aware assistant.
 
 ---
 
-**Step 5. Add your OpenAI API key.**
+### Step 4. Test the Trigger
 
-In the settings panel, click the **"Credential"** field and select **"Create New Credential"**. Paste in your OpenAI API key, give it a name you'll recognize, and hit Save.
+Before building further, let's confirm the trigger is actually working.
 
-n8n encrypts the key and stores it. You won't need to paste it again across any of the labs.
+Click **"Open Chat"** at the bottom of the canvas. Upload the sample contract and type any question — it doesn't matter what yet.
 
-![flow](./assets/4.gif)
+![flow](./assets/13.png)
 
-> ★ Your API key is tied directly to your OpenAI billing account. Never paste it into a public file, share it in a message, or commit it to a repo. Treat it like a password.
+Now click on the Chat Trigger node in the canvas. You'll see exactly what it captured.
 
----
-
-**Step 6. Choose your model.**
-
-In the same panel, open the **"Model"** dropdown and select **`gpt-5-mini`**.
-
+![flow](./assets/4.png)
 
 ![flow](./assets/5.png)
 
-GPT-5-mini hits the right balance for this lab — fast, cheap, and more than capable enough for contract Q&A. Once you're validating with real users, you can always upgrade.
-
-Want to compare every model OpenAI offers — pricing, context window, and capabilities? [View the full OpenAI model guide here.](https://platform.openai.com/docs/models)
-
-> ✓ Tip. Start with the smallest model that gives you acceptable quality. You can always move up. It's much harder to justify moving down once users are used to a more capable model.
+> **What you're looking at:** The node received two things — your text message (as a readable string) and the uploaded file (as binary data). Binary data is raw file bytes — it's not readable text yet. That's the problem we solve in the next step. The agent can't read binary; it needs actual words. This is exactly why Extract From File exists.
 
 ---
 
-**Step 7. Understand how the agent thinks: system message vs. user message.**
+### Step 5. Add the Extract From File Node
 
-Before you configure anything else, this concept is worth getting right it's the most important thing in this entire lab.
+Here's something most people don't think about: when a user uploads a PDF, the file doesn't arrive as readable text. It arrives as **binary data** — the raw bytes that make up the file. Your AI model can't read bytes. It needs actual words. So before we can hand the contract to the agent, we need to extract the text out of it first.
 
-Click on the **"AI Agent"** node. You'll see two fields that control everything the agent does:
+That's exactly what this node does. Click **"Add Node"**, search for **Extract From File**, and select it.
+
+You'll see a list of actions — choose **"Extract from PDF"**.
+
+![flow](./assets/6.png)
+
+> **Why this node?** Think of it like this: the PDF is a locked box and the file contents are inside. The Chat Trigger hands us the box. Extract From File is the key — it opens it and pulls out the readable text. Once we have the text, the AI can reason over it like any other document. Without this step, the agent would receive raw bytes it can't understand, and your workflow would fail silently.
+
+---
+
+### Step 6. Configure the File Input
+
+Inside the Extract From File settings, find **"Input Binary Field"** and set it to `data0`.
+
+![flow](./assets/14.png)
+
+> **What is `data0`?** When the Chat Trigger receives a file, it stores it internally under the key `data0`. That's the name n8n gives the first attached file. You can see it in the left panel after running the trigger. By telling Extract From File to look at `data0`, you're pointing it to exactly where the file is sitting. If you upload multiple files, they'd be `data1`, `data2`, and so on.
+
+---
+
+### Step 7. Test the Extraction
+
+Let's confirm it's working. Open the chat again, upload the contract, and send a query. Then click the Extract From File node.
+
+![flow](./assets/7.png)
+
+You should now see the full text content of the contract in the output — every clause, every paragraph, all of it as readable text. That's exactly what gets handed to the AI in the next step.
+
+> ✓ If you see text in the output, you're good to continue. If you see an error, double-check that the Input Binary Field is set to `data0` and that the file you uploaded is a PDF.
+
+---
+
+### Step 8. Add the AI Agent Node
+
+Here's where things get interesting. Click **"Add Node"**, search for **Agent**, and select it. Connect it to the Extract From File node.
 
 ![flow](./assets/8.png)
+
+> **What is an Agent node?** This is the brain of the workflow. The Agent node takes inputs — in our case, the user's question and the extracted contract text — combines them with a set of instructions (the system message), and sends everything to an AI model. The model reads it all and writes back a response. The Agent node is the orchestrator. It doesn't do the reasoning itself — it packages everything up and hands it to the model.
+
+---
+
+### Step 9. Configure the User Message
+
+Before you touch anything, here's the most important concept in this entire lab — the difference between a **System Message** and a **User Message**. These two fields control everything the agent does.
 
 | | **System Message** | **User Message** |
 |---|---|---|
 | **What it is** | The agent's standing instructions — its role, rules, and how it should respond | The question or input from the person using the agent |
 | **Who writes it** | You, the builder | The end user, at runtime |
 | **When it runs** | Once, before every conversation starts | Every time the user sends a message |
-| **Example** | "You are a contract review expert. Only answer questions about the contract. Always cite the clause number." | "What are the payment terms in this contract?" |
+| **Example** | "You are a contract review expert. Only answer from the contract. Always cite the clause." | "What are the payment terms in this contract?" |
 | **Think of it as** | The job description you give a new hire | The task you give them on a given day |
 
-The system message is where you define the product experience. It controls the agent's tone, its scope, what it will and won't answer, and how it formats its responses. None of this requires code — it's plain language.
+The system message shapes every single response. The user message is what changes each time someone asks a question. You control the system message completely — and that's where all the product decisions live.
 
-> ★ Remember. The system message runs once and shapes every response that follows. Get it right and the agent behaves consistently for every user, every session. This is the single highest-leverage thing you control as a PM building on top of AI.
+Now let's configure both.
+
+Inside the Agent settings, find **"Source for Prompt (User Message)"** and set it to **"Define Below"**.
+
+Then click **"Add Option"** and add a **System Message** field.
+
+You now have two inputs to fill: the user message and the system message.
+
+![flow](./assets/15.png)
+
+In the **User Message** field, add both of these:
+
+```
+User Query: {{ $('Chat Trigger').item.json.chatInput }}
+
+File Context: {{ $('Extract From File').item.json.text }}
+```
+
+![flow](./assets/10.gif)
+
+> **What's happening here?** The double curly braces `{{ }}` are n8n expressions — they pull live data from other nodes. The first line grabs exactly what the user typed in the chat. The second line grabs the full contract text from the extraction step. You're now combining both into a single prompt that the AI receives. The model will see the user's question and the entire document side by side, and reason over both at once.
 
 ---
 
-**Step 8. Open the chat and upload the contract.**
+### Step 10. Write the System Message
 
-Click **"Open Chat"** it's usually a speech bubble icon at the bottom left of the canvas. A chat window will appear.
+This is the most important part of the entire lab.
 
-You'll see a file attachment icon. Click it and upload the **sample contract PDF** from the prerequisites. Give it a moment to process.
+The system message is the agent's job description. It tells the model who it is, what it should do, what it should never do, and how it should format its answers. You write it once and it runs at the start of every conversation.
 
-Once uploaded, the agent has the full document in its working context. Everything it tells you will come from that file.
+In the **System Message** field, paste this:
 
-![flow](./assets/6.png)
+```
+Role
+You are an AI Contract Assistant.
+
+Instructions
+1. Always use the contract content provided before answering.
+2. Search for relevant clauses based on the user query.
+3. Extract only the most relevant contract content.
+4. If multiple clauses match, use the most relevant one.
+5. Answer directly and concisely. Do not explain your internal process.
+6. If no information is found, say: "This information is not mentioned in the contract."
+
+Guardrails
+1. Never make assumptions.
+2. Never provide legal advice.
+3. Never answer without checking the contract first.
+4. If contract language is unclear, say: "This may need professional legal review."
+5. Never say things like "I searched the contract", "Based on my analysis", or "I extracted..."
+
+Response Format
+Answer: [Direct answer]
+Evidence: [Relevant clause/section]
+```
+
+![flow](./assets/16.png)
+
+> **Why does this prompt matter so much?** The model has no idea who it is or what it's for until you tell it. Without a system message, it would answer any question, from any domain, based on its general training — including making things up. The system message is what transforms a general-purpose AI into a focused contract assistant. The guardrails stop hallucination. The response format ensures answers are always grounded in the document. This is the single highest-leverage thing you control as a PM building on AI.
 
 ---
 
-**Step 9. Start asking questions.**
+### Step 11. Add the Language Model
 
-Your agent is live. Try each of these one at a time:
+The Agent node knows how to orchestrate. But it needs a brain to do the actual reasoning. That's the language model.
+
+Click **"Add Node"**, search for **Language Model**, and choose **"OpenAI Chat Model"**. Connect it to the Agent node as a sub-node (it attaches below the agent, not inline).
+
+![flow](./assets/11.png)
+
+> **Why is this separate?** Because the model is swappable. Today you're using OpenAI. Tomorrow you might want to use Claude or a local model. By keeping the model as its own node, you can swap it without touching anything else in the workflow. This modularity is the entire point of building in n8n.
+
+---
+
+### Step 12. Add Your OpenAI API Key
+
+Inside the OpenAI Chat Model settings, click **"Credential"** → **"Create New Credential"** → paste your API key → Save.
+
+![flow](./assets/add-api-key.gif)
+
+> **What is an API key?** It's how OpenAI knows who's making the request and which account to charge. When n8n sends your prompt to OpenAI, it includes your key in the request. OpenAI's servers verify it, run the model, and send the response back. The whole round trip — question in, answer out — happens in about a second. You pay per round trip, which is why model choice is a cost decision as much as a capability one.
+
+---
+
+## Testing Your Agent
+
+Your agent is live. Open the chat, upload the sample contract, and try these one at a time:
 
 *"What is this contract about?"*
 
@@ -184,34 +352,37 @@ Your agent is live. Try each of these one at a time:
 
 *"Are there any auto-renewal clauses?"*
 
-Watch how it responds — specific, grounded in the document, citing sections. That behavior isn't accidental. It's exactly what you told it to do in the system message.
+Watch how it responds — specific, grounded in the document, citing the actual clause. That consistency isn't accidental. It's exactly what the system message told it to do.
 
-> ★ Remember. You just configured an agent from scratch — its role, its model, and its document context. That three-part structure is the foundation of every AI product in production today. You now know how it works.
+![flow](./assets/agent-response.png)
 
-![flow](./assets/7.png)
+> **Why doesn't it make things up?** Because the system message told it to only answer from the contract, and the user message contains the entire contract text. This technique is called **grounding** — you constrain the model to reason over a specific source rather than its general training knowledge. Grounding is one of the most important reliability patterns in production AI. Without it, models hallucinate. With it, they stay on topic and cite their sources.
 
-## What You Learned
+---
 
-You built your first AI agent end-to-end. Here's what that actually means:
+## What You Built
 
-**What an agent is** — a system with a defined role, a model doing the reasoning, and a context to work from. Not a chatbot. Not a search box.
+![flow](./assets/design.png)
 
-**System message** — the instruction set that runs before every conversation and shapes every response. This is your primary product design lever.
+You just built a working AI agent from scratch. Here's what you now understand that most people don't:
 
-**User message** — the runtime input from your end user. Simple to understand, but the interplay with the system message is where agent design gets interesting.
+**Triggers are the on-switch.** Every workflow needs something that says "start now." The Chat Trigger listens for messages and fires the workflow. Change the trigger and you change when and how the agent activates.
 
-**OpenAI API key** — how you connect n8n to a live model. Your key = your billing account. Handle it accordingly.
+**Binary data needs processing.** A PDF file isn't readable text — it's bytes. Extract From File is what converts it. Skip this step and the AI sees gibberish. This pattern (receive → process → pass forward) repeats constantly in agent building.
 
-**Model selection** — not all models are the same. Cost, speed, and capability trade-offs matter from day one.
+**The Agent node is the orchestrator.** It doesn't reason on its own — it packages the user's question, the document context, and the system instructions, then hands everything to the model. Understanding what it assembles is how you debug and improve agent behavior.
+
+**The system message is where product decisions live.** Tone, scope, guardrails, output format — all of it comes from one block of plain text you wrote. Two agents running the same model can behave completely differently because of their system messages. This is the PM's highest-leverage tool.
+
+**Models are swappable.** The OpenAI node is just one option. Swap it for Claude, Gemini, or a local model without touching the rest of the workflow. This is why the architecture separates orchestration from reasoning.
+
+---
 
 ## What's Next
 
-In the next lab, you'll move from this no-code canvas to building your first prototype using **Claude Code**. Same concept, different layer of the stack.
-
+In the next lab, you'll take this same concept and build it as a real prototype using **Claude Code** — moving from a visual canvas to actual working code.
 
 Save this n8n workflow. You'll come back to it.
-
----
 
 ---
 
