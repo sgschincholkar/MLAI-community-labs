@@ -1,7 +1,5 @@
 # Lab 1.1: Why Your Agent Breaks on Real Contracts
 
-![banner](./assets/banner.png)
-
 In Week 1 you built something real. An AI agent that reads a contract and answers questions about it. It worked. You tested it. It gave you accurate answers from the document.
 
 Now we're going to break it on purpose.
