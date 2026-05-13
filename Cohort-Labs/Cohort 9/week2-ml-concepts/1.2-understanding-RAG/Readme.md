@@ -1,6 +1,6 @@
 # Lab 1.2: Build Your First RAG Pipeline
 
-![banner](./assets/banner.png)
+![banner](./assets/b.png)
 
 Real contracts aren't short. A vendor agreement runs 40 pages. An enterprise SaaS contract hits 80. An M&A document can cross 200. Your agent from Week 1 handled a small sample file — but hand it a 150-page contract and it breaks. Not because the AI isn't smart enough. Because there's a hard limit on how much text any AI model can read in a single go. Dump the whole thing in and it either errors out or starts ignoring the parts that don't fit.
 
