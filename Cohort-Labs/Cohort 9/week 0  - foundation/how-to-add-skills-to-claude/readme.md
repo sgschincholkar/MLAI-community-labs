@@ -21,7 +21,7 @@ Download and install these five skills to use throughout the program. Each one i
 
 | # | Skill | Command | What It Does | Download |
 |---|---|---|---|---|
-| 1 | Idea Eval | `/idea-eval` | Evaluates a product idea across problem severity, market size, feasibility, and business potential | [Download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQBdnPc0I9iMQrYvYs1H_wVyATUTDcq9v2Qki29OmuucF8Y?e=8bQQQb) |
+| 1 | Idea Eval | `/idea-eval` | Evaluates a product idea across problem severity, market size, feasibility, and business potential | [Download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQBZZ1e6hLFWSaM7RGWn3T3uAfIMhCpEP0p422Lf0yVwfS4?e=VfdFDD) |
 | 2 | Market Research | `/market-research` | Analyzes a market — size, players, trends, opportunities, and key insights for your team | [Download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQCwxLJr3-XKTqU_Xo9ktzMlARtfX5VuIeD4dvhfm3adAw8?e=GSBweE) |
 | 3 | User Research | `/user-research` | Synthesizes user research input into findings, pain points, and product recommendations | [Download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAPNUc3xnVASoPOKxepVkR3Ad9KwoiIbdnYWGBUcVYocuk?e=byQyfS) |
 | 4 | Write Your PRD | `/write-your-prd` | Guides you through writing a complete PRD from scratch | [Download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQARMbe9Qlz1R4yuqWzKKwQoAQlgWsZNLIEnP8z4xposz1Y?e=i7lrrb) |
