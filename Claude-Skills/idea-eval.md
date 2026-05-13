@@ -79,7 +79,6 @@ Produce the evaluation below. Match the tone in the golden examples in Step 5 ex
 ```
 ## [Product Name] — Idea Evaluation
 **Stage:** [Napkin / Early Validation / Post-PRD]
-**Score:** [X/100]
 [If web search unavailable → Market research based on training data only.]
 
 ---
