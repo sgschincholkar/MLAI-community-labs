@@ -36,17 +36,10 @@ Every report you generate in this lab should live in one place — a dedicated p
 
 **Step 1.** On your Desktop, create a new folder called `compliance-lease-tool`.
 
-**Step 2.** Open the Claude desktop app. In the left sidebar, click **Projects** and then **New Project**.
+**Step 2.** Open the Claude desktop app. Click on the Choose a folder.
 
-![flow](./assets/setup-1.png)
+![flow](./assets/1.png)
 
-**Step 3.** Name the project `Compliance Lease Tool` and click **Create**.
-
-![flow](./assets/setup-2.png)
-
-**Step 4.** Inside the project, click **Add Files** and select the `compliance-lease-tool` folder you created on your Desktop. Claude will now watch this folder — any file you save here will be accessible inside this project.
-
-![flow](./assets/setup-3.png)
 
 From this point on, run every skill from inside this project. Each report will be saved to the folder and available in all future conversations within the project.
 
@@ -150,7 +143,7 @@ Open Claude Cowork and type:
 After the report is complete, save it as a file called market-research-report.md in the project workspace.
 ```
 
-![flow](./assets/1.png)
+![flow](./assets/2.png)
 
 Claude will run the full market research framework. Read the output carefully. Look for:
 
@@ -160,6 +153,8 @@ Claude will run the full market research framework. Read the output carefully. L
 - What's the buying motion? Who in an organization pays for this?
 
 > The output of this step is not a decision. It's a map. You're orienting yourself before you take a single step. PMs who skip this end up building products that already exist or building for markets too small to matter. Ten minutes of market research saves months of wasted engineering.
+
+![flow](./assets/3.png)
 
 ---
 
@@ -173,20 +168,6 @@ These are different things. A market might have ten products and still have a pr
 
 User research is how you move from "there might be something here" to "here is specifically what people struggle with and what they wish they had." Without it, you're writing requirements based on what you think users need — which is almost always wrong in some important way.
 
-### Gather your input
-
-For this lab, here is a set of simulated user interview responses representing three personas: a Lease Administrator, a Legal Compliance Officer, and a Property Portfolio Manager.
-
-```
-Lease Administrator (8 years in commercial real estate):
-"I manage renewal dates in a shared Google Sheet. Every Monday morning I check it manually. Last quarter I missed a 90-day notice window on a downtown property because the sheet wasn't updated after a lease amendment. That cost us a $40,000 penalty. I need something that updates automatically when leases change and sends me reminders before it's too late — not after."
-
-Legal Compliance Officer (works across 3 cities with different regulations):
-"The hardest part is that lease compliance isn't the same in every jurisdiction. What I have to track in San Francisco is completely different from what I track in Austin. No tool handles this. They give me one template and expect me to make it work everywhere. I end up maintaining separate tracking systems per city. It's a mess."
-
-Portfolio Manager (oversees 200+ leases):
-"I don't need to see every lease. I need a dashboard that tells me what needs my attention today. Red, amber, green. That's it. Right now I get a 40-row spreadsheet emailed to me every Friday and I have to find the urgent items myself. I've asked the team to highlight them in red but half the time they don't."
-```
 
 ### Run the skill
 
@@ -195,8 +176,10 @@ This step runs as three separate messages. Follow them in order.
 **Message 1 — trigger the skill:**
 
 ```
-/user-research
+/user-research and Save this report as a file called user-research-report.md in the project workspace.
 ```
+
+![flow](./assets/4.png)
 
 **Message 2 — when Claude asks for your research input, paste this exactly:**
 
@@ -211,13 +194,9 @@ Portfolio Manager (oversees 200+ leases):
 "I don't need to see every lease. I need a dashboard that tells me what needs my attention today. Red, amber, green. That's it. Right now I get a 40-row spreadsheet emailed to me every Friday and I have to find the urgent items myself. I've asked the team to highlight them in red but half the time they don't."
 ```
 
-**Message 3 — once the report is generated, send this:**
+![flow](./assets/5.png)
 
-```
-Save this report as a file called user-research-report.md in the project workspace.
-```
 
-![flow](./assets/2.png)
 
 Read the output. Look for:
 
@@ -248,6 +227,8 @@ Before you run the skill, there's one concept to know: the **@ symbol**.
 
 In Claude, typing `@` followed by a filename attaches that file directly into your message as context. Claude reads the full contents of the file before it responds — the same way you'd attach a document to an email. You don't have to paste anything. You just reference it.
 
+![flow](./assets/6.png)
+
 This step runs as two messages.
 
 **Message 1 — trigger the skill and attach your saved reports using @:**
@@ -257,26 +238,18 @@ This step runs as two messages.
 
 @market-research-report.md @user-research-report.md
 
-Use these two reports as your research input. The product is a Compliance Lease Tool for commercial property management.
+Use these two reports as your research input. The product is a Compliance Lease Tool for commercial property management.Save this PRD as a file called prd-v1.md in the project workspace.
 ```
 
 When you type `@`, Claude will show a dropdown of files available in your project workspace. Select `market-research-report.md` first, then `user-research-report.md`. Both will be attached as context before the skill runs.
 
-![flow](./assets/3-at.png)
+![flow](./assets/7.png)
 
-![flow](./assets/3.png)
+
 
 Claude will read both reports and generate a full PRD from them: problem statement, goals, user personas, feature requirements, out of scope, success metrics, and open questions — all grounded in the research you already ran.
 
-**Message 2 — once the PRD is generated, send this:**
-
-```
-Save this PRD as a file called prd-v1.md in the project workspace.
-```
-
-You'll use this file in the next step — the PRD eval reads directly from it.
-
-> This is why the workspace matters. Every output you save becomes the input for the next step. No copy-pasting, no retyping. The project builds on itself.
+![flow](./assets/8.png)
 
 ---
 
@@ -302,7 +275,7 @@ No copy-pasting needed. Use `@` to attach the PRD file directly, the same way yo
 
 When you type `@`, select `prd-compliance-lease-tool.md` from the dropdown. Claude will read the full document before running the evaluation.
 
-![flow](./assets/4.png)
+![flow](./assets/9.png)
 
 
 Read the feedback carefully. Look for:
@@ -315,6 +288,8 @@ Read the feedback carefully. Look for:
 Go back to your PRD, address the gaps, and run `/prd-evaluator @prd-compliance-lease-tool.md` again on the updated file.
 
 > Running the eval twice — before and after revisions — is where the real value is. The first pass shows you what's missing. The second pass confirms you've closed the gaps.
+
+![flow](./assets/10.png)
 
 ---
 
