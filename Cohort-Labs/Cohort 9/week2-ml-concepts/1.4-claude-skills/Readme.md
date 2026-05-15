@@ -1,4 +1,4 @@
-# Lab 1.4: Run the Full PM Loop with Claude Skills
+# Lab 1.4 -  Run the Full PM Loop with Claude Skills
 
 ![banner](./assets/banner.png)
 
