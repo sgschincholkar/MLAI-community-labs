@@ -1,6 +1,6 @@
 # Lab 1.4 -  Run the Full PM Loop with Claude Skills
 
-![banner](./assets/banner.png)
+![banner](./assets/11.png)
 
 You're a PM at a property management company. The legal team keeps missing lease renewal deadlines. Compliance violations are piling up. A senior stakeholder walks into your office and says: "We should build a tool for this."
 

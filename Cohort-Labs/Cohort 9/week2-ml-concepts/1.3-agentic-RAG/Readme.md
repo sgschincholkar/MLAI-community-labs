@@ -195,19 +195,19 @@ Configure it with these settings:
 - **Data Format** → **PDF**
 - **Text Splitting** → **Custom**
 
-![flow](./assets/1.13.png)
+![flow](./assets/13.png)
 
 Once you select Custom, a **Text Splitter** field appears. 
 
-![flow](./assets/1.14.png)
+![flow](./assets/14.png)
 
 Click it and select **Recursive Character Text Splitter**.
 
-![flow](./assets/1.15.png)
+![flow](./assets/15%20copy.png)
 
 Set **Chunk Overlap** to **100**.
 
-![flow](./assets/1.16.png)
+![flow](./assets/16%20copy.png)
 
 > Lease contracts are dense and clause boundaries are unpredictable. The Recursive Text Splitter respects paragraph structure — it tries to keep clauses intact rather than slicing through them mid-sentence. An overlap of 100 ensures that if a clause straddles two chunks, both chunks carry enough context to be useful. See Lab 1.2 for a full explanation of chunk size and overlap tuning.
 
@@ -217,13 +217,13 @@ Set **Chunk Overlap** to **100**.
 
 Click **"Execute Workflow"** to run the entire pipeline.
 
-![flow](./assets/1.17.png)
+![flow](./assets/1.13.png)
 
 When the form opens, upload your lease contract and submit. Watch each node light up: Form → Vector Store.
 
 If every node shows a green checkmark, your lease document has been processed and stored.
 
-![flow](./assets/1.18.png)
+![flow](./assets/1.14.png)
 
 > ✓ If you see an error on the Vector Store node, the most likely cause is a missing or expired OpenAI credential. Check the Embeddings node and confirm the API key is valid.
 
@@ -251,11 +251,7 @@ The key insight: **no single agent is doing everything**. The planner doesn't an
 
 Click **"Add Node"** on the canvas. Search for **"Chat"** and select the **Triggers** category. Choose **"On a new Chat Event"**.
 
-![flow](./assets/2.1.png)
-
-Open the Chat Trigger And Click on Add Option -> Response Mode -> When Last Node Finished
-
-![flow](./assets/2.21.png)
+![flow](./assets/1.15.png)
 
 > This is the entry point for user questions. Every question about the lease comes in through this trigger.
 
@@ -265,21 +261,13 @@ Open the Chat Trigger And Click on Add Option -> Response Mode -> When Last Node
 
 Click **"Add Node"**, search for **"Agent"**, and select the AI Agent node.
 
-![flow](./assets/2.2.png)
-
 Double-click the node header and rename it to **Retrieval Planning Agent**.
 
+![flow](./assets/1.16.png)
 
 Connect it to the Chat Trigger.
 
-
-
-Inside the node, click **"Add Option"** and select **System Message**.
-
-![flow](./assets/2.3.gif)
-
-
-System Message paste this exactly:
+Inside the node, click **"Add Option"** and select **System Message**. Paste this exactly:
 
 ```
 You are a Lease Contract Retrieval Planning Agent.
@@ -313,6 +301,7 @@ OUTPUT FORMAT:
 Return JSON only.
 ```
 
+![flow](./assets/1.17.png)
 
 > **Why a planning agent?** Basic RAG skips this step entirely — it just takes the user's raw question and runs a search. The problem is that a question like "Is this lease risky?" is too vague to retrieve anything useful from a vector store. The planning agent translates that vague intent into a precise list of clause types to search for. It separates *understanding the question* from *executing the search* — two jobs that are easier to do well when they're separated.
 
@@ -320,15 +309,11 @@ Return JSON only.
 
 ### Add the OpenAI Chat Model to the Retrieval Planning Agent
 
-Inside the Retrieval Planning Agent node, click **"Chat Model"**. 
+Inside the Retrieval Planning Agent node, click **"Chat Model"**. Select **"OpenAI Chat Model"**.
 
-![flow](./assets/2.4.png)
+Select `gpt-4o-mini` and confirm your OpenAI credential is connected.
 
-Select **"OpenAI Chat Model"**.
-
-Select `gpt-5-mini` and confirm your OpenAI credential is connected.
-
-![flow](./assets/2.9.png)
+![flow](./assets/1.18.png)
 
 ---
 
@@ -336,16 +321,11 @@ Select `gpt-5-mini` and confirm your OpenAI credential is connected.
 
 Click **"Add Node"**, search for **"Agent"**, and select the AI Agent node.
 
-![flow](./assets/2.6.png)
-
-
-
-![flow](./assets/2.7.png)
-
 Double-click the node header and rename it to **Retrieval Agent**.
 
 Connect the output of the Retrieval Planning Agent to the input of this node.
 
+![flow](./assets/1.19.png)
 
 Inside the node, find the **Prompt** section. Change the **Source** dropdown to **"Define below"**.
 
@@ -355,7 +335,7 @@ In the **Prompt (User Message)** field, enter this expression:
 {{ $json.output }}
 ```
 
-![flow](./assets/2.8.gif)
+![flow](./assets/1.20.png)
 
 > **Why `{{ $json.output }}`?** The Retrieval Planning Agent returns its output as JSON in the `output` field of its response. This expression passes that structured retrieval plan directly into the Retrieval Agent as its input. The orchestrator now knows exactly which clause types to search for — it received a plan, not a raw user question.
 
@@ -465,9 +445,7 @@ NEVER directly answer after retrieval.
 
 Inside the Retrieval Agent node, click **"Chat Model"**. Select **"OpenAI Chat Model"**.
 
-Select `gpt-5-mini` and confirm your credential.
-
-![flow](./assets/2.13.png)
+Select `gpt-4o-mini` and confirm your credential.
 
 ---
 
@@ -475,21 +453,17 @@ Select `gpt-5-mini` and confirm your credential.
 
 Inside the Retrieval Agent node, click **"Tools"**. Search for **"Simple Vector Store"** and select it.
 
-![flow](./assets/2.11.png)
-
-
-![flow](./assets/2.14.png)
+![flow](./assets/1.22.png)
 
 Double-click the tool's header and rename it to **lease_contract_vector_search**.
 
+![flow](./assets/1.23.png)
 
 Configure it with these settings:
 
 - **Operation Mode** → **Retrieve Documents**
 - **Memory Key** → select the same key you created in Phase 1 (must match exactly)
 - **Limit** → **8** (retrieves 8 chunks per query — enough to capture clauses spread across the document)
-
-![flow](./assets/2.15.png)
 
 In the **Description** field, paste this exactly:
 
@@ -519,9 +493,11 @@ Do not use this tool for:
 Always retrieve evidence first before calling specialist agents.
 ```
 
+![flow](./assets/1.24.png)
+
 > **Why does the description matter so much?** The Retrieval Agent reads tool descriptions to decide when and why to call each tool. This isn't documentation for you — it's an instruction for the AI. A vague description like "retrieves documents" gives the agent no guidance on when to reach for it. The description you pasted tells the orchestrator exactly what this tool does, what it can find, and what it should not be used for.
 
-> **Why limit 8?** In Lab 1.2 you used 4. Lease contracts are more complex — relevant clauses for a single question might be scattered across eight different sections. 8 gives enough coverage without flooding the specialist agents with noise. If your answers still feel incomplete, increase to 10. If they feel padded with irrelevant text, decrease to 4.
+> **Why limit 8?** In Lab 1.2 you used 5. Lease contracts are more complex — relevant clauses for a single question might be scattered across eight different sections. 8 gives enough coverage without flooding the specialist agents with noise. If your answers still feel incomplete, increase to 10. If they feel padded with irrelevant text, decrease to 5.
 
 ---
 
@@ -531,7 +507,7 @@ Inside the **lease_contract_vector_search** tool, click **"Embedding"**. Select 
 
 Confirm your OpenAI credential is connected and the model is `text-embedding-3-small`.
 
-![flow](./assets/2.16.png)
+![flow](./assets/1.25.png)
 
 > This must match what you used during ingestion in Phase 1. The vector store was indexed using `text-embedding-3-small` — only that same model knows how to search it correctly.
 
@@ -541,16 +517,9 @@ Confirm your OpenAI credential is connected and the model is `text-embedding-3-s
 
 Still inside the Retrieval Agent node, click **"Tools"** again. Search for **"Agent"** and select **"AI Agent Tool"**.
 
-![flow](./assets/2.17.png)
+Add this tool twice. Rename one to **lease_risk_analysis_agent** and the other to **lease_obligation_timeline_agent**.
 
-Add this tool twice, then add a Language Model and connect both with one.
-
-![flow](./assets/2.18.png)
-
-Rename one to **lease_risk_analysis_agent** and the other to **lease_obligation_timeline_agent**.
-
-![flow](./assets/2.19.png)
-
+![flow](./assets/1.26.png)
 
 These are the specialist agents the orchestrator will call after retrieval. You'll configure each one now.
 
@@ -610,11 +579,11 @@ OUTPUT FORMAT:
 Return JSON only.
 ```
 
-Set **Prompt (User Message)** source to **"Defined by model" by clicking on the icon highlighted in the below image**.
+Set **Prompt (User Message)** source to **"Defined by model"**.
 
-![flow](./assets/2.20.png)
+![flow](./assets/1.27.png)
 
-Now add an OpenAI Chat Model inside this agent. Select `gpt-5-mini` and confirm your credential.
+Now add an OpenAI Chat Model inside this agent. Select `gpt-4o-mini` and confirm your credential.
 
 Then click **"Tools"** inside this agent. Search for **"Chat"** and select the action **"Send a Message"**.
 
@@ -686,7 +655,7 @@ Set **Prompt (User Message)** source to **"Defined by model"**.
 
 ![flow](./assets/1.29.png)
 
-Now add an OpenAI Chat Model inside this agent. Select `gpt-5-mini` and confirm your credential.
+Now add an OpenAI Chat Model inside this agent. Select `gpt-4o-mini` and confirm your credential.
 
 Then click **"Tools"** inside this agent. Search for **"Chat"** and select the action **"Send a Message"**.
 
@@ -710,17 +679,17 @@ Before testing, confirm your pipeline looks like this:
 [Chat Trigger]
       ↓
 [Retrieval Planning Agent]
-  └── Chat Model: OpenAI (gpt-5-mini)
+  └── Chat Model: OpenAI (gpt-4o-mini)
       ↓
 [Retrieval Agent]
-  ├── Chat Model: OpenAI (gpt-5-mini)
+  ├── Chat Model: OpenAI (gpt-4o-mini)
   ├── Tool: lease_contract_vector_search
   │     └── Embedding: OpenAI (text-embedding-3-small)
   ├── Tool: lease_risk_analysis_agent
-  │     ├── Chat Model: OpenAI (gpt-5-mini)
+  │     ├── Chat Model: OpenAI (gpt-4o-mini)
   │     └── Tool: Send Chat Message → {{ $json.output }}
   └── Tool: lease_obligation_timeline_agent
-        ├── Chat Model: OpenAI (gpt-5-mini)
+        ├── Chat Model: OpenAI (gpt-4o-mini)
         └── Tool: Send Chat Message → {{ $json.output }}
 ```
 
@@ -786,7 +755,7 @@ Each question should trigger the planning agent, targeted retrieval, and only th
 
 ## What You Built
 
-![flow](./assets/banner0.png)
+![flow](./assets/designdiagram.png)
 
 You built a multi-agent system where retrieval is planned, evidence is routed, and analysis is specialized. Here's what to take away:
 
@@ -804,6 +773,8 @@ You built a multi-agent system where retrieval is planned, evidence is routed, a
 
 ## RAG vs Agentic RAG: The Full Comparison
 
+![flow](./assets/banner0.png)
+
 Same document. Same question. Completely different results.
 
 Let's trace what happens when a user asks *"What are the risks in this lease?"* through both systems, step by step.
@@ -811,6 +782,8 @@ Let's trace what happens when a user asks *"What are the risks in this lease?"* 
 ---
 
 ### The Basic RAG Flow (Lab 1.2)
+
+![flow](./assets/designdiagram.png)
 
 ```
 User: "What are the risks in this lease?"
@@ -840,6 +813,8 @@ The single AI then has to do everything at once: plan, retrieve, analyze, synthe
 ---
 
 ### The Agentic RAG Flow (Lab 1.3)
+
+![banner](./assets/designdiagram.png)
 
 ```
 User: "What are the risks in this lease?"
