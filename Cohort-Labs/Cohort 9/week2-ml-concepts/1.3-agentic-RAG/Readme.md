@@ -195,9 +195,19 @@ Configure it with these settings:
 - **Data Format** → **PDF**
 - **Text Splitting** → **Custom**
 
-Once you select Custom, a **Text Splitter** field appears. Click it and select **Recursive Character Text Splitter**.
+![flow](./assets/1.13.png)
+
+Once you select Custom, a **Text Splitter** field appears. 
+
+![flow](./assets/1.14.png)
+
+Click it and select **Recursive Character Text Splitter**.
+
+![flow](./assets/1.15.png)
 
 Set **Chunk Overlap** to **100**.
+
+![flow](./assets/1.16.png)
 
 > Lease contracts are dense and clause boundaries are unpredictable. The Recursive Text Splitter respects paragraph structure — it tries to keep clauses intact rather than slicing through them mid-sentence. An overlap of 100 ensures that if a clause straddles two chunks, both chunks carry enough context to be useful. See Lab 1.2 for a full explanation of chunk size and overlap tuning.
 
@@ -207,13 +217,13 @@ Set **Chunk Overlap** to **100**.
 
 Click **"Execute Workflow"** to run the entire pipeline.
 
-![flow](./assets/1.13.png)
+![flow](./assets/1.17.png)
 
 When the form opens, upload your lease contract and submit. Watch each node light up: Form → Vector Store.
 
 If every node shows a green checkmark, your lease document has been processed and stored.
 
-![flow](./assets/1.14.png)
+![flow](./assets/1.18.png)
 
 > ✓ If you see an error on the Vector Store node, the most likely cause is a missing or expired OpenAI credential. Check the Embeddings node and confirm the API key is valid.
 
@@ -241,7 +251,11 @@ The key insight: **no single agent is doing everything**. The planner doesn't an
 
 Click **"Add Node"** on the canvas. Search for **"Chat"** and select the **Triggers** category. Choose **"On a new Chat Event"**.
 
-![flow](./assets/1.15.png)
+![flow](./assets/2.1.png)
+
+Open the Chat Trigger And Click on Add Option -> Response Mode -> When Last Node Finished
+
+![flow](./assets/2.21.png)
 
 > This is the entry point for user questions. Every question about the lease comes in through this trigger.
 
@@ -251,13 +265,21 @@ Click **"Add Node"** on the canvas. Search for **"Chat"** and select the **Trigg
 
 Click **"Add Node"**, search for **"Agent"**, and select the AI Agent node.
 
+![flow](./assets/2.2.png)
+
 Double-click the node header and rename it to **Retrieval Planning Agent**.
 
-![flow](./assets/1.16.png)
 
 Connect it to the Chat Trigger.
 
-Inside the node, click **"Add Option"** and select **System Message**. Paste this exactly:
+
+
+Inside the node, click **"Add Option"** and select **System Message**.
+
+![flow](./assets/2.3.gif)
+
+
+System Message paste this exactly:
 
 ```
 You are a Lease Contract Retrieval Planning Agent.
@@ -291,7 +313,6 @@ OUTPUT FORMAT:
 Return JSON only.
 ```
 
-![flow](./assets/1.17.png)
 
 > **Why a planning agent?** Basic RAG skips this step entirely — it just takes the user's raw question and runs a search. The problem is that a question like "Is this lease risky?" is too vague to retrieve anything useful from a vector store. The planning agent translates that vague intent into a precise list of clause types to search for. It separates *understanding the question* from *executing the search* — two jobs that are easier to do well when they're separated.
 
@@ -299,11 +320,15 @@ Return JSON only.
 
 ### Add the OpenAI Chat Model to the Retrieval Planning Agent
 
-Inside the Retrieval Planning Agent node, click **"Chat Model"**. Select **"OpenAI Chat Model"**.
+Inside the Retrieval Planning Agent node, click **"Chat Model"**. 
 
-Select `gpt-4o-mini` and confirm your OpenAI credential is connected.
+![flow](./assets/2.4.png)
 
-![flow](./assets/1.18.png)
+Select **"OpenAI Chat Model"**.
+
+Select `gpt-5-mini` and confirm your OpenAI credential is connected.
+
+![flow](./assets/2.9.png)
 
 ---
 
@@ -311,11 +336,16 @@ Select `gpt-4o-mini` and confirm your OpenAI credential is connected.
 
 Click **"Add Node"**, search for **"Agent"**, and select the AI Agent node.
 
+![flow](./assets/2.6.png)
+
+
+
+![flow](./assets/2.7.png)
+
 Double-click the node header and rename it to **Retrieval Agent**.
 
 Connect the output of the Retrieval Planning Agent to the input of this node.
 
-![flow](./assets/1.19.png)
 
 Inside the node, find the **Prompt** section. Change the **Source** dropdown to **"Define below"**.
 
@@ -325,7 +355,7 @@ In the **Prompt (User Message)** field, enter this expression:
 {{ $json.output }}
 ```
 
-![flow](./assets/1.20.png)
+![flow](./assets/2.8.gif)
 
 > **Why `{{ $json.output }}`?** The Retrieval Planning Agent returns its output as JSON in the `output` field of its response. This expression passes that structured retrieval plan directly into the Retrieval Agent as its input. The orchestrator now knows exactly which clause types to search for — it received a plan, not a raw user question.
 
@@ -435,7 +465,9 @@ NEVER directly answer after retrieval.
 
 Inside the Retrieval Agent node, click **"Chat Model"**. Select **"OpenAI Chat Model"**.
 
-Select `gpt-4o-mini` and confirm your credential.
+Select `gpt-5-mini` and confirm your credential.
+
+![flow](./assets/2.13.png)
 
 ---
 
@@ -443,17 +475,21 @@ Select `gpt-4o-mini` and confirm your credential.
 
 Inside the Retrieval Agent node, click **"Tools"**. Search for **"Simple Vector Store"** and select it.
 
-![flow](./assets/1.22.png)
+![flow](./assets/2.11.png)
+
+
+![flow](./assets/2.14.png)
 
 Double-click the tool's header and rename it to **lease_contract_vector_search**.
 
-![flow](./assets/1.23.png)
 
 Configure it with these settings:
 
 - **Operation Mode** → **Retrieve Documents**
 - **Memory Key** → select the same key you created in Phase 1 (must match exactly)
 - **Limit** → **8** (retrieves 8 chunks per query — enough to capture clauses spread across the document)
+
+![flow](./assets/2.15.png)
 
 In the **Description** field, paste this exactly:
 
@@ -483,11 +519,9 @@ Do not use this tool for:
 Always retrieve evidence first before calling specialist agents.
 ```
 
-![flow](./assets/1.24.png)
-
 > **Why does the description matter so much?** The Retrieval Agent reads tool descriptions to decide when and why to call each tool. This isn't documentation for you — it's an instruction for the AI. A vague description like "retrieves documents" gives the agent no guidance on when to reach for it. The description you pasted tells the orchestrator exactly what this tool does, what it can find, and what it should not be used for.
 
-> **Why limit 8?** In Lab 1.2 you used 5. Lease contracts are more complex — relevant clauses for a single question might be scattered across eight different sections. 8 gives enough coverage without flooding the specialist agents with noise. If your answers still feel incomplete, increase to 10. If they feel padded with irrelevant text, decrease to 5.
+> **Why limit 8?** In Lab 1.2 you used 4. Lease contracts are more complex — relevant clauses for a single question might be scattered across eight different sections. 8 gives enough coverage without flooding the specialist agents with noise. If your answers still feel incomplete, increase to 10. If they feel padded with irrelevant text, decrease to 4.
 
 ---
 
@@ -497,7 +531,7 @@ Inside the **lease_contract_vector_search** tool, click **"Embedding"**. Select 
 
 Confirm your OpenAI credential is connected and the model is `text-embedding-3-small`.
 
-![flow](./assets/1.25.png)
+![flow](./assets/2.16.png)
 
 > This must match what you used during ingestion in Phase 1. The vector store was indexed using `text-embedding-3-small` — only that same model knows how to search it correctly.
 
@@ -507,9 +541,16 @@ Confirm your OpenAI credential is connected and the model is `text-embedding-3-s
 
 Still inside the Retrieval Agent node, click **"Tools"** again. Search for **"Agent"** and select **"AI Agent Tool"**.
 
-Add this tool twice. Rename one to **lease_risk_analysis_agent** and the other to **lease_obligation_timeline_agent**.
+![flow](./assets/2.17.png)
 
-![flow](./assets/1.26.png)
+Add this tool twice, then add a Language Model and connect both with one.
+
+![flow](./assets/2.18.png)
+
+Rename one to **lease_risk_analysis_agent** and the other to **lease_obligation_timeline_agent**.
+
+![flow](./assets/2.19.png)
+
 
 These are the specialist agents the orchestrator will call after retrieval. You'll configure each one now.
 
@@ -569,11 +610,11 @@ OUTPUT FORMAT:
 Return JSON only.
 ```
 
-Set **Prompt (User Message)** source to **"Defined by model"**.
+Set **Prompt (User Message)** source to **"Defined by model" by clicking on the icon highlighted in the below image**.
 
-![flow](./assets/1.27.png)
+![flow](./assets/2.20.png)
 
-Now add an OpenAI Chat Model inside this agent. Select `gpt-4o-mini` and confirm your credential.
+Now add an OpenAI Chat Model inside this agent. Select `gpt-5-mini` and confirm your credential.
 
 Then click **"Tools"** inside this agent. Search for **"Chat"** and select the action **"Send a Message"**.
 
@@ -645,7 +686,7 @@ Set **Prompt (User Message)** source to **"Defined by model"**.
 
 ![flow](./assets/1.29.png)
 
-Now add an OpenAI Chat Model inside this agent. Select `gpt-4o-mini` and confirm your credential.
+Now add an OpenAI Chat Model inside this agent. Select `gpt-5-mini` and confirm your credential.
 
 Then click **"Tools"** inside this agent. Search for **"Chat"** and select the action **"Send a Message"**.
 
@@ -669,17 +710,17 @@ Before testing, confirm your pipeline looks like this:
 [Chat Trigger]
       ↓
 [Retrieval Planning Agent]
-  └── Chat Model: OpenAI (gpt-4o-mini)
+  └── Chat Model: OpenAI (gpt-5-mini)
       ↓
 [Retrieval Agent]
-  ├── Chat Model: OpenAI (gpt-4o-mini)
+  ├── Chat Model: OpenAI (gpt-5-mini)
   ├── Tool: lease_contract_vector_search
   │     └── Embedding: OpenAI (text-embedding-3-small)
   ├── Tool: lease_risk_analysis_agent
-  │     ├── Chat Model: OpenAI (gpt-4o-mini)
+  │     ├── Chat Model: OpenAI (gpt-5-mini)
   │     └── Tool: Send Chat Message → {{ $json.output }}
   └── Tool: lease_obligation_timeline_agent
-        ├── Chat Model: OpenAI (gpt-4o-mini)
+        ├── Chat Model: OpenAI (gpt-5-mini)
         └── Tool: Send Chat Message → {{ $json.output }}
 ```
 
@@ -758,6 +799,143 @@ You built a multi-agent system where retrieval is planned, evidence is routed, a
 **JSON outputs are contracts between agents.** Every specialist agent returns JSON. The orchestrator expects JSON. This is not a stylistic choice — it's a system design decision. Structured outputs make agent-to-agent handoffs reliable. When you need to build more complex systems, this pattern — agents that produce machine-readable outputs consumed by downstream agents — is what makes them composable.
 
 **The difference from Lab 1.2:** In Lab 1.2, one retrieval step fed one AI. In Lab 1.3, three specialized retrieval searches feed two specialist AIs, whose outputs are assembled by an orchestrator. The user experience looks similar. The reliability and depth of the analysis is not.
+
+---
+
+## RAG vs Agentic RAG: The Full Comparison
+
+Same document. Same question. Completely different results.
+
+Let's trace what happens when a user asks *"What are the risks in this lease?"* through both systems, step by step.
+
+---
+
+### The Basic RAG Flow (Lab 1.2)
+
+```
+User: "What are the risks in this lease?"
+              ↓
+Vector Store
+  Search: "risks in this lease" (raw question used as-is)
+  Result: 5 chunks (whatever is semantically closest to that phrase)
+              ↓
+One AI Agent
+  Receives: 5 chunks + the original question
+  Must simultaneously:
+    - Understand what "risk" means in a lease context
+    - Identify which clauses are relevant
+    - Analyze the risk in each clause
+    - Notice what's missing
+    - Write a coherent answer
+              ↓
+Answer
+```
+
+**What typically goes wrong:**
+
+The vector store searches for chunks semantically similar to "risks in this lease." It might return the introductory paragraph (high similarity to "lease"). It might return a general clause about property use. The five most similar chunks are not necessarily the five most important chunks for risk assessment.
+
+The single AI then has to do everything at once: plan, retrieve, analyze, synthesize. With five chunks and no specialist focus, it produces a surface-level answer. It might catch the obvious penalty clause. It almost certainly misses the auto-renewal buried in the exhibits. It can't tell you what it missed because it doesn't know what it didn't retrieve.
+
+---
+
+### The Agentic RAG Flow (Lab 1.3)
+
+```
+User: "What are the risks in this lease?"
+              ↓
+Retrieval Planning Agent
+  Reads: the question
+  Identifies: this is a risk assessment query
+  Maps to clause types: termination, lock_in_period, penalty,
+                        rent_escalation, renewal, security_deposit
+  Output: structured JSON retrieval plan
+              ↓
+Retrieval Agent (Orchestrator)
+  Receives: the retrieval plan
+  Calls: lease_contract_vector_search with targeted clause queries
+  Retrieves: 8 chunks (targeted, not guessed)
+  Inspects: chunks contain both risk language AND date-based obligations
+  Routes to:
+    lease_risk_analysis_agent → receives the risk-relevant chunks
+    lease_obligation_timeline_agent → receives the date-relevant chunks
+              ↓
+lease_risk_analysis_agent          lease_obligation_timeline_agent
+  Analyzes: termination rights,      Extracts: notice deadlines,
+            penalties,                         lock-in duration,
+            escalation clauses,                rent due dates,
+            deposit conditions                 renewal opt-out window
+  Returns: JSON risk report          Returns: JSON timeline report
+              ↓
+Retrieval Agent assembles:
+  { risk_analysis: {...}, obligation_analysis: {...}, summary: "..." }
+              ↓
+Answer: structured, deep, sourced from actual clause evidence
+```
+
+---
+
+### Where Agentic RAG Wins — Dimension by Dimension
+
+| Dimension | Basic RAG (Lab 1.2) | Agentic RAG (Lab 1.3) | What Improved |
+|---|---|---|---|
+| **Search targeting** | Raw question used as the search query | Planning Agent converts question into targeted clause types | Relevant clauses found even when their wording doesn't match the question |
+| **Coverage** | 5 chunks from a single search | 8 chunks from targeted searches across multiple clause categories | Clauses spread across the document are captured, not just the ones closest to the question's surface words |
+| **Analysis depth** | One AI handles all analysis in one pass | Two specialists, each focused on a single analysis type | Risk analysis goes deeper because the agent isn't distracted by timeline tasks — and vice versa |
+| **Output structure** | Prose answer — readable but hard to process programmatically | Structured JSON with separate risk, obligation, and summary sections | Downstream systems can parse, store, or display each section independently |
+| **Missed clauses** | AI doesn't know what it didn't retrieve — silent gaps | Orchestrator checks retrieved chunks before routing; returns `missing_clause_evidence` if nothing found | Failure is explicit, not silent |
+| **Reliability** | AI can skip analysis steps when it feels confident answering from general knowledge | Orchestrator system message enforces strict sequence: retrieve → inspect → route → assemble | The pipeline follows the same steps every time regardless of how "easy" the question seems |
+| **Scalability** | Adding analysis types means rewriting the single agent's prompt | Adding analysis types means adding one specialist agent + updating orchestrator routing | System grows without breaking what already works |
+| **Auditability** | One AI, opaque reasoning — hard to know why an answer was produced | Each agent's input and output is visible in the execution panel | You can trace exactly which chunks triggered which analysis |
+
+---
+
+### The Same Question, Side by Side
+
+**Question:** *"What happens if I want to leave this lease early?"*
+
+**Basic RAG answer (typical):**
+> "If you want to leave the lease early, you will need to provide notice as per the terms of the lease agreement. There may be penalties involved depending on your specific contract. It is advisable to review the termination clause carefully."
+
+This is technically true and completely useless. It didn't retrieve the actual penalty amount. It didn't find the lock-in period. It didn't surface the notice requirement. It answered from general knowledge rather than from the contract.
+
+**Agentic RAG answer (typical):**
+```json
+{
+  "risk_analysis": {
+    "early_exit_penalty": "6 months rent payable immediately upon early termination",
+    "lock_in_risk": "No exit permitted within first 36 months regardless of circumstances",
+    "deposit_risk": "Security deposit forfeited in full on early termination — non-negotiable per clause 14.3"
+  },
+  "obligation_analysis": {
+    "notice_period": "90 days written notice required before intended exit date",
+    "earliest_exit_date": "Month 37 from commencement, subject to notice period",
+    "notice_deadline_example": "For a January 2024 start, earliest notice is October 2026"
+  },
+  "summary": "Early exit is expensive and restricted. The 36-month lock-in with a 6-month penalty and full deposit forfeiture creates significant exit costs. The earliest practical exit window opens at month 34 to allow 90-day notice for a month-37 departure."
+}
+```
+
+The difference is not subtle. One answered from general knowledge. The other answered from the actual contract.
+
+---
+
+### What We Improved and Why It Matters
+
+**1. We separated understanding from searching.**
+Basic RAG uses the raw question as the search query. Agentic RAG adds a planning step that converts the question's intent into specific clause types. The Planning Agent doesn't make the system smarter — it makes the search more precise. Precision at the retrieval stage is the single highest-leverage improvement in the entire pipeline.
+
+**2. We made retrieval failures visible.**
+In basic RAG, if no relevant chunks are retrieved, the AI still produces an answer — drawn from its training data, not the contract. The answer sounds plausible. It's wrong. In the agentic system, the orchestrator checks what was retrieved. If the vector store comes back empty, the system returns `missing_clause_evidence` and stops. A visible failure is far less dangerous than a confident wrong answer.
+
+**3. We gave each analysis type its own specialist.**
+Risk analysis and timeline extraction look similar from the outside — both read contract text and produce outputs. But the mental model is different. Risk analysis asks "what could go wrong?" Timeline extraction asks "what must happen by when?" A specialist with a constrained system message and a narrow output format goes deeper on its specific task than any generalist can.
+
+**4. We made the output machine-readable.**
+Basic RAG produces prose. Prose is for humans. The Agentic RAG system produces structured JSON. That output can be rendered into a formatted report, stored in a database, fed into another workflow, or compared across multiple contracts. Structured outputs are what turn a demo into a product.
+
+**5. We made the pipeline auditable.**
+Every agent call, every tool invocation, every routing decision is visible in n8n's execution panel. When an answer is wrong, you can trace it: did the Planning Agent map to the wrong clause types? Did the vector store fail to retrieve the relevant chunk? Did the risk agent miss something? With basic RAG, debugging means re-running the prompt and guessing. With agentic RAG, debugging means reading the execution log.
 
 ---
 
