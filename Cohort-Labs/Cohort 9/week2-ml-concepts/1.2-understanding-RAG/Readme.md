@@ -212,27 +212,112 @@ Inside the Simple Vector Store node, click **"Document"**.
 
 ![flow](./assets/1.11.png)
 
-Select **"Default Data Loader"** and leave everything at its default configuration.
+Select **"Default Data Loader"**.
 
 ![flow](./assets/1.12.png)
+
+Now configure it with these specific settings:
+
+- **Data Type** → set to **Binary**
+- **Data Format** → set to **PDF**
+- **Text Splitting** → set to **Custom**
+
+![flow](./assets/13.png)
+
+Once you select Custom, a **Text Splitter** field appears below. Click it and select **Recursive Character Text Splitter**.
+
+![flow](./assets/14.png)
+
+![flow](./assets/15.png)
+
+Set the **Chunk Overlap** to **100**.
+
+![flow](./assets/16.png)
+---
 
 **What is chunking — and why does it matter?**
 
 ![flow](./assets/chunking%20.png)
 
-Imagine tearing a 200-page contract into index cards. Each card gets one idea: one clause, one section, one paragraph. You file the cards, not the book. When someone asks a question, you pull only the relevant cards and hand them to the AI. That's exactly what the Default Data Loader does — it tears the document into chunks before storing it.
+Imagine tearing a 200-page contract into index cards. Each card gets one idea: one clause, one section, one paragraph. You file the cards, not the book. When someone asks a question, you pull only the relevant cards and hand them to the AI.
 
-The default chunk size is around **1000 characters**, with a **200-character overlap** between consecutive chunks.
+A text splitter is the tool that does this tearing. It takes the raw text of your document and cuts it into chunks that can be embedded and stored individually.
 
-The overlap is intentional. Without it, a clause that starts at the end of one chunk and finishes at the start of the next would get split in half. The AI would retrieve one card with the beginning of the clause and miss the rest. The overlap ensures important context is never cut off at a boundary.
+**Why Binary data type?**
 
-**Why chunk size matters:**
+The uploaded file arrives in n8n as a binary stream — raw bytes, not plain text. Setting Data Type to Binary tells the loader to accept the file as-is and handle the parsing itself. If you leave it on the default (Text), n8n tries to pass the file content as a plain string, which breaks for PDFs since PDFs are not plain text files — they're structured binary formats.
 
-- Too large: You retrieve a whole chapter when you only needed one clause. The AI gets flooded with irrelevant text and the answer quality drops.
-- Too small: You retrieve fragments with no surrounding context. The AI can't reason over half a sentence.
-- 1000 characters is a solid starting point for contracts. If your answers feel too generic, try reducing to 500. If answers feel cut off mid-thought, increase to 1500.
+**Why PDF as the data format?**
 
-> You don't need to change anything here for this lab. The defaults work well for the sample contract. As you work with larger, more complex documents in future labs, understanding chunk size becomes one of the most important tuning levers you have.
+Selecting PDF tells the loader to use a PDF parser that understands the internal structure of the file — pages, fonts, layout encoding. Without this, the loader would treat your contract as a generic binary blob and either fail or produce garbled text.
+
+---
+
+**What is the Recursive Character Text Splitter?**
+
+There are several ways to split text. The simplest is to cut every N characters regardless of what's there — that's a character splitter. A better approach is to split on sentence boundaries. But for real documents like contracts, neither is ideal on its own.
+
+The **Recursive Character Text Splitter** works differently. It tries to split text using a priority list of separators:
+
+1. First, it tries to split on double newlines (paragraph breaks)
+2. If the resulting chunk is still too large, it tries single newlines
+3. If still too large, it tries sentence-ending punctuation
+4. If still too large, it falls back to individual characters
+
+It keeps trying smaller and smaller boundaries until the chunk fits within your target size. The result is chunks that respect the natural structure of the text wherever possible — paragraphs stay together, sentences don't get broken mid-word — and only fall back to hard cuts when there's no better option.
+
+This is why it is the recommended splitter for legal documents. A clause in a contract is usually a paragraph. The recursive splitter will try to keep that clause intact as a chunk rather than slicing through it arbitrarily.
+
+---
+
+**How to choose chunk size**
+
+Chunk size controls how much text goes into each stored piece. The right number depends on what you're retrieving and how specific the questions will be.
+
+| Chunk Size | What it means | When to use |
+|---|---|---|
+| 200–400 chars | Very small pieces, single sentences or short clauses | High-precision Q&A where questions are narrow and specific |
+| 500–1000 chars | One to two paragraphs | Most document Q&A use cases, including contracts |
+| 1500–2000 chars | Several paragraphs | When answers require broader context across a section |
+| 2000+ chars | Near-page-level | Summaries, not retrieval |
+
+For contracts, **500–1000 characters** is the standard range. Clauses in legal documents typically run one to three sentences. A 700–800 character chunk captures most clauses cleanly without including irrelevant adjacent text.
+
+**The signal to watch:** If retrieved answers feel vague or generic, your chunks are probably too large — the retrieval is pulling in too much surrounding text and diluting the relevant part. If answers feel cut off or missing a step, your chunks are probably too small.
+
+---
+
+**How to choose chunk overlap**
+
+Overlap is the number of characters that two consecutive chunks share. If your chunk size is 800 and your overlap is 100, the last 100 characters of chunk 1 also appear as the first 100 characters of chunk 2.
+
+This solves a specific problem: important information often sits at a boundary. A clause might start on the last line of one chunk and finish on the first line of the next. Without overlap, retrieval pulls one chunk and misses the conclusion. With overlap, both chunks contain the full clause — whichever one gets retrieved, the context is intact.
+
+**Overlap = 100** is a conservative but reliable setting. It adds a small buffer without significantly inflating the number of chunks stored. For contracts, where clauses are typically self-contained, this is enough to prevent most boundary cuts.
+
+| Overlap | Effect |
+|---|---|
+| 0 | No safety buffer. Works if your content is already well-structured (e.g., markdown with clear headers) |
+| 50–100 | Small buffer, minimal storage overhead. Good default for most documents |
+| 200–300 | Larger buffer. Use when documents are dense and clause boundaries are unpredictable |
+| 500+ | Very high overlap. Use only if you're consistently losing context at chunk boundaries and other settings haven't fixed it |
+
+> A high overlap does not hurt retrieval accuracy, but it does increase the number of stored chunks and the cost of ingestion. Keep it proportional — overlap should be roughly 10–20% of your chunk size.
+
+---
+
+**Default Data Loader vs Custom Text Splitter — what's the difference?**
+
+| | Default Data Loader | Custom (Recursive Text Splitter) |
+|---|---|---|
+| **Setup** | Zero configuration | Requires choosing a splitter and setting parameters |
+| **Chunk size** | ~1000 characters, fixed | You control it |
+| **Overlap** | ~200 characters, fixed | You control it |
+| **Splitter logic** | Basic character splitting | Recursive — respects paragraph and sentence boundaries |
+| **File handling** | Works for plain text | Works for binary formats like PDF when configured correctly |
+| **When to use** | Fast prototyping, plain text files, testing a pipeline | Production use, PDF documents, when retrieval quality matters |
+
+For this lab, the custom configuration with Recursive Text Splitter gives you cleaner chunks from your PDF contract and gives you hands-on control over the most important tuning levers in a RAG pipeline.
 
 ---
 
