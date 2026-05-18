@@ -61,7 +61,7 @@ Three agents. One vector store. Two specialists. One user who gets a real answer
 By the end of this lab, you will:
 
 - Understand why single-agent RAG breaks on complex documents
-- Build a multi-agent retrieval system where each agent has a defined role
+- Build an agentic RAG system where each retrieval step has a defined role
 - Know how to pass structured data between agents using n8n's expression system
 - Have a live lease contract analyzer that separates risk analysis from obligation extraction
 
@@ -749,7 +749,7 @@ Each question should trigger the planning agent, targeted retrieval, and only th
 ![flow](./assets/90.png)
 
 
-You built a multi-agent system where retrieval is planned, evidence is routed, and analysis is specialized. Here's what to take away:
+You built an agentic RAG system where retrieval is planned, evidence is routed, and analysis is specialized. Here's what to take away:
 
 **Planning before retrieval changes everything.** Basic RAG takes the user's raw question and searches with it directly. Agentic RAG inserts a step: understand the question first, then create a precise retrieval plan. The result is targeted searches instead of semantic guesses. The planning agent converts "Is this lease safe?" into a list of specific clause types to retrieve — which is what the vector store actually needs.
 
@@ -806,7 +806,8 @@ The single AI then has to do everything at once: plan, retrieve, analyze, synthe
 
 ### The Agentic RAG Flow (Lab 1.3)
 
-![banner](./assets/designdiagram.png)
+![banner](./assets/90.png
+)
 
 ```
 User: "What are the risks in this lease?"
