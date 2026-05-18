@@ -593,21 +593,11 @@ OUTPUT FORMAT:
 Return JSON only.
 ```
 
-Set **Prompt (User Message)** source to **"Defined by model"**.
-
 ![flow](./assets/2.20.png)
 
-Now add an OpenAI Chat Model inside this agent. Select `gpt-5-mini` and confirm your credential.
+Set **Prompt (User Message)** source to **"Defined by model"**.
 
-Then click **"Tools"** inside this agent. Search for **"Chat"** and select the action **"Send a Message"**.
 
-In the **Message** field, enter:
-
-```
-{{ $json.output }}
-```
-
-![flow](./assets/1.28.png)
 
 > **Why is this agent structured to return JSON only?** Because the Retrieval Agent (orchestrator) needs to combine the outputs of both specialist agents into a single structured response. If one agent returns prose and another returns JSON, the orchestrator can't reliably assemble them. JSON-only output gives the orchestrator predictable, parseable data to work with.
 
@@ -667,7 +657,7 @@ Return JSON only.
 
 Set **Prompt (User Message)** source to **"Defined by model"**.
 
-![flow](./assets/2.20.png)
+![flow](./assets/2.24.png)
 
 
 
@@ -711,20 +701,20 @@ Go to your ingestion workflow (Phase 1). Click **"Execute Workflow"**. Upload yo
 
 This step must happen before testing retrieval. You cannot search a store that hasn't been filled.
 
-![flow](./assets/1.31.png)
+![flow](./assets/2.89.png)
 
 ---
 
 ### Open the chat and test
 
-Go to your retrieval workflow (Phase 2). Click **"Execute Workflow"** to activate it, then click **"Open Chat"**.
+Go to your retrieval workflow (Phase 2) . click **"Open Chat"**.
 
-![flow](./assets/1.32.png)
+![flow](./assets/2.40.png)
 
 Start with this question:
 
 ```
-What are the main risks in this lease contract?
+What notice period do I need to give before leaving?
 ```
 
 Watch what happens in the execution panel:
@@ -737,9 +727,6 @@ Watch what happens in the execution panel:
 
 Try a few more:
 
-```
-What notice period do I need to give before leaving?
-```
 
 ```
 Are there any auto-renewal clauses in this lease?
@@ -759,7 +746,8 @@ Each question should trigger the planning agent, targeted retrieval, and only th
 
 ## What You Built
 
-![flow](./assets/designdiagram.png)
+![flow](./assets/90.png)
+
 
 You built a multi-agent system where retrieval is planned, evidence is routed, and analysis is specialized. Here's what to take away:
 
@@ -777,7 +765,7 @@ You built a multi-agent system where retrieval is planned, evidence is routed, a
 
 ## RAG vs Agentic RAG: The Full Comparison
 
-![flow](./assets/banner0.png)
+![flow](./assets/90.png)
 
 Same document. Same question. Completely different results.
 
@@ -787,7 +775,8 @@ Let's trace what happens when a user asks *"What are the risks in this lease?"* 
 
 ### The Basic RAG Flow (Lab 1.2)
 
-![flow](./assets/designdiagram.png)
+![flow](./assets/banner0.png)
+
 
 ```
 User: "What are the risks in this lease?"
@@ -818,7 +807,7 @@ The single AI then has to do everything at once: plan, retrieve, analyze, synthe
 
 ### The Agentic RAG Flow (Lab 1.3)
 
-![banner](./assets/designdiagram.png)
+
 
 ```
 User: "What are the risks in this lease?"
