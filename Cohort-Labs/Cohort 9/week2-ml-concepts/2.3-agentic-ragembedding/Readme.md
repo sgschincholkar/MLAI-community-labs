@@ -2,7 +2,7 @@
 
 You can open this Jupyter notebook directly in Google Colab by clicking the link below:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sachin0034-tech/MLAI-community-labs/blob/main/Cohort-Labs/Cohort%209/week2-ml-concepts/1.5-agentic-ragembedding/AgenticRAG.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sachin0034-tech/MLAI-community-labs/blob/main/Cohort-Labs/Cohort%209/week2-ml-concepts/2.3-agentic-ragembedding/AgenticRAG.ipynb)
 
 
 ## What is Agentic RAG?

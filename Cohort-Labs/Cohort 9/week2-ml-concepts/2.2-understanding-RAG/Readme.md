@@ -1,4 +1,4 @@
-# Lab 1.2: Build Your First RAG Pipeline
+# Lab 2.2: Build Your First RAG Pipeline
 
 ![banner](./assets/b.png)
 
@@ -55,9 +55,9 @@ These two pipelines run separately. The ingestion happens once. The retrieval ha
 
 ## Before You Start
 
-✅ **n8n account** — the same one from Lab 1.1. You'll be creating new workflows inside it.
+✅ **n8n account** — the same one from Lab 2.1. You'll be creating new workflows inside it.
 
-✅ **OpenAI API key** — already set up in n8n from Lab 1.1. You won't need to add it again unless you're starting fresh.
+✅ **OpenAI API key** — already set up in n8n from Lab 2.1. You won't need to add it again unless you're starting fresh.
 
 ✅ **A contract PDF** — use the same sample contract 
 . [Download it here](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQDCjXtik46fSrlq-FwTPD7xASjbyEXBKIPCqTLCAloobR0?e=caCgUB) if you don't have it.

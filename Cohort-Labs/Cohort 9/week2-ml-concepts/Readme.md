@@ -16,7 +16,7 @@ No prior ML experience needed. Just the n8n account and OpenAI key from Week 1.
 
 ## The Labs
 
-### [Lab 1.1 — Why Your Agent Breaks on Real Contracts](./1.1-why-we-need-RAG/Readme.md)
+### [Lab 2.1 — Why Your Agent Breaks on Real Contracts](./2.1-why-we-need-RAG/Readme.md)
 
 Before you fix anything, you need to see what's actually broken. You'll take the agent from Week 1 and run it on a large contract — one that's closer to what real documents look like. It either fails outright or gives you a degraded answer. Either way, you'll understand exactly why.
 
@@ -26,7 +26,7 @@ This lab is short. It's a diagnostic, not a build. But it sets up everything tha
 
 ---
 
-### [Lab 1.2 — Build Your First RAG Pipeline](./1.2-understanding-RAG/Readme.md)
+### [Lab 2.2 — Build Your First RAG Pipeline](./2.2-understanding-RAG/Readme.md)
 
 This is where you build the fix. You'll create a two-workflow system: one that ingests a large contract and breaks it into searchable chunks, and one that retrieves exactly the right chunk when a user asks a question — without hitting context limits.
 
@@ -36,7 +36,7 @@ Along the way, you'll learn what embeddings actually are, why chunk size and ove
 
 ---
 
-### [Lab 1.3 — Agentic RAG: When One Retriever Isn't Enough](./1.3-agentic-RAG/Readme.md)
+### [Lab 2.3 — Agentic RAG: When One Retriever Isn't Enough](./2.3-agentic-ragembedding/Readme.md)
 
 Basic RAG works for simple questions. It breaks on complex ones. Ask "Is this lease safe to sign?" and a single retriever dumps five chunks on one AI — which has to simultaneously plan, retrieve, analyze risk, extract timelines, and write a coherent answer. It misses things.
 
@@ -46,7 +46,7 @@ This lab fixes that with a multi-agent system built specifically for lease contr
 
 ---
 
-### [Lab 1.4 — Run the Full PM Loop with Claude Skills](./1.4-claude-skills/Readme.md)
+### [Lab 2.4 — Run the Full PM Loop with Claude Skills](./2.4-claude-skills/Readme.md)
 
 Now you step back into the PM role. You've built the technical system — now use it as the foundation for a product idea. In this lab, you'll run the full discovery-to-specification process on a Compliance Lease Tool using four Claude Skills: market research, user research, PRD writing, and PRD evaluation.
 

@@ -1,10 +1,10 @@
-# Lab 1.1: Why Your Agent Breaks on Real Contracts
+# Lab 2.1: Why Your Agent Breaks on Real Contracts
 
 In Week 1 you built something real. An AI agent that reads a contract and answers questions about it. It worked. You tested it. It gave you accurate answers from the document.
 
 Now we're going to break it on purpose.
 
-Not because something is wrong with what you built — but because the thing that breaks it is the exact reason RAG exists. Once you see the failure, the solution in Lab 1.2 will make complete sense.
+Not because something is wrong with what you built — but because the thing that breaks it is the exact reason RAG exists. Once you see the failure, the solution in Lab 2.2 will make complete sense.
 
 ---
 
@@ -114,8 +114,8 @@ You didn't just see an error. You saw the architectural limit of the approach yo
 
 **Sending more isn't always better.** More tokens mean more cost, more latency, and often worse answers. Precision beats volume. The model performs best when it gets the right 500 words, not the whole 80 pages.
 
-**The failure was the lesson.** The agent you built in Week 1 is exactly how most people start. And exactly what you'll move past in Lab 1.2.
+**The failure was the lesson.** The agent you built in Week 1 is exactly how most people start. And exactly what you'll move past in Lab 2.2.
 
 ---
 
-[Go to Lab 1.2: Build Your First RAG Pipeline](../1.2-understanding-RAG/Readme.md)
+[Go to Lab 2.2: Build Your First RAG Pipeline](../2.2-understanding-RAG/Readme.md)
