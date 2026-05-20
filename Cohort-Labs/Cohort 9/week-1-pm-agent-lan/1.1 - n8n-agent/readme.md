@@ -1,4 +1,4 @@
-# Lab 1: Build Your First AI Agent in n8n
+# Lab 1.1 : Build Your First AI Agent in n8n
 
 ![flow](./assets/banner.png)
 
