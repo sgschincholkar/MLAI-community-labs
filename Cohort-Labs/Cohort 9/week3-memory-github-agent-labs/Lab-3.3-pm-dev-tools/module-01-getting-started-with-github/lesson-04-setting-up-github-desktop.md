@@ -1,4 +1,4 @@
-# Lesson 02 · Setting Up GitHub Desktop
+# Lesson 04 · Setting Up GitHub Desktop
 
 ## What is GitHub Desktop?
 

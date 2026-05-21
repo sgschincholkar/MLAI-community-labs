@@ -167,43 +167,27 @@ npm install -g @anthropic-ai/claude-code
 
 ## Phase 3 · Running Claude Code in VS Code
 
-### Step 1 — Download and Open the Project Repo
+### Step 1 — Open VS Code
 
-Go to **[the project repository](https://github.com/sachin0034-tech/aipminterview-bootcamp-project-repo)** and download it:
-
-1. Click the green **Code** button
-2. Select **Download ZIP**
-3. The ZIP file will download to your Downloads folder
-
-![Download Repo](./images/g1.png)
+Open **Visual Studio Code** from your Applications folder (Mac) or Start Menu (Windows).
 
 ---
 
-### Step 2 — Extract the ZIP File
-
-1. Go to your **Downloads** folder
-2. Right-click the ZIP file → click **Quick Look** (Mac) to preview
-3. Click **Uncompress** to extract it
-
-![Extract ZIP](./images/g2.png)
-
-You'll now have a folder named `aipminterview-bootcamp-project-repo-main`.
-
-![Extracted Folder](./images/g3.png)
-
----
-
-### Step 3 — Open the Folder in VS Code
+### Step 2 — Open Your Forked Repository
 
 In VS Code, click **File → Open Folder** (or `Cmd + O` on Mac / `Ctrl + O` on Windows).
 
-Navigate to your Downloads folder, select `aipminterview-bootcamp-project-repo-main`, and click **Open**.
+Navigate to the folder where your forked `ai-community-site` repository was cloned by GitHub Desktop, select it, and click **Open**.
 
 ![Open in VS Code](./images/g4.png)
 
+You'll see all the project files appear in the VS Code Explorer panel on the left.
+
+![Project Files](./images/g5.png)
+
 ---
 
-### Step 4 — Open the Terminal Inside VS Code
+### Step 3 — Open the Terminal Inside VS Code
 
 Click **Terminal → New Terminal** from the VS Code menu.
 

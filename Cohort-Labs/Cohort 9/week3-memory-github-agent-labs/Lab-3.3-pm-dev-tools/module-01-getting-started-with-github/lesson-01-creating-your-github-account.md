@@ -61,66 +61,6 @@ Follow the setup prompts — it takes less than 2 minutes.
 
 ---
 
-## Phase 2 · Forking a Repository
-
-Forking means creating your own personal copy of someone else's repository. Your fork lives in your GitHub account — you can freely edit it without affecting the original project.
-
-> **Why fork?** It's how you contribute to open source, experiment with someone else's code, or start from a template without touching the original.
-
-### Fork the Workshop Repository
-
-We'll practice by forking the AI Community Site repo.
-
-**1. Go to the repository**
-
-Open: [https://github.com/sachin0034-tech/ai-community-site](https://github.com/sachin0034-tech/ai-community-site)
-
----
-
-**2. Click the "Fork" button in the top-right corner**
-
-You'll see it next to the Star and Watch buttons at the top of the page.
-
-![Continue with Google](images/image.png)
-
----
-
-**3. Configure your fork**
-
-A dialog will appear asking where to fork it:
-
-- **Owner** — select your GitHub username (not an organization)
-- **Repository name** — keep it as-is, or rename it
-- Leave "Copy the `main` branch only" checked
-
-Then click **"Create fork"**.
-
----
-
-**4. Wait for GitHub to create your fork**
-
-It takes a few seconds. You'll be redirected to your own copy at:
-
-```
-https://github.com/<your-username>/ai-community-site
-```
-
----
-
-> ✅ **Fork complete!** You now have your own copy of the repo. Any changes you make here won't affect the original — and later you can submit a Pull Request to propose your changes back.
-
-### Fork vs. Clone — What's the difference?
-
-| | Fork | Clone |
-|---|---|---|
-| **Where it lives** | On GitHub (your account) | On your local machine |
-| **Connected to original?** | Yes — can pull upstream updates | Only if you set a remote |
-| **Use case** | Contribute to someone else's repo | Work locally on any repo |
-
-> In practice you do **both**: fork on GitHub, then clone your fork to your machine.
-
----
-
 ## What You Learned in This Lesson
 
 | Concept | What It Means |
@@ -128,7 +68,6 @@ https://github.com/<your-username>/ai-community-site
 | **GitHub** | A platform that stores code and tracks every change ever made — by anyone, at any time |
 | **Git** | The underlying system that powers GitHub — it records the full history of a project |
 | **GitHub Account** | Your identity on GitHub — required to fork repos, contribute code, and open Pull Requests |
-| **Fork** | Your personal copy of someone else's repo — lets you experiment or contribute without touching the original |
 | **Why PMs need it** | You can read what's actually shipping, review diffs, and collaborate using the same tools engineers use |
 
 ---
