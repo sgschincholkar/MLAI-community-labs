@@ -137,4 +137,4 @@ https://github.com/<your-username>/ai-community-site
 
 You have an account — now you need the desktop tool that makes working with GitHub fast and visual.
 
-**[→ Lesson 02: Setting Up GitHub Desktop](./lesson-02-setting-up-github-desktop.md)**
+**[→ Lesson 02: Setting Up GitHub Desktop](./lesson-04-setting-up-github-desktop.md)**

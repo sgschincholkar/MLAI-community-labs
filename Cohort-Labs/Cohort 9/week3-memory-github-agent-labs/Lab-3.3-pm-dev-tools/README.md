@@ -54,7 +54,7 @@ Your starting point. You create your GitHub identity and download the repo that 
 | Lesson | What You Will Do |
 |---|---|
 | [Lesson 01 · Creating Your GitHub Account](./module-01-getting-started-with-github/lesson-01-creating-your-github-account.md) | Sign up for GitHub and understand what it is and why PMs need it |
-| [Lesson 02 · Setting Up GitHub Desktop](./module-01-getting-started-with-github/lesson-02-setting-up-github-desktop.md) | Install GitHub Desktop, sign in, and clone the workshop repository to your machine |
+| [Lesson 02 · Setting Up GitHub Desktop](./module-01-getting-started-with-github/lesson-04-setting-up-github-desktop.md) | Install GitHub Desktop, sign in, and clone the workshop repository to your machine |
 
 ---
 

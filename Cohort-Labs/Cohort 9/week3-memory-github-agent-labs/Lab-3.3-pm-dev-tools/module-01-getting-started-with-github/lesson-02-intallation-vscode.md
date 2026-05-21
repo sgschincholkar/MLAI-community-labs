@@ -132,4 +132,4 @@ You'll land on the Welcome screen — your workspace is ready.
 
 The tools are installed. Now you'll connect Claude to your account and run it inside VS Code for the first time.
 
-**[→ Lesson 02: Setting Up Claude Code](./lesson-02-setting-up-claude.md)**
+**[→ Lesson 02: Setting Up Claude Code](../module-02-installing-vscode-and-claude-code/lesson-02-setting-up-claude.md)**
