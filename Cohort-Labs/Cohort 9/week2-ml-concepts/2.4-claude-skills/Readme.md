@@ -78,7 +78,7 @@ Here's what happens, step by step:
 
 Before doing anything, Claude reads the instructions saved in your skill file and creates an execution plan. You'll see this appear in the **Progress** section on the left side of the screen — a list of steps Claude intends to take to complete the task.
 
-![flow](./assets/behind-1.png)
+![flow](./assets/12.png)
 
 This is Claude thinking out loud before it acts. Each step in the plan maps to a section of the skill's output — for example, a market research skill might plan: research market size → identify key players → find whitespace → assess buying motion → write strategic summary.
 
@@ -86,7 +86,7 @@ This is Claude thinking out loud before it acts. Each step in the plan maps to a
 
 Watch the Progress section as Claude runs. Each step checks off as it completes. You can see exactly where Claude is in the process at any moment — it's not a black box.
 
-![flow](./assets/behind-2.png)
+![flow](./assets/12.png)
 
 **3. Claude uses tools when it needs them.**
 
@@ -99,7 +99,7 @@ Searching the web for: "lease compliance software market size 2024"
 Searching the web for: "proptech compliance SaaS competitors"
 ```
 
-![flow](./assets/behind-3.png)
+![flow](./assets/12.png)
 
 Claude decides on its own when a web search is needed. You don't trigger it manually — the skill's instructions tell it when to reach for live data vs. when to reason from what it already knows.
 
