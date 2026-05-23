@@ -1,4 +1,4 @@
-# Week 3: Give Your Agent Memory — and Ship Your First Code Change
+# Week 3: Give Your Agent Memory 
 
 Welcome to Week 3 of the AI PM Certification.
 
