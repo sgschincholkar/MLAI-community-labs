@@ -46,7 +46,7 @@ This lab uses Claude Code.
 
 ✅ The **sample contract PDF** from Lab 1.1 — same file, use it again here. [Download it here](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQC2WQJhhIuyRq5JrVY13FwNAdwS4M5gB5w-qzBAm9V4mRQ?e=XyvLU4) if you don't have it.
 
-✅ The **CLAUDE.md template** — you'll use this in Part 3 and Part 4. [Download it here](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQBnG9WXfhcYT7dES8zbfP6kAUIWwjMvbu6PzKKmLHdejAI?e=5nhIQM). This is a template — you'll modify it with your own company context before using it.
+✅ The **CLAUDE.md template** — you'll use this in Part 3 and Part 4. [Download it here](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQB4LEMKjmINRqRJCcYJ3HRoAVQwmLvrF3QwHfBj2Ioon5w?e=VqcxG0). 
 
 ---
 
