@@ -158,6 +158,8 @@ This tells Claude your defaults once — and they carry into every future projec
 
 Now we'll also set one up at the project level, which is what the next part covers.
 
+![image](./assets/90.png)
+
 ---
 
 ## Part 4: Set It Up and Run It Again
