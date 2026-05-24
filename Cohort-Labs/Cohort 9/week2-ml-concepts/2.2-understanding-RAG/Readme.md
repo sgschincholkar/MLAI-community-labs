@@ -351,13 +351,13 @@ For this lab, the custom configuration with Recursive Text Splitter gives you cl
 
 Click **"Execute Workflow"** to run the entire pipeline from start to finish.
 
-![flow](./assets/1.13.png)
+![flow](./assets/900.png)
 
 When the form opens, upload your contract and submit. Watch each node light up in sequence: Form → Vector Store.
 
 If every node shows a green checkmark, your document has been processed and stored.
 
-![flow](./assets/1.14.png)
+![flow](./assets/9001.png)
 
 > ✓ If you see an error on the Vector Store node, the most likely cause is a missing or expired OpenAI credential. Check the Embeddings node and confirm the API key is valid.
 
