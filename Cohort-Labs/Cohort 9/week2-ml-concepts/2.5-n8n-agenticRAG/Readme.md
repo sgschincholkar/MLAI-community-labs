@@ -60,6 +60,14 @@ Think of it as a **highly cautious legal research assistant** — one that refus
 
 ---
 
+## Pre-Session Downloads
+
+Download the following files before starting the lab:
+
+- ✅ **n8n Workflow file** — [Download the pre-built workflow JSON here](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQB8uV7h11OERb2oCd_Ejkj2AZseoP5phUaKMxWaqWB88Fw?e=P5aXvy) if you'd like to import it instead of building from scratch.
+- [Reference Document](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQB8uV7h11OERb2oCd_Ejkj2AZseoP5phUaKMxWaqWB88Fw?e=P5aXvy) — Download the test Contract
+---
+
 ## 3. Core Concept: What Is Agentic RAG?
 
 This is the most important concept in this lab. Let's break it down word by word.
@@ -615,49 +623,22 @@ Node 16 routes to Node 18 (Edit Fields), which prepares the query for a retry. N
 
 ## 8. Example Queries to Try
 
-Use these after uploading the sample contract. Each one tests a different aspect of the workflow.
+Use these after uploading the sample contract to get started quickly.
 
 ---
 
-### Query 1 — Clause Lookup
-> *"What is the monthly rent amount and when is it due?"*
-
-**Tests:** Simple fact retrieval from a clearly stated clause. The agent should find the rent clause quickly and return an exact figure with a due date, cited from one chunk.
+### Query 1
+> *"What is this contract about?"*
 
 ---
 
-### Query 2 — Permission Check
-> *"Is the tenant allowed to keep pets in the property?"*
-
-**Tests:** Conditional clause retrieval. The agent needs to find a pets clause and interpret any conditions (e.g., "small pets allowed with a £200 deposit and written permission").
+### Query 2
+> *"Who are the parties involved in this contract?"*
 
 ---
 
-### Query 3 — Process / Procedure
-> *"What steps does the tenant need to follow to end the tenancy early?"*
-
-**Tests:** Multi-part retrieval. The agent may need to find an early termination clause, a notice period clause, and a break clause — then combine them into a clear step-by-step answer.
-
----
-
-### Query 4 — Penalty / Consequence
-> *"What happens if the tenant misses a rent payment?"*
-
-**Tests:** Consequence clause identification. The answer should cover late fees, grace periods, or breach clauses — all cited.
-
----
-
-### Query 5 — Responsibility Comparison
-> *"Who is responsible for repairs and maintenance — the landlord or the tenant?"*
-
-**Tests:** Comparison retrieval across two separate clauses. The agent should distinguish landlord obligations from tenant obligations, citing both.
-
----
-
-### Query 6 — Multi-Hop (Advanced)
-> *"If the landlord wants to increase the rent during the tenancy, what notice must they give and how much can they increase it by?"*
-
-**Tests:** A two-part question requiring the agent to retrieve two separate but related clauses (notice period + increase cap) and synthesise them into a single coherent answer.
+### Query 3
+> *"What are the key terms and obligations in this contract?"*
 
 ---
 
