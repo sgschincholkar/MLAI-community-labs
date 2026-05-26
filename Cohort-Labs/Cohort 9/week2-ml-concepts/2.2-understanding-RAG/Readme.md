@@ -57,7 +57,7 @@ These two pipelines run separately. The ingestion happens once. The retrieval ha
 
 ✅ **n8n account** — the same one from Lab 2.1. You'll be creating new workflows inside it.
 
-✅ **OpenAI API key** — already set up in n8n from Lab 2.1. You won't need to add it again unless you're starting fresh.
+✅ **OpenAI API key** — already set up in n8n from Lab 2.1. You won't need to add it again unless you're starting fresh
 
 ✅ **A contract PDF** — use the same sample contract. [Download it here](https://pragyaallc-my.sharepoint.com/:w:/g/personal/sachin_parmar_legalgraph_ai/IQAbCBMxqrFrT6hzD6t9oCdpAR8pdsHtVaZf2O5HiyGq5jY?e=Cb3PMd) if you don't have it.
 
