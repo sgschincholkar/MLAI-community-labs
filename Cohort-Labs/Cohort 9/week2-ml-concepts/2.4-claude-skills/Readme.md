@@ -32,12 +32,6 @@ Make sure you have all four skills installed in Claude. If you haven't done this
 - [`/prd`](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAyfjRxdSesTrKfM8Ve_DTlAfFycMQrxZzPZiWQlhT081A?e=xxRLrE) — [Click here to download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAyfjRxdSesTrKfM8Ve_DTlAfFycMQrxZzPZiWQlhT081A?e=xxRLrE) 
 - [`/prd-eval`](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAfxmw5rEDEQawrm3IkktEQAbbQAXVt_mkLAU7Rlv5xpCU?e=yBEEwL) — [Click here to download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAfxmw5rEDEQawrm3IkktEQAbbQAXVt_mkLAU7Rlv5xpCU?e=yBEEwL)
 
-### Additional Files
-
-Download the following files before starting the lab:
-
-- [n8n Workflow File](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQBHa0xmd9IbRLU98-oCbR6AAcA42Ml8T-oyPBWHzXe6Zdc?e=qjdqFw) — import this into your n8n instance to set up the automation workflow
-- [Reference Document](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQB8uV7h11OERb2oCd_Ejkj2AZseoP5phUaKMxWaqWB88Fw?e=P5aXvy) — read this before starting; it provides the background context for the use case covered in this lab
 
 ---
 
