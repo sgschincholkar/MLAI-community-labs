@@ -61,7 +61,32 @@ These two pipelines run separately. The ingestion happens once. The retrieval ha
 
 ✅ **A contract PDF** — use the same sample contract. [Download it here](https://drive.google.com/file/d/1RMzUyryxh88qiXTW6psH6lEfrhQ8H2ZQ/view) if you don't have it.
 
+✅ [Reference Document- Docx Fromat](https://pragyaallc-my.sharepoint.com/:w:/g/personal/sachin_parmar_legalgraph_ai/IQAbCBMxqrFrT6hzD6t9oCdpAR8pdsHtVaZf2O5HiyGq5jY?e=4s3M8D) — Download the test Contract make sure you upload the contract is docx format
+
 ✅ **n8n Workflow file** — [Download the pre-built workflow JSON here](https://pragyaallc-my.sharepoint.com/:b:/g/personal/sachin_parmar_legalgraph_ai/IQB8uV7h11OERb2oCd_Ejkj2AZseoP5phUaKMxWaqWB88Fw?e=P5aXvy) if you'd like to import it instead of building from scratch.
+
+---
+
+# Quick Note
+  ▎
+  ▎ If you are facing the issue below while 
+  ▎ running the workflow, follow these steps:
+  
+  ![banner](./assets/9089.png)
+
+  ▎
+  ▎ 1. Make sure you change the default data 
+  ▎ loader from PDF to DOCX format.
+
+![banner](./assets/9000.png)
+
+  ▎ 2. When uploading the document, ensure the
+  ▎ file format is .docx, not .pdf.
+  ▎
+  ▎ If you are not facing this issue, you can 
+  ▎ continue with the current workflow.
+
+
 
 ---
 
@@ -544,5 +569,14 @@ You built a two-pipeline system. One processes documents. One answers questions 
 You've built the core of a document-aware AI system. The next labs will expand on this — adding memory across conversations, handling multiple document types, and improving retrieval quality when answers start to drift.
 
 ---
+
+> **Quick Note**
+>
+> If you are facing the issue below while running the workflow, follow these steps:
+>
+> 1. Make sure you change the default data loader from **PDF** to **DOCX** format.
+> 2. When uploading the document, ensure the file format is `.docx`, not `.pdf`.
+>
+> If you are not facing this issue, you can continue with the current workflow.
 
 [Next Lab →](../2.3-agentic-ragembedding/Readme.md)
