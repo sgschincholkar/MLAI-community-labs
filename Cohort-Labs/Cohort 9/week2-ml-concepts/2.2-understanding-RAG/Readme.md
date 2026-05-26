@@ -59,7 +59,7 @@ These two pipelines run separately. The ingestion happens once. The retrieval ha
 
 ✅ **OpenAI API key** — already set up in n8n from Lab 2.1. You won't need to add it again unless you're starting fresh.
 
-✅ **A contract PDF** — use the same sample contract. [Download it here](https://drive.google.com/file/d/1RMzUyryxh88qiXTW6psH6lEfrhQ8H2ZQ/view) if you don't have it.
+✅ **A contract PDF** — use the same sample contract. [Download it here](https://pragyaallc-my.sharepoint.com/:w:/g/personal/sachin_parmar_legalgraph_ai/IQAbCBMxqrFrT6hzD6t9oCdpAR8pdsHtVaZf2O5HiyGq5jY?e=Cb3PMd) if you don't have it.
 
 ✅ [Reference Document- Docx Fromat](https://pragyaallc-my.sharepoint.com/:w:/g/personal/sachin_parmar_legalgraph_ai/IQAbCBMxqrFrT6hzD6t9oCdpAR8pdsHtVaZf2O5HiyGq5jY?e=4s3M8D) — Download the test Contract make sure you upload the contract is docx format
 
