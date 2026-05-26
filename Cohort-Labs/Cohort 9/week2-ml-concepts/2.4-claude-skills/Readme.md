@@ -30,7 +30,7 @@ Make sure you have all four skills installed in Claude. If you haven't done this
 - [`/market-research`](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQCwxLJr3-XKTqU_Xo9ktzMlARtfX5VuIeD4dvhfm3adAw8?e=z6cbPU) — [Click here to download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQCwxLJr3-XKTqU_Xo9ktzMlARtfX5VuIeD4dvhfm3adAw8?e=z6cbPU)
 - [`/user-research`](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQBPyAg9PRnPRLl8FAjilaatAbZcPQa13cR03K-BzxfSRRw?e=sZKa6g) — [Click here to download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQBPyAg9PRnPRLl8FAjilaatAbZcPQa13cR03K-BzxfSRRw?e=sZKa6g)
 - [`/prd`](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQDQTVlS9_9lSYUq6QWZcRz9AXYM7oSUcfpyq5sioSXIjfs?e=OSUVnm) — [Click here to download](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQDQTVlS9_9lSYUq6QWZcRz9AXYM7oSUcfpyq5sioSXIjfs?e=OSUVnm) 
-- [`/prd-eval`](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQDQTVlS9_9lSYUq6QWZcRz9AXYM7oSUcfpyq5sioSXIjfs?e=OSUVnm) — [Click here to download](https://pragyaallc-my.sharepoint.com/:u:/g/personal/sachin_parmar_legalgraph_ai/IQDQTVlS9_9lSYUq6QWZcRz9AXYM7oSUcfpyq5sioSXIjfs?e=OSUVnm)
+- [`/prd-eval`](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAyfjRxdSesTrKfM8Ve_DTlAfFycMQrxZzPZiWQlhT081A?e=aghFMh) — [Click here to download](https://pragyaallc-my.sharepoint.com/:t:/g/personal/sachin_parmar_legalgraph_ai/IQAyfjRxdSesTrKfM8Ve_DTlAfFycMQrxZzPZiWQlhT081A?e=aghFMh)
 
 
 ---
