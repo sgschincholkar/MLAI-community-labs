@@ -48,7 +48,7 @@ Enter your name, email, and a password to create your Atlas account, then submit
 
 > You need an account so MongoDB knows who owns the cluster and can apply usage limits and billing (the free tier requires no payment details).
 
-![Step 3](images/chrome-capture-2026-05-27%20%282%29.png)
+![banner](./images/21.png)
 
 ---
 
