@@ -1,4 +1,4 @@
-# Lab 1.1 · Build a UI Mockup Agent with Claude Code
+# Build a UI Mockup Agent with Claude Code
 
 ## What This Lab Is
 
