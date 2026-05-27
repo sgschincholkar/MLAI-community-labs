@@ -1,6 +1,6 @@
-# Lab 4.2 — Connecting n8n to Multiple Data Sources with MongoDB
+# Connecting n8n to Multiple Data Sources with MongoDB
 
-![banner](./images/banner.png)
+![banner](./images/34.png)
 
 In this lab you will set up a free **MongoDB Atlas** cloud database, load sample data into it, and use the connection string inside n8n to build multi-datasource workflows.
 
