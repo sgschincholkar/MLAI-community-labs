@@ -1,4 +1,4 @@
-# Lab 4.1 — Building an AI Contract Intelligence Agent with Azure AI Foundry
+# Building an AI Contract Intelligence Agent with Azure AI Foundry
 
 ## Prerequisites — Download These Files Before Starting
 
@@ -22,7 +22,7 @@ Download the following files **before** you begin the lab steps. Click each link
 
 ## Table of Contents
 
-- [Lab 4.1 — Building an AI Contract Intelligence Agent with Azure AI Foundry](#lab-41--building-an-ai-contract-intelligence-agent-with-azure-ai-foundry)
+- [Building an AI Contract Intelligence Agent with Azure AI Foundry](#building-an-ai-contract-intelligence-agent-with-azure-ai-foundry)
   - [Prerequisites — Download These Files Before Starting](#prerequisites--download-these-files-before-starting)
   - [Table of Contents](#table-of-contents)
   - [1. The Problem — Why Contract Review is Broken](#1-the-problem--why-contract-review-is-broken)
