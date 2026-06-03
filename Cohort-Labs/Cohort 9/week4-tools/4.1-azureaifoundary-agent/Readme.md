@@ -1,6 +1,6 @@
 # Build, Deploy & Evaluate Your First AI Agent in Azure AI Foundry
 
-![image](./images/bannero.png)
+![image](./images/image.png)
 
 > **What you'll build:** A smart contract-review agent that lives inside Microsoft Teams and Microsoft 365 Copilot — no code required. By the end of this lab you'll know how to create, configure, test, publish, monitor, and continuously evaluate an AI agent using Azure AI Foundry.
 
@@ -628,3 +628,11 @@ Congratulations — here's a recap of everything you accomplished:
 ---
 
 *Built with Azure AI Foundry · Week 4 Lab · MLAI Community Labs*
+
+---
+
+## Next Lesson
+
+Ready to go deeper? Learn how to stress-test your agent for safety vulnerabilities using Azure AI Foundry's built-in Red Teaming tools.
+
+**[→ Red Teaming Your AI Agent](./redteaming.md)**
