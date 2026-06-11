@@ -634,6 +634,95 @@ You'll see output showing the files being transferred. When it finishes, go to y
 
 ---
 
+## Phase 8 — Deploying to Netlify
+
+Your app works locally. Now let's put it on the internet so anyone can access it — not just you on your own machine.
+
+**Netlify** is a free hosting platform that connects directly to your GitHub repo. Every time you push new code, Netlify automatically rebuilds and redeploys your app. No servers to manage, no complex setup.
+
+### Step 1: Sign Up and Connect GitHub
+
+1. Go to [netlify.com](https://netlify.com) in your browser
+2. Click **Sign Up**
+
+![image](./images/51.png)
+
+3. Choose **Sign up with GitHub** — this links Netlify directly to your GitHub account
+
+![image](./images/52.png)
+
+### Step 2: Add a New Project
+
+1. Once logged in, click the **Add new project** button
+
+![image](./images/53.png)
+
+2. Click **Deploy with GitHub**
+
+![image](./images/54.png)
+
+### Step 3: Select Your Repository
+
+Netlify will show a list of your GitHub repositories.
+
+1. Find and click on your forked repo (e.g. `test`)
+
+![image](./images/55.png)
+
+
+
+### Step 4: Configure the Project
+
+On the project settings screen:
+
+1. **Project name** — give your app a name (this becomes part of your URL, e.g. `your-app-name.netlify.app`)
+
+2. **Branch to deploy** — make sure it says `main`
+3. **Build command** — enter `npm run build`
+4. **Publish directory** — enter `.next`
+
+![image](./images/56.png)
+
+### Step 5: Add Your Environment Variables
+
+Your app needs the same secret keys you put in your `.env` file — Netlify needs them too so the deployed version can connect to Supabase and Azure.
+
+1. Scroll down to the **Environment variables** section
+2. Click **Add environment variables**
+3. Click **Import from .env file**
+4. Open your local `.env` file, copy all of its contents, and paste them in
+5. Click **Import**
+
+![image](./images/90.png)
+
+All your keys (Supabase URL, Supabase API keys, Azure endpoint, Azure API key) will be imported automatically.
+
+### Step 6: Deploy
+
+1. Click the **Deploy project** button
+2. Netlify will start building your app — this takes **1–2 minutes**
+3. You'll see a live build log scrolling as it compiles your Next.js app
+
+![image](./images/37.png)
+
+### Step 7: Open Your Live App
+
+When the build finishes, Netlify will show a green **Published** status and a URL like:
+
+```
+https://your-app-name.netlify.app
+```
+
+Click that URL — your app is now live on the internet.
+
+![image](./images/37.png)
+
+> **Getting a build error?** Copy the error from the Netlify build log and paste it into Claude: *"My Netlify deploy failed with this error, fix it."* Claude will identify the issue and patch the code. Then push the fix to GitHub — Netlify will automatically redeploy.
+
+> **Note:** Any time you push new code to GitHub, Netlify will automatically detect the change and redeploy your app within a couple of minutes. You never need to manually trigger a deploy again.
+
+---
+
 ## What You Just Built — And Why It Matters
 
 Let's zoom out for a moment.
@@ -674,6 +763,7 @@ That is the role of an AI-enabled product builder. You're not writing code — y
 | Stage all changes | `git add .` |
 | Commit your work | `git commit -m "your message"` |
 | Push to GitHub | `git push origin main` |
+| Deploy to Netlify | Push to `main` — Netlify auto-deploys on every push |
 
 ---
 
