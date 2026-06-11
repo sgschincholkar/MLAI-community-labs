@@ -721,6 +721,44 @@ Click that URL — your app is now live on the internet.
 
 > **Note:** Any time you push new code to GitHub, Netlify will automatically detect the change and redeploy your app within a couple of minutes. You never need to manually trigger a deploy again.
 
+### Step 8: Update NEXTAUTH_URL and Redeploy
+
+Now that your app has a live Netlify URL, you need to go back and update one environment variable — `NEXTAUTH_URL`. This tells your app where it's running so authentication redirects work correctly on the live site.
+
+1. Come back to your project in VS Code
+2. Open your `.env` file
+3. Find this line:
+   ```
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+4. Replace `http://localhost:3000` with your Netlify URL:
+   ```
+   NEXTAUTH_URL=https://your-app-name.netlify.app
+   ```
+5. Save the file
+
+![image](./images/91.png)
+
+Now update this same variable inside Netlify so the deployed app uses the new value:
+
+1. Go to your Netlify project dashboard
+2. Click **Project configuration** → **Environment variables**
+3. Find `NEXTAUTH_URL` and click **Edit**
+4. Replace the localhost value with your Netlify URL
+5. Click **Save**
+
+Finally, push the change to GitHub to trigger a fresh deploy:
+
+![image](./images/93.png)
+
+```
+git add .env
+git commit -m "Update NEXTAUTH_URL to Netlify production URL"
+git push origin main
+```
+
+Wait 1–2 minutes for Netlify to redeploy. Your authentication flow will now work correctly on the live site.
+
 ---
 
 ## What You Just Built — And Why It Matters
