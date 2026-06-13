@@ -28,16 +28,13 @@ This lab is going to be an experience. Some steps will feel unfamiliar. Some ter
 By the end of this lab, you will understand:
 
 - How to get a project from GitHub onto your own computer
-- What a design system is and why developers create one before writing any code
-- How to use Claude Code's skill system to set up a project structure automatically
-- What Next.js is and why it's one of the most popular tools for building web apps
-- How to connect your app to a real cloud database (Supabase)
-- How to let Claude plan your entire application for you using `/plan`
-- What a PRD is and why it matters before you build anything
-- What specs are and how they turn your vision into structured instructions
+- Using prebuilt or OSS design systems to avoid AI slop 
+- How to use Claude Code's skill system for developing apps 
+- Add authentication for your application so you can make money on your app 
+- How to let Claude plan your entire application `/plan`
+- Ho to create engg. specs to turn your PM vision into structured instructions for coding agents
 - How to build your entire app phase by phase using Claude's implementation skill
-- How to integrate Azure AI Foundry so your app has real AI capabilities
-- How to verify your app is working — live, in the browser
+- How to scale backend to handle 1000's of request with SLA monitoring, Observability, Evaluation to Improve loops
 
 ---
 
