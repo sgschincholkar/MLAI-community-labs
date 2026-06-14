@@ -7,22 +7,6 @@
 
 ---
 
-## Before We Start — Let's Have an Honest Conversation
-
-If you've been following along with this cohort, you've already done some impressive things. You've built automated workflows in n8n. You've created prototypes with Claude. You've connected tools and seen how AI can act like an agent.
-
-But here's the thing — every time someone asks, *"Can I actually build a real product with this?"* — the honest answer has been: *"Not yet. This is still a prototype."*
-
-Today that changes.
-
-What you're about to build is not a workflow. It's not a demo. It's a **real application** — one with a proper frontend that users can open in a browser, a real database that stores data, a real authentication system where people can sign up and log in, and real AI features powered by Azure AI Foundry.
-
-And the most exciting part? You're going to use Claude Code to build almost all of it. You'll write very little code by hand. Instead, you'll *direct* Claude — giving it your vision, your plan, your requirements — and watch it build.
-
-This lab is going to be an experience. Some steps will feel unfamiliar. Some terms might be new. But we've designed every step so you can get through it even if you've never written a single line of code before. Let's go.
-
----
-
 ## What You'll Learn
 
 By the end of this lab, you will understand:
