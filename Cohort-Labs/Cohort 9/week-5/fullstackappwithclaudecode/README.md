@@ -47,6 +47,7 @@ Before you begin, make sure you have these accounts and tools set up:
 - **Claude Code installed** — the AI coding assistant we'll use throughout. You set this up in Week 0
 - **VS Code installed** — your code editor. Also from Week 0
 - **Node.js installed** — the engine that runs JavaScript on your computer. If you haven't installed it, go to nodejs.org, download the LTS version, and click install
+- **Azure AI Foundry account** — needed in Phase 6 to power the AI contract review feature. If you haven't set this up yet, complete the Azure AI Foundry lab (Week 4, Lab 4.1) first. Free trial at azure.microsoft.com
 
 If you're missing any of these, go back to the Week 0 setup guides before continuing.
 
@@ -251,17 +252,6 @@ WEEK-5-CLAUDEAPP/
 ├── .claude/
 ├── .next/
 │
-├── app/
-│   ├── api/
-│   ├── dashboard/
-│   │   └── chat/
-│   ├── login/
-│   │   └── page.tsx
-│   ├── signup/
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-│
 ├── components/
 ├── lib/
 │
@@ -304,11 +294,12 @@ Now fill in the `.env` file with your real Supabase credentials.
 1. Log into Supabase at supabase.com and open your project
 2. On the project overview page you will see the **Project URL** — copy it and paste as `NEXT_PUBLIC_SUPABASE_URL`
 
+![image](./images/95.png)
+
 **Get the API Keys:**
 1. In the left sidebar, click **Project Settings** → **API**
 2. Scroll down to the **Legacy API Keys** section
-3. Copy the **anon / public** key → paste as `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-4. Copy the **service_role** secret key → paste as `SUPABASE_SERVICE_ROLE_KEY`
+3. Copy the **service_role** secret key → paste as `SUPABASE_SERVICE_ROLE_KEY`
 
 ![image](./images/14.png)
 
@@ -341,7 +332,7 @@ If you want to build a different app, replace the content of `PRD.md` with your 
 First type `/plan` and then add my full prompt:/pla
 
 ```
-/plan use @PRD.md I want to build a legal contract review app. The app has signup and login using a custom users table in Supabase. After login the user lands on a dashboard with three panels — a left sidebar showing chat history and a new chat button, a center panel with the chat interface and file attachment button, and a right panel showing execution steps like Cowork. The user can upload a PDF or DOCX contract, type a question, and the app sends the contract text and the question to an Azure AI agent and shows the response in the chat. Chat sessions and messages are saved in Supabase. After every assistant response a feedback form appears and the rating and comment are saved in Supabase. Create a detailed plan and save it as /blueprint/app-plan.md.
+/plan use @PRD.md I want to build a legal contract review app. The app has signup and login using a custom users table in Supabase. After login the user lands on a dashboard with three panels — a left sidebar showing chat history and a new chat button, a center panel with the chat interface and file attachment button, and a right panel showing execution steps like Cowork. The user can upload a PDF or DOCX contract, type a question, and the app sends the contract text and the question to an Azure AI agent and shows the response in the chat. Chat sessions and messages are saved in Supabase. After every assistant response a feedback form appears and the rating and comment are saved in Supabase. Create a detailed plan and save it as /blueprint/app-plan.md also generate a dedicated Database Schema section containing complete Supabase PostgreSQL SQL queries to create all required tables.
 ```
 
 ![image](./images/15.png)
