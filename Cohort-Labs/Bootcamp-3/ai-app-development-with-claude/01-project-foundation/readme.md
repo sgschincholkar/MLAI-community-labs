@@ -4,6 +4,8 @@
 
 # Lesson 1 — Project Foundation
 
+![images](./images/banner.png)
+
 ## The Problem We Are Solving
 
 Picture a founder at a 20-person SaaS company. A potential enterprise client sends over a 30-page Master Service Agreement. She needs to sign it by end of week. She has no in-house lawyer, so she either spends 90–120 minutes reading every clause herself, or she pays $400 for an hour of legal time to get a summary she barely understands.
@@ -32,15 +34,23 @@ Go to this URL in your browser:
 https://github.com/sachin0034-tech/dev-os
 ```
 
+![images](./images/1.png)
+
 In the top-right corner of the page, click the **Fork** button. GitHub will ask you where to fork it — select your own account and click **Create fork**.
 
+![images](./images/2.png)
+
 Forking creates your own copy of the repository under your GitHub account. This matters because you need a place to save your work as you build. The original repository stays untouched. Your fork is yours to commit to, experiment on, and share.
+
+![images](./images/3.png)
 
 ---
 
 ## Step 2 — Clone Your Fork to Your Computer
 
 Once the fork is created, GitHub will take you to your copy of the repository. Click the green **Code** button, make sure **HTTPS** is selected, and copy the URL shown.
+
+![images](./images/4.png)
 
 Open your terminal and run:
 
@@ -50,11 +60,15 @@ git clone <paste the URL you copied here>
 
 Cloning downloads the repository from GitHub onto your local machine. From this point on, you work on the local copy and push changes back to GitHub when you are ready.
 
+![images](./images/5.png)
+
 ---
 
 ## Step 3 — Open the Project in VS Code
 
 Open VS Code. Go to **File > Open Folder** and select the `dev-os` folder that was just created by the clone command.
+
+![images](./images/6.png)
 
 You will see a file tree on the left side. Here is what each part of the project contains and why it is there.
 
@@ -80,6 +94,10 @@ dev-os/
     └── design-system/
         └── SKILL.md
 ```
+
+
+![images](./images/7.png)
+
 
 **`CLAUDE.md`**
 This is the instruction manual for your AI coding assistant, Claude Code. It defines the rules Claude follows when helping you build — which stage of development you are in, what it is allowed to do, and what order work gets done. Think of it as the project constitution that keeps Claude focused and consistent across the entire build.
