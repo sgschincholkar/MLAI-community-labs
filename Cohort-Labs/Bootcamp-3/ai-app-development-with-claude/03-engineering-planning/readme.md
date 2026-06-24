@@ -4,6 +4,8 @@
 
 # Lesson 3 — Engineering Planning
 
+![images](./images/banner.png)
+
 ## Where We Are
 
 By this point you have:
@@ -18,6 +20,8 @@ This lesson introduces **Plan Mode** — one of the most powerful features in Cl
 ---
 
 ## What Is Plan Mode?
+
+![images](./images/plan.png)
 
 Plan Mode is a special state in Claude Code where the AI is allowed to **read and reason, but not write or change anything**.
 
@@ -77,6 +81,8 @@ In VS Code, go to **Terminal > New Terminal** (or press `` Ctrl+` ``).
 
 A terminal panel will open at the bottom of the screen, already pointed at your project folder. You will run all commands from here.
 
+![images](./images/4.png)
+
 ---
 
 ## Step 3 — Launch Claude Code
@@ -89,6 +95,9 @@ claude
 
 Claude Code will start and show its interactive prompt. You are now in a Claude Code session scoped to your project. Claude can read all files in the folder and will follow the rules defined in `CLAUDE.md`.
 
+
+![images](./images/3.png)
+
 ---
 
 ## Step 4 — Run the Engineering Planning Prompt
@@ -99,11 +108,23 @@ Copy and paste the following prompt into the Claude Code terminal:
 /plan Create an end-to-end engineering document based on the provided @docs/ContractIQ_PRD.md. Your task is to meticulously extract all features and specifications from the PRD and translate them into detailed engineering design elements. Use the @skills/engineering-planner/SKILL.md for creating the doc.
 ```
 
-Press **Enter**.
+Press **Enter**. 
+
+![images](./images/4.png)
+
+
+> **Note:** Claude may ask a few clarifying questions before proceeding — go with the recommended option unless you have a specific reason to change it.
+
+![images](./images/5.png)
 
 ---
 
-## The `@` File Reference Syntax
+> **Note:** This step can take 10–15 minutes. Let Claude finish without interrupting till then let's dicuss about "@" in claude .
+
+![images](./images/meme.png)
+
+
+# The `@` File Reference Syntax
 
 The `@` symbol is how you point Claude at a specific file or folder in your project. Instead of copying and pasting content into your prompt, you reference the path — Claude reads it directly.
 
@@ -153,6 +174,8 @@ After Claude processes the PRD through the engineering-planner skill, it will ge
 
 These documents are saved to `docs/engineering/` and become the input for Lesson 4, where you run `/implementation-specs` to break each engineering decision into file-by-file build instructions.
 
+![images](./images/6.png)
+
 ---
 
 ## Reviewing and Approving the Plan
@@ -182,6 +205,8 @@ docs/
 ```
 
 These files are the technical foundation for everything that follows. Every future skill — `/implementation-specs`, `/security-foundation`, `/frontend-setup` — reads these documents to understand what has already been decided.
+
+![images](./images/6.png)
 
 ---
 

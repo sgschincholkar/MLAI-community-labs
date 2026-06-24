@@ -118,20 +118,39 @@ claude
 Copy and paste the following prompt into the Claude Code session:
 
 ```
-Implement a Conversation Memory Layer.
+Implement a Conversation Memory Layer for the ContractIQ chat system.
 
-Currently, the chatbot does not have access to previous messages because a new session is created for each interaction. The assistant should have access to:
-- Uploaded contract/document
-- Current chat session history
-- Previous user questions
-- Previous assistant responses
+CONTEXT
+The chat assistant has access to an uploaded contract and a persisted conversation
+history. The problem: the assistant ignores conversation history when answering
+because it always uses an "answer only from the contract" system prompt, regardless
+of what the user is actually asking.
 
-Before generating a response, the system must determine whether the user's question refers to:
-- Contract content
-- Conversation history
-- Both contract content and conversation history
+WHAT IT MUST DO
 
-Based on this classification, the assistant should retrieve the appropriate context and generate an accurate response with proper source attribution.
+Before generating a response, the system must:
+
+1. CLASSIFY the user's question into one of three context types:
+   - CONTRACT  — question is about the document content
+   - HISTORY   — question is about the conversation itself
+   - BOTH      — question references both the conversation and the document
+
+2. RETRIEVE the right context based on classification:
+   - CONTRACT  → send contract text + last 10 conversation turns
+   - HISTORY   → send only conversation history (no contract text), up to 20 turns
+   - BOTH      → send contract text + last 10 conversation turns
+
+3. RESPOND with a system prompt matched to the source:
+   - CONTRACT  → "Answer only from the contract. Cite [Page X]."
+   - HISTORY   → "Answer only from the conversation. End with [From conversation]."
+   - BOTH      → "Answer from both. Attribute each fact to its source."
+
+4. ATTRIBUTE the source in the UI so the user knows where the answer came from.
+
+CRITICAL IMPLEMENTATION REQUIREMENT
+The full conversation history must be loaded from the database BEFORE the new
+user message is saved. If history is loaded after saving, the classifier will
+always see the new message as part of history and misclassify the context.
 ```
 
 Press **Enter**.

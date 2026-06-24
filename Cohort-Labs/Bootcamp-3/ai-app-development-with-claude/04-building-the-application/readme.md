@@ -4,6 +4,8 @@
 
 # Lesson 4 — Building the Application
 
+![images](./images/banner.png)
+
 ## Where We Are
 
 By this point you have:
@@ -31,32 +33,86 @@ By the end, you will have a working app you can open in a browser.
 
 ## Before You Start — Set Up Supabase
 
-The application uses **Supabase** as its database and authentication layer. You need to create a project there before running the prompts, because the prompts will ask for your credentials.
+## What is Supabase?
 
-### Create a Supabase Account
+**Supabase** is an open-source Firebase alternative built on top of PostgreSQL. It gives you a hosted database, instant REST and GraphQL APIs, authentication, storage, and realtime subscriptions — all in one platform.
 
-1. Go to [supabase.com](https://supabase.com) and click **Start your project**.
-2. Sign in with GitHub (recommended) or create an account with your email.
-3. Once logged in, click **New project**.
-4. Give the project a name (e.g. `contractiq`), choose a region close to you, and set a strong database password. Save the password somewhere — you will need it later.
-5. Click **Create new project**. Supabase will take about 60 seconds to spin up.
+| Feature | What It Means |
+|---|---|
+| PostgreSQL | Full relational database — standard SQL |
+| Auto-generated API | REST and GraphQL APIs built from your tables automatically |
+| Row Level Security | Fine-grained access control per row |
+| Free tier | Generous free plan — no credit card required |
+
+---
+
+## Step 1: Go to Supabase and Click "Start Your Project"
+
+1. Open your browser and go to [https://supabase.com/](https://supabase.com/)
+2. Click **"Start your project"**
+
+![Supabase Homepage](./images/1.png)
+
+---
+
+## Step 2: Sign Up
+
+Create a Supabase account:
+
+- Sign up with **GitHub** (recommended — fastest), or
+- Use your **email address**
+
+![Sign Up](./images/2.png)
+
+---
+
+## Step 3: Create a New Organization
+
+After signing in, Supabase will prompt you to create an organization:
+
+1. Enter a name for your organization (e.g. your name or team name)
+2. Select the **Free** plan
+3. Click **"Create organization"**
+
+![Create Organization](./images/4.png)
+
+---
+
+## Step 4: Create a New Project
+
+Inside your organization:
+
+1. Click **"New project"**
+2. Enter a **Project Name** (e.g. `contractIQ-db`)
+3. Set a strong **Database Password** — save this somewhere safe
+4. Choose the **Region** closest to you
+5. Click **"Create new project"**
+
+> Wait 1–2 minutes while Supabase provisions your database.
+
+
+![Project Setup](./images/5.png)
+
 
 ### Copy Your Credentials
 
 You need three values from Supabase. Here is where to find them:
 
 **Project URL**
-1. Go to your project dashboard.
-2. Click **Project Settings** in the left sidebar.
-3. Click **API**.
-4. Copy the value under **Project URL**. It looks like `https://xyzxyzxyz.supabase.co`.
+1. Go to your project overview — the URL is shown at the top. It looks like `https://xyzxyzxyz.supabase.co`.
+
+![Project Setup](./images/6.png)
 
 **Anon Key (public)**
-On the same **API** settings page, scroll down to **Project API keys**.
-Copy the value next to **`anon` `public`** — also listed as the **legacy anon key**. This is safe to use in browser code.
+1. Click **Project Settings** in the left sidebar.
+2. Click **API**.
+3. Scroll down to **Project API keys** and copy the value next to **`anon` `public`** (also listed as the **legacy anon key**). This is safe to use in browser code.
 
 **Service Role Key (secret)**
-On the same page, copy the value next to **`service_role`**. This key bypasses Row Level Security — keep it out of your frontend code and never commit it to GitHub.
+1. On the same **API** settings page, go to **Legacy API keys**.
+2. Copy the value next to **`service_role`**. This key bypasses Row Level Security — keep it out of your frontend code and never commit it to GitHub.
+
+![Project Setup](./images/7.png)
 
 Set these aside. You will add them to your `.env` file at the end of this lesson.
 
@@ -106,6 +162,26 @@ The design tokens from `docs/design.md` are loaded into Tailwind so your brand c
 
 Review the file tree once the skill finishes. If anything looks off, describe the issue and Claude will correct it before you move on.
 
+![Project Setup](./images/8.png)
+
+
+
+### Add Your Credentials to `.env`
+
+## > **Note:** You will now see a `.env.local.example` file in your project. Rename it to `.env.local`, then paste in your Supabase Project URL, Anon Key, and Service Role Key both anon key and service role key are same. Also add your OPEN API key also.
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xyzxyzxyz.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+OPENAI_API_KEY = sk....
+```
+
+Replace the placeholder values with the credentials you copied earlier.
+
+
+![Project Setup](./images/9.png)
+
 ---
 
 ## Prompt 2 — Implement the Application
@@ -132,8 +208,23 @@ Implementation Rules:
 - Implement proper loading, error, and empty states.
 - Implement validation and security requirements defined in the specs.
 - Keep code modular and scalable.
-- Use the claude-haiku-4-5-20251001 model.
+- Use the gpt-4o-mini model.
 ```
+
+![Project Setup](./images/10.png)
+
+
+
+> **Note:** Once Claude finishes, open a new terminal and run the development server to see your app. Make sure you are in the frontend folder first — if not, `cd` into it if you are in the folder then directly run in you terminal npm run dev:
+>
+> ```bash
+> cd apps/web
+> npm run dev
+> ```
+
+Once the server starts, you will see a local URL in the terminal — click it or open `http://localhost:3000` in your browser.
+
+![Project Setup](./images/13.png)
 
 ### What This Does
 
@@ -147,11 +238,15 @@ This prompt takes the most time. Claude may ask clarifying questions before it b
 
 ## Prompt 3 — Generate the Database Schema
 
-Once the application code is in place, run:
+The application code is now written, but the database is still empty — there are no tables to store users, contracts, or chat messages yet. This prompt tells Claude to read the data models from your engineering documents and produce a single `database.sql` file you can run directly in Supabase to create everything at once.
+
+Once the application code is in place, run this prompt in Claude:
 
 ```
 Create a database.sql file that contains all SQL statements required to set up the database for the application. Based on the Engineering Document and Implementation Specifications, generate a complete production-ready database schema.
 ```
+
+![Project Setup](./images/14.png)
 
 ### What This Does
 
@@ -159,40 +254,29 @@ Claude reads the data models in your engineering documents and writes a single `
 
 ---
 
-## Prompt 4 — Load the Schema and Connect the App
+## Load the Schema and Connect the App
 
 ### Run the SQL in Supabase
 
 1. Open your Supabase project dashboard.
 2. Click **SQL Editor** in the left sidebar.
-3. Click **New query**.
-4. Open `database.sql` in VS Code. Select all (`Cmd+A` on Mac, `Ctrl+A` on Windows). Copy.
-5. Paste the SQL into the Supabase SQL Editor.
-6. Click **Run** (or press `Cmd+Enter`).
+3. Open `database.sql` in VS Code. Select all (`Cmd+A` on Mac, `Ctrl+A` on Windows). Copy.
+4. Paste the SQL into the Supabase SQL Editor.
+5. Click **Run** (or press `Cmd+Enter`).
 
 Supabase will execute all the statements. When it finishes without errors, your database tables are live.
 
 If you see an error, read the message — it usually names the exact line that failed. Common causes are a table being referenced before it is created (a foreign key ordering issue) or a typo in a policy name. Paste the error back into Claude Code and it will fix the specific line.
 
-### Add Your Credentials to `.env`
 
-Open `.env.local` in the root of your project (if it does not exist, rename `.env.local.example`). Add your three Supabase values:
 
-```
-NEXT_PUBLIC_SUPABASE_URL=https://xyzxyzxyz.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
-```
-
-Replace the placeholder values with the credentials you copied earlier.
-
-> **Important:** `SUPABASE_SERVICE_ROLE_KEY` must never appear in browser-side code and must never be committed to GitHub. The `.env.local` file should already be listed in `.gitignore` — verify this before your first push.
+> **Important:** `SUPABASE_SERVICE_ROLE_KEY` must never appear in browser-side code and must never be committed to GitHub. The `.env` file should already be listed in `.gitignore` — verify this before your first push.
 
 ---
 
 ## Test Your Application
 
-Open a new terminal in VS Code (**Terminal > New Terminal**), then start the development server:
+Open a new terminal or in the same application in VS Code (**Terminal > New Terminal**), then start the development server:
 
 
 /note make sure you are in the woring frongedn dolrr 
@@ -213,6 +297,10 @@ Open `http://localhost:3000` in your browser and walk through these checks:
 | Database writes | Check the relevant table in Supabase **Table Editor** to confirm data was saved |
 
 If anything fails, open the browser dev console (`F12`) and read the error. Most issues at this stage come from a missing environment variable or a table name mismatch between the SQL schema and the application code. Paste the error into Claude Code with the relevant file path and it will fix it.
+
+
+
+![Project Setup](./images/15.png)
 
 ---
 
