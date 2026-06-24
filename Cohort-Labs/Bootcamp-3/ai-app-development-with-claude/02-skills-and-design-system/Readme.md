@@ -4,6 +4,8 @@
 
 # Lesson 2 — Skills and the Design System
 
+![images](./images/banner.png)
+
 ## What Are Claude Code Skills?
 
 Every time you open a new conversation with Claude, it starts completely fresh — no memory of your decisions, your style choices, or your rules.
@@ -23,6 +25,8 @@ skills/
 └── design-system/         →   /design-system
 ```
 
+![images](./images/1.png)
+
 Each folder contains one file — `SKILL.md` — which is the plain-text instruction set Claude reads when you run the command.
 
 > **Learn more:** [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf)
@@ -31,15 +35,26 @@ Each folder contains one file — `SKILL.md` — which is the plain-text instruc
 
 ## What Is a Design System?
 
+![images](./images/design.png)
+
 A design system is a set of visual decisions you make once — colors, fonts, spacing, button shapes — written down so every new screen follows the same rules automatically.
 
 Without it, each page you build drifts slightly from the last. Nothing looks broken. Nothing looks finished either.
 
 In this project, the design system lives at **`docs/design.md`**. It defines the colors, fonts, spacing, component shapes, and animation rules for ContractIQ. When Claude builds any screen, it reads this file first so every element matches everything else.
 
+## Note
+
+The `design.md` file is already included in the repository you cloned — you do not need to create it. If you want to build your own design system from scratch, follow the step-by-step instructions here: [How to Create a Design System](../00-resources-lab/create-design-system.md)
+
+
+![images](./images/2.png)
+
 ---
 
 ## The 5 Skills in This Project
+
+![images](./images/skills.png)
 
 ### `/engineering-planner`
 Reads the product description and turns it into an organized build plan.

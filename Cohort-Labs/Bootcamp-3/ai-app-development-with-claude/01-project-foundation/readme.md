@@ -28,11 +28,7 @@ The tool does not replace a lawyer for high-stakes situations. It gives people e
 
 We are not starting from a blank folder. A starter repository has already been set up with the project structure, configuration files, and workflow rules you will need throughout this course.
 
-Go to this URL in your browser:
-
-```
-https://github.com/sachin0034-tech/dev-os
-```
+Go to this URL in your browser: [https://github.com/sachin0034-tech/dev-os](https://github.com/sachin0034-tech/dev-os)
 
 ![images](./images/1.png)
 
