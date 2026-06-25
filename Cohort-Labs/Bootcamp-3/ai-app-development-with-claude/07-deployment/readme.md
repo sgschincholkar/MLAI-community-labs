@@ -127,9 +127,9 @@ Once logged in:
 
 Netlify will show a list of your GitHub repositories.
 
-Find and click on your forked repo (e.g. `contractiq` or whatever you named it).
+Find and click on your forked repo (e.g. `dev-os` or whatever you named it).
 
-![Select repository](./images/55.png)
+![Select repository](./images/57.png)
 
 ---
 
@@ -144,7 +144,7 @@ On the project settings screen, fill in the following:
 | **Build command** | `npm run build` |
 | **Publish directory** | `.next` |
 
-![Project configuration](./images/6.png)
+![Project configuration](./images/56.png)
 
 > **Note:** If your project is inside a subdirectory (e.g. `apps/web`), set the **Base directory** field to that path before filling in the build command and publish directory.
 
@@ -160,7 +160,7 @@ Your deployed app needs the same secret keys you have in your local `.env.local`
 4. Open your local `.env.local` file, copy all of its contents, and paste them in
 5. Click **Import**
 
-![Environment variables](./images/7.png)
+![Environment variables](./images/58.png)
 
 All your keys — Supabase URL, Supabase API keys, OpenAI key — will be imported automatically.
 
@@ -174,7 +174,6 @@ Click the **Deploy project** button.
 
 Netlify will start building your app. This takes 1–2 minutes. You will see a live build log scrolling as it compiles your Next.js app.
 
-![Build log](./images/8.png)
 
 If the build fails, read the error message in the log — it will name the exact line or file that caused the failure. See the Troubleshooting section at the end of this lesson for how to fix common build errors.
 
@@ -190,7 +189,7 @@ https://your-app-name.netlify.app
 
 Click that URL — your app is now live on the internet.
 
-![Published app](./images/9.png)
+![Published app](./images/59.png)
 
 > **Note:** Any time you push new code to GitHub, Netlify will automatically detect the change and redeploy your app within a couple of minutes. You never need to manually trigger a deploy again.
 
@@ -213,7 +212,7 @@ Now that your app has a live Netlify URL, you need to update one environment var
    ```
 4. Save the file
 
-![Update env file](./images/10.png)
+![Update env file](./images/60.png)
 
 **Update the variable in Netlify**
 
@@ -223,7 +222,11 @@ Now that your app has a live Netlify URL, you need to update one environment var
 4. Replace the `localhost` value with your Netlify URL
 5. Click **Save**
 
+![Update env file](./images/61.png)
+
 **Push and redeploy**
+
+Open the terminal again and redeploy the app
 
 ```bash
 git add .env.local
