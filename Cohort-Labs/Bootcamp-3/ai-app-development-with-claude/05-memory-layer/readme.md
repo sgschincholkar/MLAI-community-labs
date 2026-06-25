@@ -1,8 +1,10 @@
-[← Lesson 4](../04-building-the-application/readme.md) | **Lesson 5**
+[← Lesson 4](../04-building-the-application/readme.md) | **Lesson 5** | [Lesson 6 →](../06-security-and-production/readme.md)
 
 ---
 
 # Lesson 5 — Memory Layer
+
+![images](./Images/banner.png)
 
 ## Where We Are
 
@@ -34,6 +36,8 @@ Can you summarise what you just told me?
 The assistant has no idea what it just told you. It cannot answer the follow-up because each message is a brand new, isolated API call with no context carried over.
 
 This is the problem memory solves.
+
+![image](./Images/1.png)
 
 ---
 
@@ -224,6 +228,8 @@ Open the app and go to the chat interface for any previously uploaded contract. 
 
 If Turn 3 fails (history does not reload), check that the `chat_messages` Supabase write is completing without error. Open the browser dev console and look for a failed fetch.
 
+![image](./Images/2.png)
+
 ---
 
 ## What You Have Built
@@ -248,4 +254,90 @@ At the end of this lesson your application has:
 
 ---
 
-[← Lesson 4](../04-building-the-application/readme.md) | **Lesson 5**
+## Troubleshooting — Let Claude Fix It
+
+If something is broken or not working as expected, you do not need to debug it manually. Claude Code can diagnose and fix most issues when you describe the symptom clearly. Below are the most common problems and the exact prompts to use.
+
+---
+
+### How to Use These Prompts
+
+1. Open a Claude Code session in your project root: `claude`
+2. Copy the prompt for your error and paste it in — do not paraphrase it
+3. Approve the changes Claude proposes and re-test
+
+---
+
+### Common Issues
+
+#### Chat history does not reload after a page refresh
+
+```
+The chat history is not reloading when I refresh the page. Messages are being saved to Supabase (I can see them in the dashboard) but the chat interface starts blank every time. Fix whatever is preventing the persisted messages from being fetched and displayed on load.
+```
+
+---
+
+#### Follow-up questions are ignored — the assistant acts like each message is the first
+
+```
+The assistant has no memory of previous turns within the same session. Every message is answered as if the conversation just started. The memory layer should be loading history from Supabase before each API call. Find out why it is not, and fix it.
+```
+
+---
+
+#### Query classifier is always returning the same type (e.g. always "contract")
+
+```
+The query classifier is not working correctly — it is categorising every question as the same type regardless of what I ask. A question like "what did you say earlier?" should be classified as "history", not "contract". Review the classifier logic and fix the misclassification.
+```
+
+---
+
+#### Messages are being saved twice or the chat history is duplicated
+
+```
+I am seeing duplicate messages in the chat UI and in the Supabase chat_messages table. Each turn is being saved more than once. Find where the save is being called multiple times and fix it so each message is written exactly once per turn.
+```
+
+---
+
+#### Source attribution ([Page X] or [From conversation]) is missing from responses
+
+```
+Responses from the assistant are no longer showing source attribution like [Page X] or [From conversation]. The system prompt instructs the model to include these but they are missing. Find out why and restore the attribution so users can trace answers back to the source.
+```
+
+---
+
+#### A feature is not working and you are not sure why
+
+If you hit an error or broken behaviour that is not listed above, use this general-purpose prompt:
+
+```
+[Paste the error message or describe what is broken]
+
+I am building a ContractIQ app with a memory layer in Next.js using Supabase. The issue is happening in the chat flow — specifically around loading history, classifying queries, or saving messages. Please diagnose the root cause and fix it.
+```
+
+---
+
+#### You want to add a new feature
+
+```
+I want to add [describe the feature] to the ContractIQ chat. The existing memory layer loads conversation history from Supabase, classifies each query as contract / history / both, and saves every turn back to Supabase. The feature should fit into this flow without breaking the existing classification or persistence logic. Implement it.
+```
+
+---
+
+### Tips for Getting the Best Results from Claude
+
+- **Include the error message** — paste the full stack trace or console error, not just "it broke"
+- **Say where it breaks** — "when I refresh the page", "after the second message", "when I ask about the conversation" gives Claude a precise reproduction path
+- **One problem at a time** — if multiple things are wrong, fix the most fundamental one first (usually the database write or the history fetch)
+- **Review the diff** — Claude will show you what it changed before applying; read it to understand what was wrong
+- **Re-test with the four-turn sequence** — after any fix, run through the test in Step 3 to confirm nothing else regressed
+
+---
+
+[← Lesson 4](../04-building-the-application/readme.md) | **Lesson 5** | [Lesson 6 →](../06-security-and-production/readme.md)

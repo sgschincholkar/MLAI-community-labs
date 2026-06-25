@@ -260,6 +260,9 @@ Claude reads the data models in your engineering documents and writes a single `
 
 1. Open your Supabase project dashboard.
 2. Click **SQL Editor** in the left sidebar.
+   
+![Project Setup](./images/19.png)
+
 3. Open `database.sql` in VS Code. Select all (`Cmd+A` on Mac, `Ctrl+A` on Windows). Copy.
 4. Paste the SQL into the Supabase SQL Editor.
 5. Click **Run** (or press `Cmd+Enter`).
