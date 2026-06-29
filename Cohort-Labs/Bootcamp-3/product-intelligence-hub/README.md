@@ -21,7 +21,7 @@ By the end of this series you will have a fully working pipeline where:
 
 | # | Module | What you set up |
 |---|--------|----------------|
-| [00](./00-setup-snowflake/readme.md) | **Snowflake Setup** | Provision a free Snowflake trial account and prepare it for the pipeline |
+| [00](./00-setup-snowflake/Readme.md) | **Snowflake Setup** | Provision a free Snowflake trial account and prepare it for the pipeline |
 | [01](./01-setup-composio/readme.md) | **Composio + Snowflake** | Connect Snowflake to Claude via Composio's MCP server |
 | [02](./02-setup-apify/readme.md) | **Apify Connector** | Add Apify to Claude so it can scrape live web data |
 | [03](./03-data-ingestion-pipeline/readme.md) | **Data Ingestion Pipeline** | Install the Customer Intelligence Hub skill and run the full pipeline |
