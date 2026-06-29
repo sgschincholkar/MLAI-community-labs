@@ -148,7 +148,6 @@ To confirm the data was published successfully:
 1. In Snowflake, go to **Catalog** → **Data Explorer**
 2. Open **CUSTOMER_INTELLIGENCE_DB** → **ANALYTICS**
 3. Click any table, then go to **Data Preview** to see the inserted records
-go to ctalog -> Data eplore > cutomer intelligence db inside nalyisc table you wull see tables cik andy table then fo to data preview 
 
 ![images](./images/4.png)
 
@@ -162,6 +161,29 @@ go to ctalog -> Data eplore > cutomer intelligence db inside nalyisc table you w
 | 2 | Ran the pipeline and provided data sources |
 | 3 | Reviewed the generated interactive HTML dashboard |
 | 4 | (Optional) Published the run to Snowflake |
+---
+
+## What You Can Do Next — Fetching Data from Snowflake
+
+Now that your customer intelligence data lives in Snowflake, Claude can query it on demand to power a wide range of deliverables. Here are a few examples:
+
+**Weekly Business Review (WBR)**
+Ask Claude to pull the latest health scores, pain point trends, and satisfaction scores from `CUSTOMER_INTELLIGENCE_DB` and draft a WBR slide narrative — complete with week-over-week comparisons across pipeline runs.
+
+> "Using our Snowflake data, generate a Weekly Business Review summary for last week's customer intelligence run. Highlight any change in health score and the top 3 pain points."
+
+**Executive Deck**
+Ask Claude to query the `ai_summary` and `meeting_notes` tables and produce a structured slide outline with a talking-point per slide — ready to drop into Google Slides or PowerPoint.
+
+> "From our Snowflake analytics, create an executive presentation outline covering customer health, key risks, and recommended actions."
+
+**Feature Prioritization**
+Ask Claude to pull the `most_requested_features` data across multiple runs and rank features by frequency and demand signal — giving your product team a data-backed backlog.
+
+> "Query the Snowflake feature requests data across all pipeline runs and rank the top 10 most requested features by how often they appear."
+
+You now have a fully end-to-end pipeline: **live data collection → AI analysis → interactive dashboard → persistent Snowflake warehouse → on-demand reporting** — all from a single slash command.
+
 ---
 
 ## What You Learned
