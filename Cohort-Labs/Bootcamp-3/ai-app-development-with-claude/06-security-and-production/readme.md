@@ -4,7 +4,7 @@
 
 # Lesson 6 — Security Foundation
 
-![images](./images/banner.png)
+![images](./images/banners.png)
 
 ## Where We Are
 

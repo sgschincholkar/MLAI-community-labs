@@ -236,7 +236,6 @@ git push origin main
 
 Wait 1–2 minutes for Netlify to redeploy. Your authentication flow will now work correctly on the live site.
 
-![Redeployed](./images/11.png)
 
 ---
 
