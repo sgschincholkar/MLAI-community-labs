@@ -1,4 +1,4 @@
-# Product Intelligence Hub
+# Build Data Pipelines with Claude Code
 
 ![image](./imaged/1.png)
 
