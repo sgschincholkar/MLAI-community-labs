@@ -216,3 +216,65 @@ Now that you have your AI interview preparation assistant ready, let's test it w
 ![images](./images/c10.png)
 
 ---
+
+## Bonus: Skip All the Steps — Use the `/interview-prep` Skill
+
+Don't want to run each step manually? There's a faster way. Use the pre-built `/interview-prep` skill — it collects your resume and job description, asks which round you're preparing for, and generates all the prep files automatically in one go.
+
+---
+
+### Step 1: Download the Skill
+
+[Click here to download the `interview-prep-skill.md` file](https://drive.google.com/file/d/1kw4IeUq2zz8A6Y4exQf1WuFVseah2PWE/view?usp=sharing)
+
+---
+
+### Step 2: Open Claude Code
+
+Launch Claude Code in VS Code or open a terminal and type `claude`.
+
+![images](./images/opppp1.png)
+
+---
+
+### Step 3: Go to Customize
+
+Click the **Customize** option in the Claude Code interface (top-left menu or settings icon).
+
+![images](./images/opppp1.png)
+
+
+---
+
+### Step 4: Click on Skills
+
+In the Customize panel, select the **Skills** tab.
+
+---
+
+### Step 5: Upload the Skill
+
+Click **Add** and upload the `interview-prep-skill.md` file you downloaded in Step 1.
+
+![images](./images/opppp2.png)
+
+---
+
+### Step 6: Come Back to Chat and Test It
+
+Type the following in the Claude Code chat:
+
+```
+/interview-prep
+```
+
+Claude Code will ask you a few questions — which round you're preparing for, your resume, and the job description — then automatically generate all your prep files.
+
+---
+
+> **What gets created:**
+> - **Round 1:** `interview-strategy.md`, `first-call-stories.md`, `project-discussion-points.md`
+> - **Round 2:** `round2-prep.md` (deep-dive questions, case studies, strategic questions to ask)
+> - **Full Prep:** All four files in one run
+
+---
