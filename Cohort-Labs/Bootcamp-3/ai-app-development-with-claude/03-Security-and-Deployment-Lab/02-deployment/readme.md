@@ -1,21 +1,20 @@
-[← Lesson 6](../06-security-and-production/readme.md) | **Lesson 7**
+[← Back to Lab 3 Overview](../readme.md)
+
+[← Lesson 1](../01-security-foundation/readme.md) | **Lesson 2**
 
 ---
 
-# Lesson 7 — Deployment
+# Lesson 2 — Deployment
 
-![images](./images/banner.png)
+![images](./images/51.png)
 
 ## Where We Are
 
 By this point you have:
 
-- **Lesson 1** — Forked the `dev-os` starter repo, cloned it to your machine, and opened it in VS Code.
-- **Lesson 2** — Explored the five skills and reviewed the design system in `docs/design.md`.
-- **Lesson 3** — Used Plan Mode to run `/engineering-planner` and `/implementation-specs`, producing the engineering documents in `docs/engineering/`.
-- **Lesson 4** — Scaffolded the Next.js project, implemented the application, ran the database schema in Supabase, and confirmed the app loads in a browser.
-- **Lesson 5** — Added a memory layer so the assistant can recall conversation history within and across sessions.
-- **Lesson 6** — Scanned the codebase with the `security-fix` skill and patched all common vulnerabilities.
+- **Lab 1** — Forked the `dev-os` starter repo, explored the skills and design system, and produced the engineering documents in `docs/engineering/`.
+- **Lab 2** — Scaffolded the Next.js project, implemented the application, ran the database schema in Supabase, and added a memory layer so the assistant can recall conversation history within and across sessions.
+- **Lab 3, Lesson 1** — Scanned the codebase with the `security-fix` skill and patched all common vulnerabilities.
 
 Your app works locally and is secure. This lesson puts it on the internet so anyone can access it — not just you on your own machine.
 
@@ -23,7 +22,7 @@ Your app works locally and is secure. This lesson puts it on the internet so any
 
 ## Part 1 — Push Your Code to GitHub
 
-Netlify deploys by reading your GitHub repository. Your code must be on GitHub before Netlify can see it. Work through these steps first.
+Netlify deploys by reading your GitHub repository. Your code must be on GitHub before Netlify can see it. Work through these steps first, in a terminal in VS Code.
 
 ---
 
@@ -174,7 +173,6 @@ Click the **Deploy project** button.
 
 Netlify will start building your app. This takes 1–2 minutes. You will see a live build log scrolling as it compiles your Next.js app.
 
-
 If the build fails, read the error message in the log — it will name the exact line or file that caused the failure. See the Troubleshooting section at the end of this lesson for how to fix common build errors.
 
 ---
@@ -226,7 +224,7 @@ Now that your app has a live Netlify URL, you need to update one environment var
 
 **Push and redeploy**
 
-Open the terminal again and redeploy the app
+Open the terminal again and redeploy the app:
 
 ```bash
 git add .env.local
@@ -236,6 +234,9 @@ git push origin main
 
 Wait 1–2 minutes for Netlify to redeploy. Your authentication flow will now work correctly on the live site.
 
+<!-- 📸 Add a screenshot here as ./images/62.png showing the Netlify "Published" deploy log
+     after this redeploy, and uncomment the line below.
+![Redeployed](./images/62.png) -->
 
 ---
 
@@ -264,7 +265,7 @@ At the end of this lesson your application is:
 
 ## Troubleshooting — Let Claude Fix It
 
-If your Netlify deploy fails or something is broken on the live site, use the prompts below.
+If your Netlify deploy fails or something is broken on the live site, use the prompts below in the Claude Code terminal.
 
 ---
 
@@ -310,4 +311,14 @@ This feature works perfectly locally but is broken on the live Netlify site: [de
 
 ---
 
-[← Lesson 6](../06-security-and-production/readme.md) | **Lesson 7**
+## You're Done
+
+Your app is live, secure, and automatically redeploys on every push. This completes the three-lab path:
+
+**[Lab 1: Planning](../../01-Planning-and-Architecture-Lab/readme.md) → [Lab 2: Building](../../02-Building-the-Application-Lab/readme.md) → [Lab 3: Security & Deployment](../readme.md)**
+
+---
+
+[← Back to Lab 3 Overview](../readme.md)
+
+[← Lesson 1](../01-security-foundation/readme.md) | **Lesson 2**
